@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/fuel_button"
+        android:layout_width="70sp"
+        android:layout_height="80sp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="150dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_fuel" />
+    <ImageButton
+        android:id="@+id/oil_button"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="30dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_oil" />
+    <ImageButton
+        android:id="@+id/lamp_button"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="250dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_lamp" />
+    <ImageButton
+        android:id="@+id/tyre_button"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="40dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_tyre" />
+    <ImageButton
+        android:id="@+id/other_button"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="250dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_other" />
+    <ImageButton
+        android:id="@+id/ins_button"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="150dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/button_ins" />
+
+
+</android.support.design.widget.CoordinatorLayout>

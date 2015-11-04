@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CarDesk</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_fuel">FuelActivity</string>
+    <string name="title_activity_one_veiw">OneVeiw</string>
+    <string name="title_activity_view_all">ViewAll</string>
+    <string name="title_activity_view_one">ViewOne</string>
+</resources>
