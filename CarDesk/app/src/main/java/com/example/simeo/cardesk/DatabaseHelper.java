@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME="Fuel.db" ;
-    public static final String TABlE_NAME="fuel_table";
+    public static final String DATABASE_NAME="Database.db" ;
     public static final String COL_1="ID";
     public static final String COL_2="QUANTITY";
     public static final String COL_3="PRICE";
     public static final String COL_4="DATE";
+    public static final String TABlE_NAME[] = {"fuel_table","lamp_table","ins_table","oil_table","other_table","tyre_table"};
 
 
     public DatabaseHelper(Context context) {
@@ -23,16 +23,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABlE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUANTITY TEXT, PRICE TEXT, DATE TEXT)");
+        for(int i=0;i<6;i++) {
+            db.execSQL("create table " + TABlE_NAME[i] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUANTITY TEXT, PRICE TEXT, DATE TEXT)");
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + TABlE_NAME);
+        for(int i=0;i<6;i++) {
+        db.execSQL("DROP TABLE IF EXISTS" + TABlE_NAME[i]);
+        }
         onCreate(db);
     }
 
-    public void delete(String date,String price,String quantity)
+    public void delete(String date,String price,String quantity,String TABlE_NAME)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try
@@ -49,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertData(String quantity, String price,String date) {
+    public boolean insertData(String quantity, String price,String date,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,quantity);
@@ -61,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else return true;
     }
 
-    public Cursor getAllData() {
+    public Cursor getAllData(String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res=db.rawQuery("select * from "+TABlE_NAME,null);
         return res;

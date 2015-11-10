@@ -26,12 +26,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn_fuel = (ImageButton)findViewById(R.id.fuel_button);
+        lamp_button = (ImageButton)findViewById(R.id.lamp_button);
 
         btn_fuel.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, FuelActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        lamp_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, LampActivity.class);
                         startActivity(intent);
                     }
                 }

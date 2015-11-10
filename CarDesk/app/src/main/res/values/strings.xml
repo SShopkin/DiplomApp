@@ -5,4 +5,5 @@
     <string name="title_activity_one_veiw">OneVeiw</string>
     <string name="title_activity_view_all">ViewAll</string>
     <string name="title_activity_view_one">ViewOne</string>
+    <string name="title_activity_lamp">LampActivity</string>
 </resources>

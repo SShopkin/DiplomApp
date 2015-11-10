@@ -2,13 +2,12 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewOne extends AppCompatActivity {
+public class ViewOne extends ActivityHelper {
     TextView txtView;
     Button btnDelete;
     DatabaseHelper myDb;
@@ -20,14 +19,16 @@ public class ViewOne extends AppCompatActivity {
         btnDelete=(Button)findViewById(R.id.button_delete);
         myDb=new DatabaseHelper(this);
 
+
         Intent intent = getIntent();
-        String value = intent.getStringExtra("key"); //if it's a string you stored.
+        String value = intent.getStringExtra("key");
         String line[]= value.split("\n");
         double intquantity= Integer.parseInt(line[0].replaceAll("[^0-9]", ""));
         double intprice=Integer.parseInt(line[1].replaceAll("[^0-9]", ""));
         final String quantity[]=line[0].split(":");
         final String price[]=line[1].split(" ");
         final String date[]=line[2].split(":");
+        final String table_name=line[3];
         String display;
 
         if(quantity[1].replaceFirst("^ *", "").contains(" ")) {
@@ -47,10 +48,9 @@ public class ViewOne extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb.delete(date[1].replaceFirst("^ *", ""),price[1] +" "+price[2],quantity[1].replaceFirst("^ *", ""));
+                        myDb.delete(date[1].replaceFirst("^ *", ""),price[1] +" "+price[2],quantity[1].replaceFirst("^ *", ""),table_name);
                         Toast.makeText(ViewOne.this, "Successfull deleted", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(ViewOne.this, ViewAll.class);
-                        startActivity(intent);
+                        History(ViewOne.this,table_name);
                     }
                 }
         );

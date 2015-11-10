@@ -31,16 +31,17 @@ public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
 
-    public void History(Context a){
-        Intent intent = new Intent(a, ViewAll.class);
-        startActivity(intent);
+    public void History(Context a,String table_name){
+        Intent myIntent = new Intent(a, ViewAll.class);
+        myIntent.putExtra("key", table_name); //Optional parameters
+        a.startActivity(myIntent);
     }
 
-    public void AddData (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow){
+    public void AddData (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){
         if(("".equals(firstRow))||("".equals(secondRow))||("".equals(thirdRow))) {
             Toast.makeText(activity, "Fill correct your information", Toast.LENGTH_LONG).show();
         } else if(secondRow.contains(" ")){
-            boolean isInserted = myDb.insertData(firstRow, secondRow, thirdRow);
+            boolean isInserted = myDb.insertData(firstRow, secondRow, thirdRow,table_name);
             if (isInserted)
                 Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();
             else
@@ -53,10 +54,10 @@ public class ActivityHelper extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void sendData(DatabaseHelper myDb) throws JSONException {
+    public void sendData(DatabaseHelper myDb,String table_name) throws JSONException {
         JSONObject obj;
         JSONArray jsonArray = new JSONArray();
-        Cursor res = myDb.getAllData();
+        Cursor res = myDb.getAllData(table_name);
         if (res.getCount()==0){
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
         }
@@ -140,7 +141,7 @@ public class ActivityHelper extends AppCompatActivity {
         return null;
     }
 
-    public void openFile(String path,DatabaseHelper myDb,Context context) {
+    public void openFile(String path,DatabaseHelper myDb,Context context,String table_name) {
         File file = new File(path);
         StringBuilder text = new StringBuilder();
         try {
@@ -163,10 +164,10 @@ public class ActivityHelper extends AppCompatActivity {
         String[] textByLine = text.toString().split(a) ;
         for(int i=5;i<textByLine.length;i+=0){
 
-            myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12]);
+            myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],table_name);
             i +=16;
         }
-        History(context);
+        History(context,table_name);
     }
 
 
