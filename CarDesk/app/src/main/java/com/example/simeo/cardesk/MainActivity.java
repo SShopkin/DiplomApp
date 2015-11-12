@@ -2,14 +2,8 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
         btn_fuel = (ImageButton)findViewById(R.id.fuel_button);
         lamp_button = (ImageButton)findViewById(R.id.lamp_button);
+        ins_button = (ImageButton)findViewById(R.id.ins_button);
+        oil_button = (ImageButton)findViewById(R.id.oil_button);
+        tyre_button = (ImageButton)findViewById(R.id.tyre_button);
+        other_button = (ImageButton)findViewById(R.id.other_button);
 
         btn_fuel.setOnClickListener(
                 new View.OnClickListener() {
@@ -43,6 +41,46 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, LampActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        tyre_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, TyreActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        ins_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, InsActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        oil_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, OilActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        other_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, OtherActivity.class);
                         startActivity(intent);
                     }
                 }

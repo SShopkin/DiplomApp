@@ -53,6 +53,26 @@
             android:label="@string/title_activity_lamp"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".InsActivity"
+            android:label="@string/title_activity_ins"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".OilActivity"
+            android:label="@string/title_activity_oil"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".TyreActivity"
+            android:label="@string/title_activity_tyre"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".OtherActivity"
+            android:label="@string/title_activity_other"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

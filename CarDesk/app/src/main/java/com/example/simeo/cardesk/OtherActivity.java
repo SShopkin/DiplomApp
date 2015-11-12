@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class FuelActivity extends ActivityHelper {
+public class OtherActivity extends ActivityHelper {
     DatabaseHelper myDb;
     EditText editQuantity,editPrice,editDate;
     Button btnAddData;
@@ -15,13 +15,13 @@ public class FuelActivity extends ActivityHelper {
     public static final String TABlE_NAME;
 
     static {
-        TABlE_NAME = "fuel_table";
+        TABlE_NAME = "other_table";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fuel);
+        setContentView(R.layout.activity_other);
         myDb=new DatabaseHelper(this);
 
         editQuantity = (EditText)findViewById(R.id.editText_quantity);
@@ -35,13 +35,13 @@ public class FuelActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AddData(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                editDate.getText().toString(),TABlE_NAME);
-                        final String value = "Quan: "+editQuantity.getText().toString()+"\n"+"Price: "+editPrice.getText().toString()+"\n"+
-                                "Date: "+editDate.getText().toString()+"\n"+TABlE_NAME;
-                        Intent myIntent = new Intent(FuelActivity.this, ViewOne.class);
+                        AddData(OtherActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                editDate.getText().toString(), TABlE_NAME);
+                        final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
+                                "Date: " + editDate.getText().toString() + "\n" + TABlE_NAME;
+                        Intent myIntent = new Intent(OtherActivity.this, ViewOne.class);
                         myIntent.putExtra("key", value); //Optional parameters
-                        FuelActivity.this.startActivity(myIntent);
+                        OtherActivity.this.startActivity(myIntent);
                     }
                 });
 
@@ -49,7 +49,7 @@ public class FuelActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(FuelActivity.this, "fuel_table");
+                        History(OtherActivity.this, TABlE_NAME);
                     }
                 });
 

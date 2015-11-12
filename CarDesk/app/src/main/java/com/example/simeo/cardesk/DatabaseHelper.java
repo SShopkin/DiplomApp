@@ -53,6 +53,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /*public void update(String newDate,String newPrice,String newQuantity,String date,String price,String quantity,String TABlE_NAME){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_2,newQuantity);
+        cv.put(COL_3,newPrice);
+        cv.put(COL_4,newDate);
+        db.update(TABlE_NAME, cv,"DATE = ? and PRICE=? and QUANTITY=?", new String[]{date, price, quantity});
+    }*/
+
     public boolean insertData(String quantity, String price,String date,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -60,14 +69,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3,price);
         contentValues.put(COL_4,date);
         long result = db.insert(TABlE_NAME,null,contentValues);
-        if (result ==-1){
-            return false;
-        } else return true;
+        return result != -1;
     }
 
     public Cursor getAllData(String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res=db.rawQuery("select * from "+TABlE_NAME,null);
-        return res;
+        return db.rawQuery("select * from "+TABlE_NAME,null);
     }
 }

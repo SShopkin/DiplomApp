@@ -6,4 +6,8 @@
     <string name="title_activity_view_all">ViewAll</string>
     <string name="title_activity_view_one">ViewOne</string>
     <string name="title_activity_lamp">LampActivity</string>
+    <string name="title_activity_ins">InsActivity</string>
+    <string name="title_activity_oil">OilActivity</string>
+    <string name="title_activity_tyre">TyreActivity</string>
+    <string name="title_activity_other">OtherActivity</string>
 </resources>

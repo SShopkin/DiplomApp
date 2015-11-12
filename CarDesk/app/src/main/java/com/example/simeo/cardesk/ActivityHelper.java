@@ -31,10 +31,10 @@ public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
 
-    public void History(Context a,String table_name){
-        Intent myIntent = new Intent(a, ViewAll.class);
+    public void History(Context context,String table_name){
+        Intent myIntent = new Intent(context, ViewAll.class);
         myIntent.putExtra("key", table_name); //Optional parameters
-        a.startActivity(myIntent);
+        context.startActivity(myIntent);
     }
 
     public void AddData (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){
@@ -141,7 +141,7 @@ public class ActivityHelper extends AppCompatActivity {
         return null;
     }
 
-    public void openFile(String path,DatabaseHelper myDb,Context context,String table_name) {
+    public void openFile(String path,DatabaseHelper myDb,String table_name) {
         File file = new File(path);
         StringBuilder text = new StringBuilder();
         try {
@@ -155,7 +155,7 @@ public class ActivityHelper extends AppCompatActivity {
             br.close();
         }
         catch (IOException e) {
-            Toast.makeText(context, "3.",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "3.",Toast.LENGTH_SHORT).show();
         }
 
         int number = 34;
@@ -167,7 +167,9 @@ public class ActivityHelper extends AppCompatActivity {
             myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],table_name);
             i +=16;
         }
-        History(context,table_name);
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
 
