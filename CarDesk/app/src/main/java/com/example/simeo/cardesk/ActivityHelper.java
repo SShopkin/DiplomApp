@@ -4,10 +4,16 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,12 +30,40 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import static android.os.Environment.getExternalStorageState;
 
 
 public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
+    public void AdGenerator(){
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    public void SetDateButton(Context context){
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                (DatePickerDialog.OnDateSetListener) context,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.setAccentColor(Color.parseColor("#9C27B0"));
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    public void GetCurrentDate(Button dateButton){
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = new Date();
+        dateButton.setText(dateFormat.format(date));
+    }
 
     public void History(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
@@ -37,21 +71,23 @@ public class ActivityHelper extends AppCompatActivity {
         context.startActivity(myIntent);
     }
 
-    public void AddData (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){
+    public long AddDataToTheBase (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){
+        long isInserted = -1;
         if(("".equals(firstRow))||("".equals(secondRow))||("".equals(thirdRow))) {
             Toast.makeText(activity, "Fill correct your information", Toast.LENGTH_LONG).show();
         } else if(secondRow.contains(" ")){
-            boolean isInserted = myDb.insertData(firstRow, secondRow, thirdRow,table_name);
-            if (isInserted)
-                Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();
-            else
+            isInserted = myDb.insertData(firstRow, secondRow, thirdRow,table_name);
+            if (isInserted==-1)
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(activity, "Fill correct your information: Check price " +
                     "(it must contain space between a number and currency unit )", Toast.LENGTH_LONG).show();
         }
-        //VIEW ONE ACTIVITY
+        return isInserted;
     }
+
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void sendData(DatabaseHelper myDb,String table_name) throws JSONException {
@@ -171,6 +207,7 @@ public class ActivityHelper extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
 
 
 }

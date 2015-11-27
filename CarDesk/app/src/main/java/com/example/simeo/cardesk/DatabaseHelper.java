@@ -36,12 +36,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void delete(String date,String price,String quantity,String TABlE_NAME)
+    public void delete(String id,String TABlE_NAME)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
-            db.delete(TABlE_NAME, "DATE = ? and PRICE=? and QUANTITY=?", new String[]{date,price,quantity});
+            db.delete(TABlE_NAME, "ID = ?", new String[]{id});
         }
         catch(Exception e)
         {
@@ -62,18 +62,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABlE_NAME, cv,"DATE = ? and PRICE=? and QUANTITY=?", new String[]{date, price, quantity});
     }*/
 
-    public boolean insertData(String quantity, String price,String date,String TABlE_NAME) {
+    public long insertData(String quantity, String price,String date,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,quantity);
         contentValues.put(COL_3,price);
         contentValues.put(COL_4,date);
         long result = db.insert(TABlE_NAME,null,contentValues);
-        return result != -1;
+        return result;
     }
 
     public Cursor getAllData(String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from "+TABlE_NAME,null);
     }
+
 }

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -13,19 +14,20 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_fuel"
-        android:layout_above="@+id/lamp_button"
-        android:layout_alignRight="@+id/ins_button"
-        android:layout_alignEnd="@+id/ins_button" />
+        android:layout_alignTop="@+id/lamp_button"
+        android:layout_alignRight="@+id/other_button"
+        android:layout_alignEnd="@+id/other_button" />
     <ImageButton
         android:id="@+id/oil_button"
-        android:layout_width="120sp"
+        android:layout_width="110sp"
         android:layout_height="100sp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_oil"
-        android:layout_alignTop="@+id/lamp_button"
-        android:layout_toLeftOf="@+id/ins_button"
-        android:layout_toStartOf="@+id/ins_button" />
+        android:layout_alignTop="@+id/other_button"
+        android:layout_alignBottom="@+id/other_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
     <ImageButton
         android:id="@+id/lamp_button"
         android:layout_width="80sp"
@@ -33,9 +35,10 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_lamp"
-        android:layout_above="@+id/other_button"
-        android:layout_toRightOf="@+id/fuel_button"
-        android:layout_toEndOf="@+id/fuel_button" />
+        android:layout_alignTop="@+id/ins_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp" />
     <ImageButton
         android:id="@+id/tyre_button"
         android:layout_width="70sp"
@@ -43,10 +46,10 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_tyre"
-        android:layout_marginRight="28dp"
-        android:layout_below="@+id/oil_button"
-        android:layout_toLeftOf="@+id/ins_button"
-        android:layout_toStartOf="@+id/ins_button" />
+        android:layout_alignTop="@+id/other_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp" />
     <ImageButton
         android:id="@+id/other_button"
         android:layout_width="80sp"
@@ -54,10 +57,9 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_other"
-        android:layout_above="@+id/ins_button"
-        android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/lamp_button"
-        android:layout_alignStart="@+id/lamp_button" />
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/ins_button"
+        android:layout_centerHorizontal="true" />
     <ImageButton
         android:id="@+id/ins_button"
         android:layout_width="80sp"
@@ -65,9 +67,20 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_ins"
-        android:layout_marginBottom="50dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_main">
+    </com.google.android.gms.ads.AdView>
 
 
 </RelativeLayout>

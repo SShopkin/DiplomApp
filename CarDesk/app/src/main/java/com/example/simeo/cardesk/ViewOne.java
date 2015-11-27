@@ -22,6 +22,7 @@ public class ViewOne extends ActivityHelper {
         btnEdit=(Button)findViewById(R.id.button_edit);
         myDb=new DatabaseHelper(this);
 
+        AdGenerator();
 
         Intent intent = getIntent();
         String value = intent.getStringExtra("key");
@@ -32,6 +33,7 @@ public class ViewOne extends ActivityHelper {
         final String price[]=line[1].split(" ");
         final String date[]=line[2].split(":");
         final String table_name=line[3];
+        final String id=line[4];
         String display;
 
         if ("fuel_table".equals(table_name)) {
@@ -61,7 +63,7 @@ public class ViewOne extends ActivityHelper {
             display = "You change your bulb of type " + type +". Bulb is from " + place +". This cost you "+
                      price[1] + " " + price[2] + " and you do it on "+date[1]+".";
         } else if ("oil_table".equals(table_name)) {
-            display = "You change your oil on " + date[1]+"at"+firstLine[1]+". This cost you "+ price[1] +
+            display = "You change your oil on " + date[1]+" at"+firstLine[1]+". This cost you "+ price[1] +
                     " " + price[2]+".";
         } else {
             display = "You do: "+firstLine[1]+" on " + date[1]+" and this cost you "+ price[1] +
@@ -74,8 +76,8 @@ public class ViewOne extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb.delete(date[1].replaceFirst("^ *", ""), price[1] + " " + price[2], firstLine[1].replaceFirst("^ *", ""), table_name);
-                        Toast.makeText(ViewOne.this, "Successfull deleted", Toast.LENGTH_LONG).show();
+                        myDb.delete(id, table_name);
+                        Toast.makeText(ViewOne.this, "Successful deleted", Toast.LENGTH_LONG).show();
                         History(ViewOne.this, table_name);
                     }
                 }

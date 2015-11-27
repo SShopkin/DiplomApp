@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-public class OilActivity extends ActivityHelper {
+
+public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice,editDate;
+    EditText editQuantity,editPrice;
     Button btnAddData;
     Button btnHistory;
+    Button dateButton;
     public static final String TABlE_NAME;
 
     static {
@@ -24,21 +27,23 @@ public class OilActivity extends ActivityHelper {
         setContentView(R.layout.activity_oil);
         myDb=new DatabaseHelper(this);
 
+
+        dateButton = (Button)findViewById(R.id.date_button);
         editQuantity = (EditText)findViewById(R.id.editText_quantity);
-        editPrice = (EditText)findViewById(R.id.editText_price);
-        editDate = (EditText)findViewById(R.id.editText_date);
+        editPrice = (EditText) findViewById(R.id.editText_price);
         btnAddData = (Button)findViewById(R.id.button_add);
         btnHistory = (Button)findViewById(R.id.button_history);
 
-
+        AdGenerator();
+        GetCurrentDate(dateButton);
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AddData(OilActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                editDate.getText().toString(), TABlE_NAME);
+                        long id = AddDataToTheBase(OilActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                dateButton.getText().toString(), TABlE_NAME);
                         final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
-                                "Date: " + editDate.getText().toString() + "\n" + TABlE_NAME;
+                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n"+id;
                         Intent myIntent = new Intent(OilActivity.this, ViewOne.class);
                         myIntent.putExtra("key", value); //Optional parameters
                         OilActivity.this.startActivity(myIntent);
@@ -53,13 +58,19 @@ public class OilActivity extends ActivityHelper {
                     }
                 });
 
-
-
-
+        dateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SetDateButton(OilActivity.this);
+                    }
+        });
     }
 
 
-
-
-
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = dayOfMonth+"."+(++monthOfYear)+"."+year;
+        dateButton.setText(date);
+    }
 }

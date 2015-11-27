@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-    public class LampActivity extends ActivityHelper {
+
+public class LampActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice,editDate;
+    EditText editQuantity,editPrice;
     Button btnAddData;
     Button btnHistory;
+    Button dateButton;
     public static final String TABlE_NAME;
 
     static {
@@ -26,19 +29,20 @@ import android.widget.EditText;
 
         editQuantity = (EditText)findViewById(R.id.editText_quantity);
         editPrice = (EditText)findViewById(R.id.editText_price);
-        editDate = (EditText)findViewById(R.id.editText_date);
         btnAddData = (Button)findViewById(R.id.button_add);
         btnHistory = (Button)findViewById(R.id.button_history);
+        dateButton = (Button)findViewById(R.id.date_button);
 
-
+        GetCurrentDate(dateButton);
+        AdGenerator();
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AddData(LampActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                editDate.getText().toString(),TABlE_NAME);
-                        final String value = "Quan: "+editQuantity.getText().toString()+"\n"+"Price: "+editPrice.getText().toString()+"\n"+
-                                "Date: "+editDate.getText().toString()+"\n"+TABlE_NAME;
+                        long id = AddDataToTheBase(LampActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                dateButton.getText().toString(), TABlE_NAME);
+                        final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
+                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
                         Intent myIntent = new Intent(LampActivity.this, ViewOne.class);
                         myIntent.putExtra("key", value); //Optional parameters
                         LampActivity.this.startActivity(myIntent);
@@ -49,12 +53,24 @@ import android.widget.EditText;
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(LampActivity.this,"lamp_table");
+                        History(LampActivity.this, "lamp_table");
+                    }
+                });
+
+        dateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SetDateButton(LampActivity.this);
                     }
                 });
 
 
     }
-
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
+        dateButton.setText(date);
+    }
 
 }

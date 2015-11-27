@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class MainActivity extends AppCompatActivity {
     ImageButton btn_fuel;
     ImageButton ins_button;
@@ -25,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         oil_button = (ImageButton)findViewById(R.id.oil_button);
         tyre_button = (ImageButton)findViewById(R.id.tyre_button);
         other_button = (ImageButton)findViewById(R.id.other_button);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         btn_fuel.setOnClickListener(
                 new View.OnClickListener() {
