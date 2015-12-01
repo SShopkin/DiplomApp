@@ -5,6 +5,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/back1"
     android:id="@+id/simeon">
 
     <ImageButton
@@ -14,20 +15,18 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_fuel"
-        android:layout_alignTop="@+id/lamp_button"
-        android:layout_alignRight="@+id/other_button"
-        android:layout_alignEnd="@+id/other_button" />
+        android:layout_alignTop="@+id/ins_button"
+        android:layout_centerHorizontal="true" />
     <ImageButton
         android:id="@+id/oil_button"
-        android:layout_width="110sp"
-        android:layout_height="100sp"
+        android:layout_width="90sp"
+        android:layout_height="90sp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_oil"
         android:layout_alignTop="@+id/other_button"
-        android:layout_alignBottom="@+id/other_button"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/ins_button"
+        android:layout_alignEnd="@+id/ins_button" />
     <ImageButton
         android:id="@+id/lamp_button"
         android:layout_width="80sp"
@@ -35,21 +34,20 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_lamp"
+        android:layout_alignTop="@+id/other_button"
+        android:layout_alignLeft="@+id/tyre_button"
+        android:layout_alignStart="@+id/tyre_button" />
+    <ImageButton
+        android:id="@+id/tyre_button"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_tyre"
         android:layout_alignTop="@+id/ins_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp" />
-    <ImageButton
-        android:id="@+id/tyre_button"
-        android:layout_width="70sp"
-        android:layout_height="70sp"
-        android:scaleType="fitXY"
-        android:background="@android:color/transparent"
-        android:src="@drawable/button_tyre"
-        android:layout_alignTop="@+id/other_button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginRight="21dp" />
     <ImageButton
         android:id="@+id/other_button"
         android:layout_width="80sp"
@@ -57,9 +55,9 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_other"
-        android:layout_marginTop="33dp"
         android:layout_below="@+id/ins_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
     <ImageButton
         android:id="@+id/ins_button"
         android:layout_width="80sp"
@@ -67,20 +65,55 @@
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:src="@drawable/button_ins"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/editText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_main">
+        ads:adUnitId="@string/banner_ad_main"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     </com.google.android.gms.ads.AdView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/title"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your current millage"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_alignLeft="@+id/ins_button"
+        android:layout_alignStart="@+id/ins_button"
+        android:layout_below="@+id/textView3"
+        android:layout_alignRight="@+id/tyre_button"
+        android:layout_alignEnd="@+id/tyre_button" />
+
+
 
 
 </RelativeLayout>

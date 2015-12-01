@@ -41,7 +41,7 @@ import static android.os.Environment.getExternalStorageState;
 public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
-    public void AdGenerator(){
+     public void AdGenerator(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
