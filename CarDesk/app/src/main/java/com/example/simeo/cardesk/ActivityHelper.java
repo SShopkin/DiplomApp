@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -35,11 +35,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 import static android.os.Environment.getExternalStorageState;
 
 
 public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
+
+    public void ToolBar(String title){
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        myToolbar.setTitle(title);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
      public void AdGenerator(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
@@ -47,7 +56,7 @@ public class ActivityHelper extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
-    public void SetDateButton(Context context){
+    public void SetDateButton(Context context,String color){
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 (DatePickerDialog.OnDateSetListener) context,
@@ -55,14 +64,15 @@ public class ActivityHelper extends AppCompatActivity {
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.setAccentColor(Color.parseColor("#9C27B0"));
+        dpd.setAccentColor(Color.parseColor(color));
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
-    public void GetCurrentDate(Button dateButton){
+    public void GetCurrentDate(FancyButton dateButton){
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
         dateButton.setText(dateFormat.format(date));
+        dateButton.setTextSize(25);
     }
 
     public void History(Context context,String table_name){

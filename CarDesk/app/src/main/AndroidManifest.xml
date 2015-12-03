@@ -17,14 +17,12 @@
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".FuelActivity"
             android:label="@string/title_activity_fuel"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,45 +31,52 @@
         <activity
             android:name=".ViewAll"
             android:label="@string/title_activity_view_all"
-            android:parentActivityName=".FuelActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.simeo.cardesk.FuelActivity" />
         </activity>
         <activity
             android:name=".ViewOne"
             android:label="@string/title_activity_view_one"
-            android:parentActivityName=".FuelActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.simeo.cardesk.FuelActivity" />
         </activity>
         <activity
             android:name=".LampActivity"
             android:label="@string/title_activity_lamp"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
             android:name=".InsActivity"
             android:label="@string/title_activity_ins"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
             android:name=".OilActivity"
             android:label="@string/title_activity_oil"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
             android:name=".TyreActivity"
             android:label="@string/title_activity_tyre"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
             android:name=".OtherActivity"
             android:label="@string/title_activity_other"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
     </application>
 

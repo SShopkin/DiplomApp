@@ -2,11 +2,12 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.github.lguipeng.library.animcheckbox.AnimCheckBox;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -14,10 +15,10 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice;
+    EditText editQuantity,editPrice,editMileage;
     FancyButton btnAddData;
     FancyButton btnHistory;
-    Button dateButton;
+    FancyButton dateButton;
     public static final String TABlE_NAME;
 
     static {
@@ -32,24 +33,19 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
 
         editQuantity = (EditText)findViewById(R.id.editText_quantity);
         editPrice = (EditText)findViewById(R.id.editText_price);
+        editMileage = (EditText)findViewById(R.id.editText_mileage);
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
-        dateButton = (Button)findViewById(R.id.date_button);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("FUEL");
+        dateButton = (FancyButton)findViewById(R.id.date_button);
+        AnimCheckBox checkbox = (AnimCheckBox)findViewById(R.id.checkbox);
 
-        setSupportActionBar(myToolbar);
-        myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back));
+        checkbox.setChecked(true);
+        boolean animation = true;
+        checkbox.setChecked(false, animation);
 
+        editMileage.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(FuelActivity.this, MainActivity.class);
-                startActivity(myIntent);
-            }
-        });
-
+        ToolBar("Fuel");
         GetCurrentDate(dateButton);
         AdGenerator();
 
@@ -79,7 +75,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(FuelActivity.this);
+                        SetDateButton(FuelActivity.this,"#AED581");
                     }
                 });
 
@@ -90,4 +86,12 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
         dateButton.setText(date);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        onBackPressed();
+        return true;
+    }
+
+
 }

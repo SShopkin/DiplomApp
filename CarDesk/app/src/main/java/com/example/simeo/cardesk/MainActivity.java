@@ -31,8 +31,8 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, FuelActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(MainActivity.this, FuelActivity.class);
+                        startActivity(new Intent(MainActivity.this, FuelActivity.class));
                     }
                 }
         );
@@ -41,8 +41,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, LampActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, LampActivity.class));
                     }
                 }
         );
@@ -51,8 +50,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, TyreActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, TyreActivity.class));
                     }
                 }
         );
@@ -61,8 +59,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, InsActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, InsActivity.class));
                     }
                 }
         );
@@ -71,8 +68,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, OilActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, OilActivity.class));
                     }
                 }
         );
@@ -81,8 +77,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, OtherActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(MainActivity.this, OtherActivity.class));
                     }
                 }
         );

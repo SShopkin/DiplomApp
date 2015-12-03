@@ -8,13 +8,15 @@ import android.widget.EditText;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 
 public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
     EditText editQuantity,editPrice;
     Button btnAddData;
     Button btnHistory;
-    Button dateButton;
+    FancyButton dateButton;
     public static final String TABlE_NAME;
 
     static {
@@ -31,7 +33,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         editPrice = (EditText)findViewById(R.id.editText_price);
         btnAddData = (Button)findViewById(R.id.button_add);
         btnHistory = (Button)findViewById(R.id.button_history);
-        dateButton = (Button)findViewById(R.id.date_button);
+        dateButton = (FancyButton)findViewById(R.id.date_button);
 
         GetCurrentDate(dateButton);
         AdGenerator();
@@ -61,7 +63,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(InsActivity.this);
+                        SetDateButton(InsActivity.this,"#AED581");
                     }
                 });
 

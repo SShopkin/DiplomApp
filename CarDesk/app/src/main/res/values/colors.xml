@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="backgroundGreen">#DCEDC8</color>
+    <color name="lightGreen">#C5E1A5</color>
+    <color name="navigationBarGreen">#AED581</color>
+    <color name="accentGreen">#1B5E20</color>
+
+    <color name="backgroundOrange">#FFF3E0</color>
+    <color name="lightOrange">#FFE0B2</color>
+    <color name="navigationBarOrange">#FFCC80</color>
+    <color name="accentOrange">#E65100</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 
 </resources>
