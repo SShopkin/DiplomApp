@@ -75,10 +75,35 @@ public class ActivityHelper extends AppCompatActivity {
         dateButton.setTextSize(25);
     }
 
+    public String GetSetting(DatabaseHelper myDb) {
+        String liquid = null,distance = null,currency = null;
+        Cursor res = myDb.getAllData("settings_table");
+        while (res.moveToNext()) {
+            liquid = res.getString(0);
+            distance = res.getString(1);
+            currency = res.getString(2);
+        }
+        return liquid+":"+distance+":"+currency;
+    }
+
     public void History(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
         myIntent.putExtra("key", table_name); //Optional parameters
         context.startActivity(myIntent);
+    }
+
+    public long AddDataToTheBaseFS (Context activity,DatabaseHelper myDb,String firstRow,String price,String thirdRow,String fourthRow,String fifthRow,String table_name){
+        long isInserted = -1;
+        if(!("".equals(price)||("").equals(firstRow))) {
+            isInserted = myDb.insertDataFS(firstRow, price, thirdRow, fourthRow, fifthRow, table_name);
+            if (isInserted==-1)
+                Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(activity, "Enter price or/and quantity", Toast.LENGTH_LONG).show();
+        }
+        return isInserted;
     }
 
     public long AddDataToTheBase (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){

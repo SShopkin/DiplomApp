@@ -5,10 +5,11 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:theme="@style/orange"
         android:layout_height="wrap_content"
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="@color/backgroundGreen"
+        android:background="@color/backgroundOrange"
         tools:context=".FuelActivity"
         android:id="@+id/simeon">
 
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/navigationBarGreen"
+            android:background="@color/navigationBarOrange"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
         <mehdi.sakout.fancybuttons.FancyButton
@@ -25,10 +26,10 @@
             android:id="@+id/date_button"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_defaultColor="@color/backgroundGreen"
-            ads:fb_focusColor="@color/lightGreen"
+            ads:fb_defaultColor="@color/backgroundOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_text="Add data"
-            ads:fb_textColor="@color/accentGreen"
+            ads:fb_textColor="@color/accentOrange"
             android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true" />
 
@@ -37,14 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Quantity:"
-            ads:met_underlineColor="@color/accentGreen"
+            ads:met_underlineColor="@color/accentOrange"
             ads:met_floatingLabel="highlight"
             android:layout_below="@+id/date_button"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="-3dp" />
+            android:layout_marginTop="-3dp"
+            android:inputType="number" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editText_price"
@@ -52,13 +54,14 @@
             android:layout_height="wrap_content"
             android:hint="Price:"
             ads:met_floatingLabel="highlight"
-            ads:met_underlineColor="@color/accentGreen"
+            ads:met_underlineColor="@color/accentOrange"
             android:layout_below="@+id/editText_quantity"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="15dp"
             android:layout_alignLeft="@+id/editText_quantity"
-            android:layout_alignStart="@+id/editText_quantity" />
+            android:layout_alignStart="@+id/editText_quantity"
+            android:inputType="number" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editText_mileage"
@@ -67,7 +70,7 @@
             android:imeOptions="actionDone"
             android:hint="Mileage:"
             ads:met_floatingLabel="highlight"
-            ads:met_underlineColor="@color/accentGreen"
+            ads:met_underlineColor="@color/accentOrange"
             android:layout_below="@+id/editText_price"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -85,10 +88,10 @@
             android:paddingRight="40dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_borderColor="@color/accentGreen"
+            ads:fb_borderColor="@color/accentOrange"
             ads:fb_borderWidth="1dp"
-            ads:fb_defaultColor="@color/navigationBarGreen"
-            ads:fb_focusColor="@color/lightGreen"
+            ads:fb_defaultColor="@color/navigationBarOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_radius="30dp"
             ads:fb_text="History"
             ads:fb_textColor="#000000"
@@ -103,10 +106,10 @@
             android:paddingRight="40dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_borderColor="@color/accentGreen"
+            ads:fb_borderColor="@color/accentOrange"
             ads:fb_borderWidth="1dp"
-            ads:fb_defaultColor="@color/navigationBarGreen"
-            ads:fb_focusColor="@color/lightGreen"
+            ads:fb_defaultColor="@color/navigationBarOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_radius="30dp"
             ads:fb_text="Add data"
             ads:fb_textColor="@color/black"
@@ -122,8 +125,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/checkbox"
             ads:stroke_width="4dp"
-            ads:stroke_color="@color/accentGreen"
-            ads:circle_color="@color/lightGreen"
+            ads:stroke_color="@color/accentOrange"
+            ads:circle_color="@color/lightOrange"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/editText_mileage"
             android:layout_alignLeft="@+id/button_add"
@@ -147,7 +150,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Your tank is full"
-            android:textColor="@color/accentGreen"
+            android:textColor="@color/accentOrange"
             android:id="@+id/textView4"
             android:layout_alignTop="@+id/checkbox"
             android:layout_toLeftOf="@+id/button_add"

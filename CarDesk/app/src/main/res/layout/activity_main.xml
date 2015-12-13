@@ -35,15 +35,15 @@
         android:background="@android:color/transparent"
         android:src="@drawable/button_lamp"
         android:layout_alignTop="@+id/other_button"
-        android:layout_alignLeft="@+id/tyre_button"
-        android:layout_alignStart="@+id/tyre_button" />
+        android:layout_alignLeft="@+id/settings_button"
+        android:layout_alignStart="@+id/settings_button" />
     <ImageButton
-        android:id="@+id/tyre_button"
+        android:id="@+id/settings_button"
         android:layout_width="80sp"
         android:layout_height="80sp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        android:src="@drawable/icon_tyre"
+        android:src="@drawable/icon_settings"
         android:layout_alignTop="@+id/ins_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -110,8 +110,8 @@
         android:layout_alignLeft="@+id/ins_button"
         android:layout_alignStart="@+id/ins_button"
         android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/tyre_button"
-        android:layout_alignEnd="@+id/tyre_button" />
+        android:layout_alignRight="@+id/settings_button"
+        android:layout_alignEnd="@+id/settings_button" />
 
 
 

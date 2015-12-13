@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ViewOne"
+            android:name=".ViewFS"
             android:label="@string/title_activity_view_one"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
@@ -63,7 +63,7 @@
                 android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
-            android:name=".TyreActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_tyre"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
@@ -71,7 +71,7 @@
                 android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
-            android:name=".OtherActivity"
+            android:name=".ServiceActivity"
             android:label="@string/title_activity_other"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data

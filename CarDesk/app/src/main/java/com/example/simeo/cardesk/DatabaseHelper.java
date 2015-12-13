@@ -13,7 +13,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_2="QUANTITY";
     public static final String COL_3="PRICE";
     public static final String COL_4="DATE";
-    public static final String TABlE_NAME[] = {"fuel_table","lamp_table","ins_table","oil_table","other_table","tyre_table"};
+    public static final String COL_5="MILEAGE";
+    public static final String TABlE_NAME[] = {"service_table","fuel_table","ins_table","clean_table","statistic_table","settings_table"};
 
 
     public DatabaseHelper(Context context) {
@@ -23,9 +24,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        for(int i=0;i<6;i++) {
-            db.execSQL("create table " + TABlE_NAME[i] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUANTITY TEXT, PRICE TEXT, DATE TEXT)");
-        }
+        db.execSQL("create table " + TABlE_NAME[0] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, PRICE TEXT, DATE TEXT, MILEAGE TEXT, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, PRICE TEXT, DATE TEXT, MILEAGE TEXT, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE TEXT, DATE TEXT, VALIDMIL TEXT, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE TEXT, DATE TEXT, VALIDMIL TEXT, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[4] + " (CURRENTMILEAGE TEXT, LASTFULLUPDATE TEXT, PREVIOUSFULLUPDATE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[5] + " (UNITFORLIQUID TEXT, UNITFORDISTANCE TEXT, CURRENCY TEXT)");
     }
 
     @Override
@@ -53,14 +57,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /*public void update(String newDate,String newPrice,String newQuantity,String date,String price,String quantity,String TABlE_NAME){
+    public void updateSettings(String newLiquid,String newDistance,String newCurrency){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COL_2,newQuantity);
-        cv.put(COL_3,newPrice);
-        cv.put(COL_4,newDate);
-        db.update(TABlE_NAME, cv,"DATE = ? and PRICE=? and QUANTITY=?", new String[]{date, price, quantity});
-    }*/
+        cv.put("UNITFORLIQUID",newLiquid);
+        cv.put("UNITFORDISTANCE",newDistance);
+        cv.put("CURRENCY",newCurrency);
+        db.insert("settings_table", null, cv);
+    }
+
+    public long insertDataFS(String firstRow, String price,String date,String mileage,String note,String TABlE_NAME) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("SERVICE",firstRow);
+        contentValues.put(COL_3,price);
+        contentValues.put(COL_4,date);
+        contentValues.put("MILEAGE",mileage);
+        contentValues.put("NOTE",note);
+        long result = db.insert(TABlE_NAME,null,contentValues);
+        return result;
+    }
 
     public long insertData(String quantity, String price,String date,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();

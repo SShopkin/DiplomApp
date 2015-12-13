@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.github.lguipeng.library.animcheckbox.AnimCheckBox;
@@ -19,6 +18,9 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
     FancyButton btnAddData;
     FancyButton btnHistory;
     FancyButton dateButton;
+    AnimCheckBox isItFull;
+    String tank="";
+    boolean checked=false;
     public static final String TABlE_NAME;
 
     static {
@@ -37,13 +39,24 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
-        AnimCheckBox checkbox = (AnimCheckBox)findViewById(R.id.checkbox);
+        isItFull = (AnimCheckBox)findViewById(R.id.checkbox);
 
-        checkbox.setChecked(true);
-        boolean animation = true;
-        checkbox.setChecked(false, animation);
 
-        editMileage.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        isItFull.setChecked(checked);
+        isItFull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checked=!checked;
+                isItFull.setChecked(checked);
+                if (((AnimCheckBox) v).isChecked()) {
+                    tank="Your tank was full up.";
+                } else {
+                    tank="";
+                }
+
+            }
+        });
+
 
         ToolBar("Fuel");
         GetCurrentDate(dateButton);
@@ -53,13 +66,16 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(), TABlE_NAME);
-                        final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
-                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
-                        Intent myIntent = new Intent(FuelActivity.this, ViewOne.class);
-                        myIntent.putExtra("key", value); //Optional parameters
-                        FuelActivity.this.startActivity(myIntent);
+                        long id = AddDataToTheBaseFS(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                dateButton.getText().toString(),editMileage.getText().toString(),tank, TABlE_NAME);
+                        if (id!=-1) {
+                            final String value = " "+editQuantity.getText().toString() + "\n" + " " + editPrice.getText().toString() + "\n" +
+                                    " " + dateButton.getText().toString() + "\n" + editMileage.getText().toString() +
+                                    "\n" + tank + "\n" + TABlE_NAME + "\n" + id;
+                            Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);
+                            myIntent.putExtra("key", value); //Optional parameters
+                            FuelActivity.this.startActivity(myIntent);
+                        }
                     }
                 });
 
@@ -92,6 +108,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         onBackPressed();
         return true;
     }
+
 
 
 }

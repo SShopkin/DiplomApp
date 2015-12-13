@@ -10,15 +10,21 @@
     <string name="title_activity_oil">OilActivity</string>
     <string name="title_activity_tyre">TyreActivity</string>
     <string name="title_activity_other">OtherActivity</string>
+
     <string name="banner_ad_main">ca-app-pub-3789613095387394/9269698060</string>
     <string name="banner_ad_fuel">ca-app-pub-3789613095387394/1606830464</string>
     <string name="banner_ad_ins">ca-app-pub-3789613095387394/5757828461</string>
     <string name="banner_ad_lamp">ca-app-pub-3789613095387394/7234561666</string>
     <string name="banner_ad_oil">ca-app-pub-3789613095387394/8711294866</string>
     <string name="banner_ad_other">ca-app-pub-3789613095387394/2664761268</string>
-    <string name="banner_ad_tyre">ca-app-pub-3789613095387394/7094960863</string>
+    <string name="banner_ad_settings">ca-app-pub-3789613095387394/7094960863</string>
     <string name="banner_ad_all">ca-app-pub-3789613095387394/8571694066</string>
     <string name="banner_ad_one">ca-app-pub-3789613095387394/1048427266</string>
+
+    <!-- SettingsActivity.java-->
+    <string name="auto_liquid_measure">l.</string>
+    <string name="auto_distance_measure">km.</string>
+    <string name="auto_currency">euro</string>
 
 
 </resources>

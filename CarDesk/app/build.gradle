@@ -28,7 +28,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.3.0'
     compile 'com.github.medyo:fancybuttons:1.5@aar'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.github.lawloretienne:trestle:0.0.6'
     compile 'com.github.lguipeng:AnimCheckBox:1.0.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
 }

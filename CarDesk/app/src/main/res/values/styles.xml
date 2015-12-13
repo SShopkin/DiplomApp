@@ -12,6 +12,11 @@
         <item name="colorPrimaryDark">@color/accentOrange</item>
         <item name="colorAccent">@color/accentOrange</item>
     </style>
+    <style name="purple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/accentPurple</item>
+        <item name="colorPrimaryDark">@color/accentPurple</item>
+        <item name="colorAccent">@color/accentPurple</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

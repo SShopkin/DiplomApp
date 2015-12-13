@@ -38,6 +38,8 @@ public class ViewAll extends ActivityHelper {
         final ListView listview = (ListView) findViewById(R.id.listview);
         String[] values = new String[100000];
         final List<String> idArray = new ArrayList<String>();
+        final List<String> mileageArray = new ArrayList<String>();
+        final List<String> noteArray = new ArrayList<String>();
         Intent intent = getIntent();
         table_name  = intent.getStringExtra("key");
 
@@ -81,13 +83,15 @@ public class ViewAll extends ActivityHelper {
                 buffer.append("Changing km: " + res.getString(1) + "\n");
             } else if ("tyre_table".equals(table_name)) {
                 buffer.append("Season: " + res.getString(1) + "\n");
-            } else if ("other_table".equals(table_name)){
+            } else if ("service_table".equals(table_name)){
                 buffer.append("What: " + res.getString(1) + "\n");
             } else {
                 buffer.append("Type: " + res.getString(1) + "\n");
             }
             buffer.append("Price: " + res.getString(2) + "\n");
             buffer.append("Date: " + res.getString(3));
+            mileageArray.add(res.getString(4));
+            noteArray.add(res.getString(5));
             values[b]=buffer.toString();
             b++;
         }
@@ -100,6 +104,8 @@ public class ViewAll extends ActivityHelper {
 
         Collections.sort(idArray);
         Collections.reverse(idArray);
+        Collections.reverse(mileageArray);
+        Collections.reverse(noteArray);
         Collections.reverse(list);
         final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
@@ -108,8 +114,8 @@ public class ViewAll extends ActivityHelper {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 String value = (String) parent.getItemAtPosition(position);
-                value = value + "\n" + table_name+"\n"+idArray.get(position);
-                Intent myIntent = new Intent(ViewAll.this, ViewOne.class);
+                value = value + "\n" +mileageArray.get(position)+"\n"+noteArray.get(position)+ "\n"+table_name+"\n"+idArray.get(position);
+                Intent myIntent = new Intent(ViewAll.this, ViewFS.class);
                 myIntent.putExtra("key", value); //Optional parameters
                 ViewAll.this.startActivity(myIntent);
             }

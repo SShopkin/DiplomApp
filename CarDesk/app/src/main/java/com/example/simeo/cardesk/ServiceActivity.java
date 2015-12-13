@@ -13,9 +13,9 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
-public class OtherActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
+public class ServiceActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice;
+    EditText editQuantity,editPrice,editNote,editMileage;
     FancyButton btnAddData;
     FancyButton btnHistory;
     FancyButton dateButton;
@@ -23,22 +23,24 @@ public class OtherActivity extends ActivityHelper implements DatePickerDialog.On
     public static final String TABlE_NAME;
 
     static {
-        TABlE_NAME = "other_table";
+        TABlE_NAME = "service_table";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_other);
+        setContentView(R.layout.activity_service);
         myDb=new DatabaseHelper(this);
 
         editQuantity = (EditText)findViewById(R.id.editText_quantity);
         editPrice = (EditText)findViewById(R.id.editText_price);
+        editNote = (EditText)findViewById(R.id.editText_note);
+        editMileage = (EditText)findViewById(R.id.editText_mileage);
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
-        String[] ITEMS = {"Cleaning", "Tyre change", "Bulb change", "Absorber change", "Brake system", "Other"};
+        String[] ITEMS = {"Oil change", "Tyre change", "Bulb change", "Absorber change", "Brake system", "Other"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (MaterialSpinner)findViewById(R.id.spinner);
@@ -52,13 +54,16 @@ public class OtherActivity extends ActivityHelper implements DatePickerDialog.On
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(OtherActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(), TABlE_NAME);
-                        final String value = "Quan: " + spinner.getSelectedItem().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
-                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
-                        Intent myIntent = new Intent(OtherActivity.this, ViewOne.class);
-                        myIntent.putExtra("key", value); //Optional parameters
-                        OtherActivity.this.startActivity(myIntent);
+                        long id = AddDataToTheBaseFS(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
+                                dateButton.getText().toString(), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
+                        if (id!=-1) {
+                            final String value = spinner.getSelectedItem().toString() + "\n" +" " +editPrice.getText().toString() + "\n" +
+                                    " "+dateButton.getText().toString() + "\n" + editMileage.getText().toString() + "\n" +
+                                    editNote.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
+                            Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
+                            myIntent.putExtra("key", value); //Optional parameters
+                            ServiceActivity.this.startActivity(myIntent);
+                        }
                     }
                 });
 
@@ -66,7 +71,7 @@ public class OtherActivity extends ActivityHelper implements DatePickerDialog.On
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(OtherActivity.this, TABlE_NAME);
+                        History(ServiceActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -74,7 +79,7 @@ public class OtherActivity extends ActivityHelper implements DatePickerDialog.On
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(OtherActivity.this,"#FFCC80");
+                        SetDateButton(ServiceActivity.this,"#FFCC80");
                     }
                 });
 

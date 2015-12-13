@@ -45,7 +45,7 @@ public class LampActivity extends ActivityHelper implements DatePickerDialog.OnD
                                 dateButton.getText().toString(), TABlE_NAME);
                         final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
                                 "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
-                        Intent myIntent = new Intent(LampActivity.this, ViewOne.class);
+                        Intent myIntent = new Intent(LampActivity.this, ViewFS.class);
                         myIntent.putExtra("key", value); //Optional parameters
                         LampActivity.this.startActivity(myIntent);
                     }

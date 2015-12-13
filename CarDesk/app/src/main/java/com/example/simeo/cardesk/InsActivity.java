@@ -2,8 +2,8 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -13,9 +13,9 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice;
-    Button btnAddData;
-    Button btnHistory;
+    EditText editValidity,editPrice;
+    FancyButton btnAddData;
+    FancyButton btnHistory;
     FancyButton dateButton;
     public static final String TABlE_NAME;
 
@@ -29,23 +29,34 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         setContentView(R.layout.activity_ins);
         myDb=new DatabaseHelper(this);
 
-        editQuantity = (EditText)findViewById(R.id.editText_quantity);
+        editValidity = (EditText)findViewById(R.id.editText_validity);
         editPrice = (EditText)findViewById(R.id.editText_price);
-        btnAddData = (Button)findViewById(R.id.button_add);
-        btnHistory = (Button)findViewById(R.id.button_history);
+        btnAddData = (FancyButton)findViewById(R.id.button_add);
+        btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
+        ToolBar("Insurance");
         GetCurrentDate(dateButton);
         AdGenerator();
+
+
+        editValidity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SetDateButton(InsActivity.this,"#D81B60");
+            }
+
+        });
+
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(InsActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                        long id = AddDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(), editPrice.getText().toString(),
                                 dateButton.getText().toString(), TABlE_NAME);
-                        final String value = "Quan: " + editQuantity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
+                        final String value = "Quan: " + editValidity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
                                 "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
-                        Intent myIntent = new Intent(InsActivity.this, ViewOne.class);
+                        Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
                         myIntent.putExtra("key", value); //Optional parameters
                         InsActivity.this.startActivity(myIntent);
                     }
@@ -63,7 +74,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(InsActivity.this,"#AED581");
+                        SetDateButton(InsActivity.this,"#D81B60");
                     }
                 });
 
@@ -74,6 +85,27 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
-        dateButton.setText(date);
+        int newDate= Integer.parseInt(new StringBuffer(date.replaceAll("\\D+","")).reverse().toString());
+        int buttonDate=Integer.parseInt(new StringBuffer(dateButton.getText().toString().replaceAll("\\D+", "")).reverse().toString());
+        if(newDate<1000000){
+            newDate=newDate*100;
+        }else if(newDate<10000000){
+            newDate=newDate*10;
+        }
+        if(buttonDate<1000000){
+            buttonDate=buttonDate*100;
+        }else if(buttonDate<10000000){
+            buttonDate=buttonDate*10;
+        }
+        if(newDate > buttonDate){
+            editValidity.setText(date);
+        } else {
+            dateButton.setText(date);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        onBackPressed();
+        return true;
     }
 }
