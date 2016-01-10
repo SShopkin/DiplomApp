@@ -9,12 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME="Database.db" ;
-    public static final String COL_1="ID";
-    public static final String COL_2="QUANTITY";
     public static final String COL_3="PRICE";
     public static final String COL_4="DATE";
-    public static final String COL_5="MILEAGE";
-    public static final String TABlE_NAME[] = {"service_table","fuel_table","ins_table","clean_table","statistic_table","settings_table"};
+    public static final String TABlE_NAME[] = {"service_table","fuel_table","ins_table","clean_table","mileage_table","settings_table"};
 
 
     public DatabaseHelper(Context context) {
@@ -24,11 +21,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABlE_NAME[0] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, PRICE TEXT, DATE TEXT, MILEAGE TEXT, NOTE TEXT)");
-        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, PRICE TEXT, DATE TEXT, MILEAGE TEXT, NOTE TEXT)");
-        db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE TEXT, DATE TEXT, VALIDMIL TEXT, NOTE TEXT)");
-        db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE TEXT, DATE TEXT, VALIDMIL TEXT, NOTE TEXT)");
-        db.execSQL("create table " + TABlE_NAME[4] + " (CURRENTMILEAGE TEXT, LASTFULLUPDATE TEXT, PREVIOUSFULLUPDATE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[0] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, PRICE REAL, DATE TEXT, MILEAGE INTEGER, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE REAL, PRICE REAL, DATE TEXT, MILEAGE INTEGER, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE REAL, DATE TEXT, VALIDMIL TEXT, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE REAL, DATE TEXT, VALIDMIL INTEGER, NOTE TEXT)");
+        db.execSQL("create table " + TABlE_NAME[4] + " (CURRENTMILEAGE TEXT)");
         db.execSQL("create table " + TABlE_NAME[5] + " (UNITFORLIQUID TEXT, UNITFORDISTANCE TEXT, CURRENCY TEXT)");
     }
 
@@ -72,20 +69,92 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("SERVICE",firstRow);
         contentValues.put(COL_3,price);
         contentValues.put(COL_4,date);
-        contentValues.put("MILEAGE",mileage);
+        contentValues.put("MILEAGE", mileage);
         contentValues.put("NOTE",note);
-        long result = db.insert(TABlE_NAME,null,contentValues);
-        return result;
+        return db.insert(TABlE_NAME,null,contentValues);
     }
 
-    public long insertData(String quantity, String price,String date,String TABlE_NAME) {
+    public String sumQuery(String searchDate, String currentDate, String tableName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
+        if(cursor.moveToFirst()){
+            return Double.toString(cursor.getDouble(0));
+        } return "0";
+
+    }
+
+    public double FuelBetweenDate(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
+        Cursor firstFuel = db.rawQuery("SELECT SERVICE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
+        if(firstFuel.moveToFirst()&&fuel.moveToFirst()){
+            return (Double.parseDouble(fuel.getString(0))) - (Double.parseDouble(firstFuel.getString(0)));
+        }  return 0;
+    }
+
+    public String GetLastMileage(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor lastMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID DESC limit 1", null);
+        if(lastMileage.moveToFirst())        {
+            return lastMileage.getString(0);
+        } return "101";
+    }
+
+    public String GetFirstMileage(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor lastMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
+        if(lastMileage.moveToFirst())        {
+            return lastMileage.getString(0);
+        } return "100";
+    }
+
+    public String GetLastFullUpMileage(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor lastFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE NOTE!='' ORDER BY ID DESC limit 1", null);
+        if(lastFullUp.moveToFirst())        {
+            return lastFullUp.getString(0);
+        } return "";
+    }
+
+
+    public String preciseFuel(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM (SELECT ft.*, (SELECT count(*) FROM fuel_table ft2 WHERE ft2.note='Your tank was full up.' and ft2.id>=ft.id) AS numNotesAhead FROM fuel_table ft) AS ft WHERE numNotesAhead=1",null);
+        if(fuel.moveToFirst())        {
+            return fuel.getString(0);
+        } return "";
+    }
+
+    public void updateMileage(String newMileage,String oldMileage) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("CURRENTMILEAGE", newMileage);
+        db.update("mileage_table", cv, "CURRENTMILEAGE = ?", new String[]{oldMileage});
+    }
+
+    public void setMileage(String mileage){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("CURRENTMILEAGE",mileage);
+        db.insert("mileage_table", null, cv);
+    }
+
+    public String GetPreviousFullUpMileage(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor previosFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE NOTE!='' ORDER BY ID DESC limit 1,1", null);
+        if(previosFullUp.moveToFirst())        {
+            return previosFullUp.getString(0);
+        } return "";
+    }
+
+    public long insertData(String price, String date,String validMil,String note,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,quantity);
-        contentValues.put(COL_3,price);
-        contentValues.put(COL_4,date);
-        long result = db.insert(TABlE_NAME,null,contentValues);
-        return result;
+        contentValues.put("PRICE",price);
+        contentValues.put("DATE",date);
+        contentValues.put("VALIDMIL",validMil);
+        contentValues.put("NOTE",note);
+        return db.insert(TABlE_NAME, null, contentValues);
     }
 
     public Cursor getAllData(String TABlE_NAME) {
@@ -93,4 +162,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("select * from "+TABlE_NAME,null);
     }
 
+    public void editRecord(String firstRow,String secoundRow,String thirdRow,String fourthRow,String id,String tableName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where="ID = ?";
+        if(("fuel_table".equals(tableName))||("service_table".equals(tableName))){
+            cv.put("SERVICE",firstRow);
+            cv.put("MILEAGE",fourthRow);
+            cv.put("PRICE",secoundRow);
+            cv.put("DATE",thirdRow);
+        }else{
+            cv.put("PRICE",secoundRow);
+            cv.put("DATE",thirdRow);
+            cv.put("VALIDMIL",firstRow);
+            cv.put("NOTE", fourthRow);
+        }
+        db.update(tableName,cv, where, new String[]{id});
+    }
 }

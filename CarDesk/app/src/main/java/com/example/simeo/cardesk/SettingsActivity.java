@@ -12,8 +12,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class SettingsActivity extends ActivityHelper {
     DatabaseHelper myDb;
-    FancyButton btnApply;
-    String newLiquid,newDistance,newCurrency;
+    FancyButton btnApply,btnText;
+    String newLiquid,newDistance,newCurrency,liquid,distance,currency;
     MaterialSpinner spinnerLiquid,spinnerDistance,spinnerCurrency;
     public static final String TABlE_NAME;
     static {
@@ -27,6 +27,13 @@ public class SettingsActivity extends ActivityHelper {
         myDb=new DatabaseHelper(this);
 
         btnApply = (FancyButton)findViewById(R.id.button_apply);
+        btnText = (FancyButton)findViewById(R.id.text_button);
+
+        liquid=GetSetting(myDb).split(":")[0];
+        distance=GetSetting(myDb).split(":")[1];
+        currency=GetSetting(myDb).split(":")[2];
+
+        btnText.setText("Set your app values. Current are: "+liquid+", "+distance+", "+currency+".");
 
         String[] LIQUIDS = {"litre", "gallon","Automatic"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, LIQUIDS);

@@ -23,7 +23,7 @@
         <mehdi.sakout.fancybuttons.FancyButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/date_button"
+            android:id="@+id/text_button"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             ads:fb_defaultColor="@color/backgroundPurple"
@@ -39,7 +39,7 @@
             ads:ms_hint="Liquid measures:"
             ads:ms_baseColor="@color/accentPurple"
             ads:ms_arrowSize="20dp"
-            android:layout_below="@+id/date_button"
+            android:layout_below="@+id/text_button"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" />
 

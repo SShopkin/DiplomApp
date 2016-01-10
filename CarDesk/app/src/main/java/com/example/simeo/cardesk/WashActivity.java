@@ -2,6 +2,7 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -11,22 +12,20 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
-public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
+public class WashActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
     EditText editMileage,editPrice;
-    FancyButton btnAddData;
-    FancyButton btnHistory;
-    FancyButton dateButton;
+    FancyButton btnAddData,btnHistory,dateButton;
     public static final String TABlE_NAME;
 
     static {
-        TABlE_NAME = "oil_table";
+        TABlE_NAME = "clean_table";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oil);
+        setContentView(R.layout.activity_wash);
         myDb=new DatabaseHelper(this);
 
 
@@ -36,21 +35,22 @@ public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDa
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
-        ToolBar("Oil change");
-        AdGenerator();
+        ToolBar("Car Wash");
+        editMileage.setText(GetMileage(myDb));
         GetCurrentDate(dateButton);
+        AdGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(OilActivity.this, myDb, editMileage.getText().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(), TABlE_NAME);
+                        long id = AddDataToTheBase(WashActivity.this, myDb, editMileage.getText().toString(), editPrice.getText().toString(),
+                                dateButton.getText().toString(),dateButton.getText().toString(), TABlE_NAME);
                         final String value = "Quan: " + editMileage.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
                                 "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n"+id;
-                        Intent myIntent = new Intent(OilActivity.this, ViewFS.class);
+                        Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
                         myIntent.putExtra("key", value); //Optional parameters
-                        OilActivity.this.startActivity(myIntent);
+                        WashActivity.this.startActivity(myIntent);
                     }
                 });
 
@@ -58,7 +58,7 @@ public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(OilActivity.this, TABlE_NAME);
+                        History(WashActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -66,7 +66,7 @@ public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(OilActivity.this,"#9C27B0");
+                        SetDateButton(WashActivity.this,"#9C27B0");
                     }
         });
     }
@@ -77,8 +77,20 @@ public class OilActivity extends ActivityHelper implements DatePickerDialog.OnDa
         dateButton.setText(date);
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(WashActivity.this, SettingsActivity.class));
+                return true;
+            default:
+                Intent myIntent = new Intent(WashActivity.this, MainActivity.class);
+                WashActivity.this.startActivity(myIntent);
+                return true;
+        }
     }
 }

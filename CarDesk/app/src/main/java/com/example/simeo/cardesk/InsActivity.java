@@ -2,6 +2,7 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +14,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editValidity,editPrice;
+    EditText editValidity,editPrice,editNote;
     FancyButton btnAddData;
     FancyButton btnHistory;
     FancyButton dateButton;
@@ -31,6 +32,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
 
         editValidity = (EditText)findViewById(R.id.editText_validity);
         editPrice = (EditText)findViewById(R.id.editText_price);
+        editNote = (EditText)findViewById(R.id.editText_note);
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
@@ -52,13 +54,16 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(), TABlE_NAME);
-                        final String value = "Quan: " + editValidity.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
-                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
-                        Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
-                        myIntent.putExtra("key", value); //Optional parameters
-                        InsActivity.this.startActivity(myIntent);
+                        long id = AddDataToTheBase(InsActivity.this, myDb, editPrice.getText().toString(),
+                                DateForBase(dateButton.getText().toString()), editValidity.getText().toString()
+                                ,editNote.getText().toString(), TABlE_NAME);
+                        if (id!=-1) {
+                            final String value = " "+editPrice.getText().toString() + "\n" + " "+ dateButton.getText().toString() +  "\n" +" "+
+                                    editValidity.getText().toString()  +"\n" + editNote.getText().toString()+ "\n"+""+ "\n" + TABlE_NAME + "\n" + id;
+                            Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
+                            myIntent.putExtra("key", value); //Optional parameters
+                            InsActivity.this.startActivity(myIntent);
+                        }
                     }
                 });
 
@@ -84,28 +89,46 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
     }
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
-        int newDate= Integer.parseInt(new StringBuffer(date.replaceAll("\\D+","")).reverse().toString());
-        int buttonDate=Integer.parseInt(new StringBuffer(dateButton.getText().toString().replaceAll("\\D+", "")).reverse().toString());
-        if(newDate<1000000){
-            newDate=newDate*100;
-        }else if(newDate<10000000){
-            newDate=newDate*10;
+        String day,month;
+        if(((dayOfMonth)>=1)&&((dayOfMonth)<=9)){
+            day = "0"+dayOfMonth;
+        } else {
+            day=dayOfMonth+"";
         }
-        if(buttonDate<1000000){
-            buttonDate=buttonDate*100;
-        }else if(buttonDate<10000000){
-            buttonDate=buttonDate*10;
+        if(((monthOfYear)>=0)&&((monthOfYear)<=8)){
+            month = "0"+(++monthOfYear);
+        } else {
+            month=(++monthOfYear)+"";
         }
-        if(newDate > buttonDate){
+        String date = day + "." + month + "." + year;
+        int buttonYear=Integer.parseInt(dateButton.getText().toString().split("\\.")[2]);
+        int buttonMonth=Integer.parseInt(dateButton.getText().toString().split("\\.")[1]);
+        int buttonDay=Integer.parseInt(dateButton.getText().toString().split("\\.")[0]);
+       if(year > buttonYear){
+            editValidity.setText(date);
+        } else if((monthOfYear > buttonMonth)&&(year==buttonYear)){
+            editValidity.setText(date);
+        } else if((dayOfMonth > buttonDay)&&(monthOfYear==buttonMonth)&&(year==buttonYear)){
             editValidity.setText(date);
         } else {
             dateButton.setText(date);
         }
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(InsActivity.this, SettingsActivity.class));
+                return true;
+            default:
+                Intent myIntent = new Intent(InsActivity.this, MainActivity.class);
+                InsActivity.this.startActivity(myIntent);
+                return true;
+        }
     }
 }

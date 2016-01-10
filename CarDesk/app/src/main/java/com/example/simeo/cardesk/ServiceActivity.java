@@ -2,6 +2,7 @@ package com.example.simeo.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -41,24 +42,28 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
         String[] ITEMS = {"Oil change", "Tyre change", "Bulb change", "Absorber change", "Brake system", "Other"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (MaterialSpinner)findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
 
         ToolBar("Service");
         GetCurrentDate(dateButton);
+        editMileage.setText(GetMileage(myDb));
         AdGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
+                            myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
+                        }
                         long id = AddDataToTheBaseFS(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
+                                DateForBase(dateButton.getText().toString()), GetMileage(myDb), editNote.getText().toString(), TABlE_NAME);
                         if (id!=-1) {
                             final String value = spinner.getSelectedItem().toString() + "\n" +" " +editPrice.getText().toString() + "\n" +
-                                    " "+dateButton.getText().toString() + "\n" + editMileage.getText().toString() + "\n" +
+                                    " "+dateButton.getText().toString() + "\n" + GetMileage(myDb) + "\n" +
                                     editNote.getText().toString() + "\n" + TABlE_NAME + "\n" + id;
                             Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
                             myIntent.putExtra("key", value); //Optional parameters
@@ -89,12 +94,35 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
     }
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
+        String day,month;
+        if(((dayOfMonth)>=1)&&((dayOfMonth)<=9)){
+            day = "0"+dayOfMonth;
+        } else {
+            day=dayOfMonth+"";
+        }
+        if(((monthOfYear)>=0)&&((monthOfYear)<=8)){
+            month = "0"+(++monthOfYear);
+        } else {
+            month=(++monthOfYear)+"";
+        }
+        String date = day + "." + month + "." + year;
         dateButton.setText(date);
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(ServiceActivity.this, SettingsActivity.class));
+                return true;
+            default:
+                Intent myIntent = new Intent(ServiceActivity.this, MainActivity.class);
+                ServiceActivity.this.startActivity(myIntent);
+                return true;
+        }
     }
 }

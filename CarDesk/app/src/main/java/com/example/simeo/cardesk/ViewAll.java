@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +46,7 @@ public class ViewAll extends ActivityHelper {
         table_name  = intent.getStringExtra("key");
 
         AdGenerator();
+        ToolBar("History");
 
         btnExport.setOnClickListener(
                 new View.OnClickListener() {
@@ -78,20 +81,23 @@ public class ViewAll extends ActivityHelper {
             if("fuel_table".equals(table_name)){
                 buffer.append("Quantity: " + res.getString(1) + "\n");
             } else if ("ins_table".equals(table_name)){
-                buffer.append("Validity: " + res.getString(1) + "\n");
-            } else if ("oil_table".equals(table_name)){
-                buffer.append("Changing km: " + res.getString(1) + "\n");
-            } else if ("tyre_table".equals(table_name)) {
-                buffer.append("Season: " + res.getString(1) + "\n");
+                buffer.append("Price: " + res.getString(1) + "\n");
+            } else if ("clean_table".equals(table_name)){
+                buffer.append("Cleaning km: " + res.getString(1) + "\n");
             } else if ("service_table".equals(table_name)){
                 buffer.append("What: " + res.getString(1) + "\n");
-            } else {
-                buffer.append("Type: " + res.getString(1) + "\n");
             }
-            buffer.append("Price: " + res.getString(2) + "\n");
-            buffer.append("Date: " + res.getString(3));
+            if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
+                buffer.append("Price: " + res.getString(2) + "\n");
+                buffer.append("Date: " + res.getString(3));
+            }else {
+                buffer.append("Date: " + res.getString(2) + "\n");
+                buffer.append("Validity: " + res.getString(3));
+            }
             mileageArray.add(res.getString(4));
-            noteArray.add(res.getString(5));
+            if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
+                noteArray.add(res.getString(5));
+            }
             values[b]=buffer.toString();
             b++;
         }
@@ -114,7 +120,11 @@ public class ViewAll extends ActivityHelper {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 String value = (String) parent.getItemAtPosition(position);
-                value = value + "\n" +mileageArray.get(position)+"\n"+noteArray.get(position)+ "\n"+table_name+"\n"+idArray.get(position);
+                if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
+                    value = value + "\n" + mileageArray.get(position) + "\n" + noteArray.get(position) + "\n" + table_name + "\n" + idArray.get(position);
+                } else {
+                    value = value + "\n" + mileageArray.get(position) + "\n" + "\n" + table_name + "\n" + idArray.get(position);
+                }
                 Intent myIntent = new Intent(ViewAll.this, ViewFS.class);
                 myIntent.putExtra("key", value); //Optional parameters
                 ViewAll.this.startActivity(myIntent);
@@ -165,6 +175,32 @@ public class ViewAll extends ActivityHelper {
             return true;
         }
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(ViewAll.this, SettingsActivity.class));
+                return true;
+            default:
+                Intent myIntent;
+                if ("fuel_table".equals(table_name)) {
+                    myIntent = new Intent(ViewAll.this, FuelActivity.class);
+                } else if ("service_table".equals(table_name)) {
+                    myIntent = new Intent(ViewAll.this, ServiceActivity.class);
+                } else if ("ins_table".equals(table_name)) {
+                    myIntent = new Intent(ViewAll.this, InsActivity.class);
+                } else {
+                    myIntent = new Intent(ViewAll.this, WashActivity.class);
+                }
+                ViewAll.this.startActivity(myIntent);
+                return true;
+        }
     }
 }
 

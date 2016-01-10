@@ -44,7 +44,7 @@ public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
     public void ToolBar(String title){
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
         myToolbar.setTitle(title);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,6 +75,13 @@ public class ActivityHelper extends AppCompatActivity {
         dateButton.setTextSize(25);
     }
 
+    public String DateForBase(String date){
+        String year=date.split("\\.")[2];
+        String month=date.split("\\.")[1];
+        String day=date.split("\\.")[0];
+        return year+"-"+month+"-"+day;
+    }
+
     public String GetSetting(DatabaseHelper myDb) {
         String liquid = null,distance = null,currency = null;
         Cursor res = myDb.getAllData("settings_table");
@@ -84,6 +91,15 @@ public class ActivityHelper extends AppCompatActivity {
             currency = res.getString(2);
         }
         return liquid+":"+distance+":"+currency;
+    }
+
+    public String GetMileage(DatabaseHelper myDb) {
+        String mileage = null;
+        Cursor res = myDb.getAllData("mileage_table");
+        while (res.moveToNext()) {
+            mileage = res.getString(0);
+        }
+        return mileage;
     }
 
     public void History(Context context,String table_name){
@@ -106,19 +122,16 @@ public class ActivityHelper extends AppCompatActivity {
         return isInserted;
     }
 
-    public long AddDataToTheBase (Context activity,DatabaseHelper myDb,String firstRow,String secondRow,String thirdRow,String table_name){
+    public long AddDataToTheBase (Context activity,DatabaseHelper myDb,String price,String date,String thirdRow,String note,String table_name){
         long isInserted = -1;
-        if(("".equals(firstRow))||("".equals(secondRow))||("".equals(thirdRow))) {
-            Toast.makeText(activity, "Fill correct your information", Toast.LENGTH_LONG).show();
-        } else if(secondRow.contains(" ")){
-            isInserted = myDb.insertData(firstRow, secondRow, thirdRow,table_name);
+        if(!("".equals(price)||("").equals(thirdRow))) {
+            isInserted = myDb.insertData(price, date, thirdRow,note,table_name);
             if (isInserted==-1)
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(activity, "Fill correct your information: Check price " +
-                    "(it must contain space between a number and currency unit )", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "Enter price or/and quantity", Toast.LENGTH_LONG).show();
         }
         return isInserted;
     }
@@ -235,8 +248,8 @@ public class ActivityHelper extends AppCompatActivity {
         String[] textByLine = text.toString().split(a) ;
         for(int i=5;i<textByLine.length;i+=0){
 
-            myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],table_name);
-            i +=16;
+            myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],table_name);
+            i +=20;
         }
         Intent intent = getIntent();
         finish();

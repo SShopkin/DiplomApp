@@ -5,19 +5,18 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:theme="@style/purple"
         android:layout_height="wrap_content"
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:background="@color/backgroundPurple"
-        tools:context=".OilActivity"
+        android:background="@color/backgroundOrange"
+        tools:context=".WashActivity"
         android:id="@+id/simeon">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/navigationBarPurple"
+            android:background="@color/navigationBarOrange"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
     
         <mehdi.sakout.fancybuttons.FancyButton
@@ -26,10 +25,10 @@
             android:id="@+id/date_button"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_defaultColor="@color/backgroundPurple"
-            ads:fb_focusColor="@color/lightPurple"
+            ads:fb_defaultColor="@color/backgroundOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_text="Add data"
-            ads:fb_textColor="@color/accentPurple"
+            ads:fb_textColor="@color/accentOrange"
             android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true" />
     
@@ -39,11 +38,12 @@
             android:layout_height="wrap_content"
             android:hint="Price:"
             ads:met_floatingLabel="highlight"
-            ads:met_underlineColor="@color/accentPurple"
+            ads:met_underlineColor="@color/accentOrange"
             android:layout_below="@+id/date_button"
             android:layout_alignLeft="@+id/editText_mileage"
             android:layout_alignStart="@+id/editText_mileage"
-            android:layout_marginRight="15dp" />
+            android:layout_marginRight="15dp"
+            android:inputType="numberDecimal" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editText_mileage"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:hint="Mileage:"
             ads:met_floatingLabel="highlight"
-            ads:met_underlineColor="@color/accentPurple"
+            ads:met_underlineColor="@color/accentOrange"
             android:inputType="number"
             android:layout_below="@+id/editText_price"
             android:layout_alignParentRight="true"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            ads:met_underlineColor="@color/accentPurple"
+            ads:met_underlineColor="@color/accentOrange"
             android:hint="Note:"
             ads:met_floatingLabel="highlight"
             android:layout_below="@+id/editText_mileage"
@@ -85,10 +85,10 @@
             android:paddingRight="40dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_borderColor="@color/accentPurple"
+            ads:fb_borderColor="@color/accentOrange"
             ads:fb_borderWidth="1dp"
-            ads:fb_defaultColor="@color/navigationBarPurple"
-            ads:fb_focusColor="@color/lightPurple"
+            ads:fb_defaultColor="@color/navigationBarOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_radius="30dp"
             ads:fb_text="History"
             ads:fb_textColor="#000000"
@@ -103,10 +103,10 @@
             android:paddingRight="40dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            ads:fb_borderColor="@color/accentPurple"
+            ads:fb_borderColor="@color/accentOrange"
             ads:fb_borderWidth="1dp"
-            ads:fb_defaultColor="@color/navigationBarPurple"
-            ads:fb_focusColor="@color/lightPurple"
+            ads:fb_defaultColor="@color/navigationBarOrange"
+            ads:fb_focusColor="@color/lightOrange"
             ads:fb_radius="30dp"
             ads:fb_text="Add data"
             ads:fb_textColor="#000000"

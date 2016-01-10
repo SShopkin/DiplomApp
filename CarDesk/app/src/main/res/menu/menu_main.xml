@@ -1,18 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".FuelActivity">
-    <!-- "Mark Favorite", should appear as action button if possible -->
-    <item
-        android:id="@+id/action_favorite"
-        android:icon="@drawable/back"
-        android:title="Fuel"
-        app:showAsAction="ifRoom"/>
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:icon="@drawable/back"
-        app:showAsAction="ifRoom"/>
-
+        app:showAsAction="never"/>
 </menu>
