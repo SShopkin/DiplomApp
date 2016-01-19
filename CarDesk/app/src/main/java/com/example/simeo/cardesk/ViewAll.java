@@ -67,10 +67,10 @@ public class ViewAll extends ActivityHelper {
                 });
 
         Cursor res = myDb.getAllData(table_name);
-            if (res.getCount() == 0) {
-                Toast.makeText(ViewAll.this, "Error: No data", Toast.LENGTH_LONG).show();
-                return;
-            }
+        if (res.getCount() == 0) {
+            Toast.makeText(ViewAll.this, "Error: No data", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         int b=0;
         while (res.moveToNext()) {

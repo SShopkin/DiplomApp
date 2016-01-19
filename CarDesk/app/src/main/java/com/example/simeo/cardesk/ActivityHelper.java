@@ -93,6 +93,9 @@ public class ActivityHelper extends AppCompatActivity {
         if(!("".equals(price)||("").equals(service))) {
             enterId = myDb.insertEnter(price, date, mileage);
             isInserted = myDb.insertData(service,enterId,tableName);
+            if(!("".equals(note))){
+                myDb.insertNote(note,enterId);
+            }
             if (isInserted==-1)
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
             else

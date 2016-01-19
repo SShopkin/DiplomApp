@@ -1,6 +1,7 @@
 package com.example.simeo.cardesk;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,12 +37,21 @@ public class ViewFS extends ActivityHelper {
         double numQuantity;
         double numPrice;
         double numPricePerQuantity;
-        final String service="",price="0",date="",mileage="",note="";
+        String service="1",price="1",date="",mileage="",note="",noteID="";
         final String liquidMeasure=myDb.getSettings().split(":")[0];
         final String distanceMeasure=myDb.getSettings().split(":")[1];
         final String currencyMeasure=myDb.getSettings().split(":")[2];
         String display="";
 
+        Cursor res = myDb.getOneRow(table_name, id);
+        while (res.moveToNext()) {
+            service=res.getString(1);
+            noteID=res.getString(3);
+            price=res.getString(4);
+            date=res.getString(5);
+            mileage=res.getString(6);
+        }
+        note = myDb.getNote(noteID);
         if ("fuel_table".equals(table_name)) {
             numQuantity = Double.parseDouble(service);
             numPrice = Double.parseDouble(price);
@@ -91,9 +101,9 @@ public class ViewFS extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String value = service + "\n" + price + "\n" + date + "\n" + mileage + "\n" + id  + "\n" + table_name;
+                        //String value = service + "\n" + price + "\n" + date + "\n" + mileage + "\n" + id  + "\n" + table_name;
                         Intent myIntent = new Intent(ViewFS.this, EditActivity.class);
-                        myIntent.putExtra("key", value);
+                        //myIntent.putExtra("key", value);
                         ViewFS.this.startActivity(myIntent);
                     }
                 }
