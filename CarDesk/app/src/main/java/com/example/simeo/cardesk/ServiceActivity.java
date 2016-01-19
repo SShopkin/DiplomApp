@@ -49,14 +49,14 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
 
         ToolBar("Service");
         GetCurrentDate(dateButton);
-        editMileage.setText(GetMileage(myDb));
+        //editMileage.setText(GetMileage(myDb));
         AdGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
+                       /* if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
                             myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
                         }
                         long id = AddDataToTheBaseFS(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
@@ -68,7 +68,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                             Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
                             myIntent.putExtra("key", value); //Optional parameters
                             ServiceActivity.this.startActivity(myIntent);
-                        }
+                        }*/
                     }
                 });
 

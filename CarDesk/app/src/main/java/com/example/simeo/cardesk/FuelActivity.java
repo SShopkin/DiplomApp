@@ -40,7 +40,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         dateButton = (FancyButton)findViewById(R.id.date_button);
         isItFull = (AnimCheckBox)findViewById(R.id.checkbox);
 
-        editMileage.setText(GetMileage(myDb));
+        //editMileage.setText(GetMileage(myDb));
 
         isItFull.setChecked(checked);
         isItFull.setOnClickListener(new View.OnClickListener() {
@@ -67,18 +67,18 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
+                       /* if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
                             myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
-                        }
-                        long id = AddDataToTheBaseFS(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                DateForBase(dateButton.getText().toString()),GetMileage(myDb),tank, TABlE_NAME);
+                        }*/
+                        long id = addDataToTheBase(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                DateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
                         if (id!=-1) {
-                            final String value = " "+editQuantity.getText().toString() + "\n" + " " + editPrice.getText().toString() + "\n" +
-                                    " " + dateButton.getText().toString() + "\n" + GetMileage(myDb) +
+                            /*final String value = " "+editQuantity.getText().toString() + "\n" + " " + editPrice.getText().toString() + "\n" +
+                                    " " + dateButton.getText().toString() + "\n" + editMileage.getText().toString() +
                                     "\n" + tank + "\n" + TABlE_NAME + "\n" + id;
                             Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);
                             myIntent.putExtra("key", value); //Optional parameters
-                            FuelActivity.this.startActivity(myIntent);
+                            FuelActivity.this.startActivity(myIntent);*/
                         }
                     }
                 });

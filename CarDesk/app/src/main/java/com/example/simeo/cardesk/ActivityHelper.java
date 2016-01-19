@@ -93,25 +93,17 @@ public class ActivityHelper extends AppCompatActivity {
         return liquid+":"+distance+":"+currency;
     }
 
-    public String GetMileage(DatabaseHelper myDb) {
-        String mileage = null;
-        Cursor res = myDb.getAllData("mileage_table");
-        while (res.moveToNext()) {
-            mileage = res.getString(0);
-        }
-        return mileage;
-    }
-
     public void History(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
-        myIntent.putExtra("key", table_name); //Optional parameters
+        myIntent.putExtra("key", table_name);
         context.startActivity(myIntent);
     }
 
-    public long AddDataToTheBaseFS (Context activity,DatabaseHelper myDb,String firstRow,String price,String thirdRow,String fourthRow,String fifthRow,String table_name){
-        long isInserted = -1;
-        if(!("".equals(price)||("").equals(firstRow))) {
-            isInserted = myDb.insertDataFS(firstRow, price, thirdRow, fourthRow, fifthRow, table_name);
+    public long addDataToTheBase (Context activity,DatabaseHelper myDb,String service,String price,String date,String mileage,String note,String tableName){
+        long isInserted = -1,enterId;
+        if(!("".equals(price)||("").equals(service))) {
+            enterId = myDb.insertEnter(price, date, mileage);
+            isInserted = myDb.insertData(service,enterId,tableName);
             if (isInserted==-1)
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
             else
@@ -122,7 +114,7 @@ public class ActivityHelper extends AppCompatActivity {
         return isInserted;
     }
 
-    public long AddDataToTheBase (Context activity,DatabaseHelper myDb,String price,String date,String thirdRow,String note,String table_name){
+    public long AddDataToTheBaseC (Context activity,DatabaseHelper myDb,String price,String date,String thirdRow,String note,String table_name){
         long isInserted = -1;
         if(!("".equals(price)||("").equals(thirdRow))) {
             isInserted = myDb.insertData(price, date, thirdRow,note,table_name);

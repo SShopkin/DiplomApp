@@ -45,7 +45,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
+                        //myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
                         startActivity(new Intent(MainActivity.this, FuelActivity.class));
                     }
                 }

@@ -36,7 +36,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
         ToolBar("Car Wash");
-        editMileage.setText(GetMileage(myDb));
+        //editMileage.setText(GetMileage(myDb));
         GetCurrentDate(dateButton);
         AdGenerator();
 
@@ -44,13 +44,13 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = AddDataToTheBase(WashActivity.this, myDb, editMileage.getText().toString(), editPrice.getText().toString(),
+                        /*long id = AddDataToTheBase(WashActivity.this, myDb, editMileage.getText().toString(), editPrice.getText().toString(),
                                 dateButton.getText().toString(),dateButton.getText().toString(), TABlE_NAME);
                         final String value = "Quan: " + editMileage.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
                                 "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n"+id;
                         Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
                         myIntent.putExtra("key", value); //Optional parameters
-                        WashActivity.this.startActivity(myIntent);
+                        WashActivity.this.startActivity(myIntent);*/
                     }
                 });
 

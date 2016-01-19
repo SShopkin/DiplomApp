@@ -39,9 +39,7 @@ public class ViewAll extends ActivityHelper {
 
         final ListView listview = (ListView) findViewById(R.id.listview);
         String[] values = new String[100000];
-        final List<String> idArray = new ArrayList<String>();
-        final List<String> mileageArray = new ArrayList<String>();
-        final List<String> noteArray = new ArrayList<String>();
+        final List<String> idArray = new ArrayList<>();
         Intent intent = getIntent();
         table_name  = intent.getStringExtra("key");
 
@@ -87,22 +85,13 @@ public class ViewAll extends ActivityHelper {
             } else if ("service_table".equals(table_name)){
                 buffer.append("What: " + res.getString(1) + "\n");
             }
-            if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
-                buffer.append("Price: " + res.getString(2) + "\n");
-                buffer.append("Date: " + res.getString(3));
-            }else {
-                buffer.append("Date: " + res.getString(2) + "\n");
-                buffer.append("Validity: " + res.getString(3));
-            }
-            mileageArray.add(res.getString(4));
-            if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
-                noteArray.add(res.getString(5));
-            }
+            buffer.append("price: " + res.getString(4) + "\n");
+            buffer.append("date: " + res.getString(5));
             values[b]=buffer.toString();
             b++;
         }
 
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < res.getCount(); ++i) {
             list.add(values[i]);
         }
@@ -110,8 +99,6 @@ public class ViewAll extends ActivityHelper {
 
         Collections.sort(idArray);
         Collections.reverse(idArray);
-        Collections.reverse(mileageArray);
-        Collections.reverse(noteArray);
         Collections.reverse(list);
         final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
@@ -119,11 +106,11 @@ public class ViewAll extends ActivityHelper {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                String value = (String) parent.getItemAtPosition(position);
+                String value;
                 if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
-                    value = value + "\n" + mileageArray.get(position) + "\n" + noteArray.get(position) + "\n" + table_name + "\n" + idArray.get(position);
+                    value = table_name + "\n" + idArray.get(position);
                 } else {
-                    value = value + "\n" + mileageArray.get(position) + "\n" + "\n" + table_name + "\n" + idArray.get(position);
+                    value = table_name + "\n" + idArray.get(position);
                 }
                 Intent myIntent = new Intent(ViewAll.this, ViewFS.class);
                 myIntent.putExtra("key", value); //Optional parameters
@@ -135,7 +122,6 @@ public class ViewAll extends ActivityHelper {
     private static final int FILE_SELECT_CODE = 0;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //Toast.makeText(FuelActivity.this, "2.",Toast.LENGTH_SHORT).show();
         switch (requestCode) {
             case FILE_SELECT_CODE:
                 if (resultCode == RESULT_OK) {
@@ -154,7 +140,7 @@ public class ViewAll extends ActivityHelper {
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+        HashMap<String, Integer> mIdMap = new HashMap<>();
 
         public StableArrayAdapter(Context context, int textViewResourceId,
                                   List<String> objects) {
