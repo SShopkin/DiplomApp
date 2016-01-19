@@ -28,18 +28,18 @@ public class MainActivity extends ActivityHelper {
         other_button = (ImageButton)findViewById(R.id.other_button);
         editMileage = (EditText)findViewById(R.id.editMileage);
 
-        if("null:null:null".equals(GetSetting(myDb))){
+        /*if("null:null:null".equals(GetSetting(myDb))){
             myDb.updateSettings(getResources().getString(R.string.auto_liquid_measure),
                     getResources().getString(R.string.auto_distance_measure),
                     getResources().getString(R.string.auto_currency));
             myDb.setMileage("0");
-        }
+        }*/
         AdGenerator();
 
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        editMileage.setText(GetMileage(myDb));
+        //editMileage.setText(GetMileage(myDb));
 
         btn_fuel.setOnClickListener(
                 new View.OnClickListener() {
