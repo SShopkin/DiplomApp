@@ -29,9 +29,9 @@ public class SettingsActivity extends ActivityHelper {
         btnApply = (FancyButton)findViewById(R.id.button_apply);
         btnText = (FancyButton)findViewById(R.id.text_button);
 
-        liquid=GetSetting(myDb).split(":")[0];
-        distance=GetSetting(myDb).split(":")[1];
-        currency=GetSetting(myDb).split(":")[2];
+        liquid=myDb.getSettings().split(":")[0];
+        distance=myDb.getSettings().split(":")[1];
+        currency=myDb.getSettings().split(":")[2];
 
         btnText.setText("Set your app values. Current are: "+liquid+", "+distance+", "+currency+".");
 

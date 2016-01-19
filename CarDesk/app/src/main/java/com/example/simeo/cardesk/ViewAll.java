@@ -106,7 +106,7 @@ public class ViewAll extends ActivityHelper {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                String value;
+                String value="";
                 if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
                     value = table_name + "\n" + idArray.get(position);
                 } else {

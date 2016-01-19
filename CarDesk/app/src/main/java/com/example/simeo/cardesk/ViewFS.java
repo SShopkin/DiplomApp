@@ -31,27 +31,23 @@ public class ViewFS extends ActivityHelper {
         Intent intent = getIntent();
         String value = intent.getStringExtra("key");
         String line[]= value.split("\n");
+        final String table_name=line[0];
+        final String id=line[1];
         double numQuantity;
         double numPrice;
         double numPricePerQuantity;
-        final String firstLine=line[0].split(" ")[1];
-        final String price=line[1].split(" ")[1];
-        final String date=line[2].split(" ")[1];
-        final String mileage=line[3];
-        final String note=line[4];
-        final String table_name=line[5];
-        final String id=line[6];
-        final String liquidMeasure=GetSetting(myDb).split(":")[0];
-        final String distanceMeasure=GetSetting(myDb).split(":")[1];
-        final String currencyMeasure=GetSetting(myDb).split(":")[2];
-        String display;
+        final String service="",price="0",date="",mileage="",note="";
+        final String liquidMeasure=myDb.getSettings().split(":")[0];
+        final String distanceMeasure=myDb.getSettings().split(":")[1];
+        final String currencyMeasure=myDb.getSettings().split(":")[2];
+        String display="";
 
         if ("fuel_table".equals(table_name)) {
-            numQuantity = Double.parseDouble(firstLine);
+            numQuantity = Double.parseDouble(service);
             numPrice = Double.parseDouble(price);
             numPricePerQuantity = numPrice / numQuantity;
             numPricePerQuantity = Math.floor(numPricePerQuantity * 100) / 100;
-            display =firstLine+" "+liquidMeasure+"s fuel on " + date+" and this cost you "+ price
+            display =service+" "+liquidMeasure+"s fuel on " + date+" and this cost you "+ price
                     +" "+currencyMeasure+" or " +Double.toString(numPricePerQuantity) + " " +
                     currencyMeasure+" per "+liquidMeasure+".";
             if(!("".equals(mileage))){
@@ -60,7 +56,7 @@ public class ViewFS extends ActivityHelper {
             if(!("".equals(note))){
                 display+= note;
             }
-        } else if("service_table".equals(table_name)){
+        } /*else if("service_table".equals(table_name)){
             display ="What: "+firstLine+" on " + date+" and this cost you "+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
                 display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
@@ -76,7 +72,7 @@ public class ViewFS extends ActivityHelper {
             }
         } else {
             display ="What: ";
-        }
+        }*/
 
         txtView.setText(display);
 
@@ -95,7 +91,7 @@ public class ViewFS extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String value = firstLine + "\n" + price + "\n" + date + "\n" + mileage + "\n" + id  + "\n" + table_name;
+                        String value = service + "\n" + price + "\n" + date + "\n" + mileage + "\n" + id  + "\n" + table_name;
                         Intent myIntent = new Intent(ViewFS.this, EditActivity.class);
                         myIntent.putExtra("key", value);
                         ViewFS.this.startActivity(myIntent);

@@ -62,6 +62,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert("settings_table", null, cv);
     }
 
+    public String getSettings(){
+        String liquid = null,distance=null,currency=null;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from settings_table", null);
+        while (res.moveToNext()) {
+            liquid = res.getString(0);
+            distance = res.getString(1);
+            currency = res.getString(2);
+        }
+        return liquid+":"+distance+":"+currency;
+    }
+
     public long insertData(String service,long enterId,String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

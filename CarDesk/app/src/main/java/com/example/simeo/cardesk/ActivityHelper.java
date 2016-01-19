@@ -82,17 +82,6 @@ public class ActivityHelper extends AppCompatActivity {
         return year+"-"+month+"-"+day;
     }
 
-    public String GetSetting(DatabaseHelper myDb) {
-        String liquid = null,distance = null,currency = null;
-        Cursor res = myDb.getAllData("settings_table");
-        while (res.moveToNext()) {
-            liquid = res.getString(0);
-            distance = res.getString(1);
-            currency = res.getString(2);
-        }
-        return liquid+":"+distance+":"+currency;
-    }
-
     public void History(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
         myIntent.putExtra("key", table_name);

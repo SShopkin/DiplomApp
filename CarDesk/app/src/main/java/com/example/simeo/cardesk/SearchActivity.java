@@ -29,9 +29,9 @@ public class SearchActivity extends ActivityHelper {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         myDb=new DatabaseHelper(this);
-        liquidMeasure=GetSetting(myDb).split(":")[0];
-        distanceMeasure=GetSetting(myDb).split(":")[1];
-        currencyMeasure=GetSetting(myDb).split(":")[2];
+        liquidMeasure=myDb.getSettings().split(":")[0];
+        distanceMeasure=myDb.getSettings().split(":")[1];
+        currencyMeasure=myDb.getSettings().split(":")[2];
 
         ToolBar("Statistics");
 
