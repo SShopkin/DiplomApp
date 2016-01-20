@@ -32,27 +32,27 @@ public class ViewFS extends ActivityHelper {
         Intent intent = getIntent();
         String value = intent.getStringExtra("key");
         String line[]= value.split("\n");
-        final String table_name=line[0];
+        final String tableName=line[0];
         final String id=line[1];
         double numQuantity;
         double numPrice;
         double numPricePerQuantity;
-        String service="1",price="1",date="",mileage="",note="",noteID="";
+        String service="1",price="1",date="",mileage="",note="";
         final String liquidMeasure=myDb.getSettings().split(":")[0];
         final String distanceMeasure=myDb.getSettings().split(":")[1];
         final String currencyMeasure=myDb.getSettings().split(":")[2];
         String display="";
 
-        Cursor res = myDb.getOneRow(table_name, id);
+        Cursor res = myDb.getOneRow(tableName, id);
         while (res.moveToNext()) {
             service=res.getString(1);
-            noteID=res.getString(3);
             price=res.getString(4);
             date=res.getString(5);
             mileage=res.getString(6);
+            note=res.getString(8);
         }
-        note = myDb.getNote(noteID);
-        if ("fuel_table".equals(table_name)) {
+        
+        if ("fuel_table".equals(tableName)) {
             numQuantity = Double.parseDouble(service);
             numPrice = Double.parseDouble(price);
             numPricePerQuantity = numPrice / numQuantity;
@@ -63,7 +63,7 @@ public class ViewFS extends ActivityHelper {
             if(!("".equals(mileage))){
                 display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
             }
-            if(!("".equals(note))){
+            if(!(null==note)){
                 display+= note;
             }
         } /*else if("service_table".equals(table_name)){
@@ -90,9 +90,9 @@ public class ViewFS extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb.delete(id, table_name);
+                        myDb.delete(id, tableName);
                         Toast.makeText(ViewFS.this, "Successful deleted", Toast.LENGTH_LONG).show();
-                        History(ViewFS.this, table_name);
+                        History(ViewFS.this, tableName);
                     }
                 }
         );

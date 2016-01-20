@@ -168,12 +168,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert("note_table", null, cv);
     }
 
-    public String getNote(String id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT NOTE FROM note_table WHERE ENTER="+id, null);
-        return res.getString(0);
-    }
-
     public Cursor getAllData(String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID", null);
@@ -181,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getOneRow(String tableName,String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from "+tableName+" LEFT JOIN enter_table ON "+tableName+".ENTER = enter_table.ID where "+tableName+".ID="+id,null);
+        return db.rawQuery("select * from "+tableName+" LEFT JOIN enter_table ON "+tableName+".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER where "+tableName+".ID="+id,null);
     }
 
     public void editRecord(String firstRow,String secoundRow,String thirdRow,String fourthRow,String id,String tableName){
