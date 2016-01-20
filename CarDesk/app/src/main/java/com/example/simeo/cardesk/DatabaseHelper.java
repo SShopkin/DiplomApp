@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABlE_NAME[0] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE REAL, DATE TEXT, MILEAGE INTEGER)");
-        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTER  INTEGER REFERENCES enter_table)");
+        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
         db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE REAL, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
         db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
         db.execSQL("create table " + TABlE_NAME[4] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
@@ -163,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertNote(String note,long enterId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("NOTE",note);
+        cv.put("NOTE", note);
         cv.put("ENTER",enterId);
         return db.insert("note_table", null, cv);
     }

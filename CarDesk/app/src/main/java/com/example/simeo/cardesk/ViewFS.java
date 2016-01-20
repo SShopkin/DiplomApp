@@ -63,18 +63,18 @@ public class ViewFS extends ActivityHelper {
             if(!("".equals(mileage))){
                 display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
             }
-            if(!(null==note)){
+            if(null!=note){
                 display+= note;
             }
-        } /*else if("service_table".equals(table_name)){
-            display ="What: "+firstLine+" on " + date+" and this cost you "+ price + " "+ currencyMeasure +".";
+        } else if("service_table".equals(tableName)){
+            display ="What: "+service+" on " + date+" and this cost you "+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
                 display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
             }
-            if(!("".equals(note))){
+            if(null!=note){
                 display+= note;
             }
-        } else if("ins_table".equals(table_name)){
+        } /*else if("ins_table".equals(table_name)){
             display ="You made insurance at "+price + " and it is valid to "+ date +
                     ". This cost you " + firstLine +" "+ currencyMeasure+". ";
             if(!("".equals(mileage))){

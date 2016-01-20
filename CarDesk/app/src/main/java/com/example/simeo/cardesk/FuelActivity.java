@@ -71,7 +71,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                             myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
                         }*/
                         long id = addDataToTheBase(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                DateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
+                                dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
                         if (id!=-1) {
                             final String value =TABlE_NAME + "\n" + id;
                             Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);

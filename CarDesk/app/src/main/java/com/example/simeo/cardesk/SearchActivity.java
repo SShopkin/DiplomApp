@@ -86,7 +86,7 @@ public class SearchActivity extends ActivityHelper {
     public String currentDate(){
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
-        return DateForBase(dateFormat.format(date));
+        return dateForBase(dateFormat.format(date));
     }
 
     public String sumCost(){

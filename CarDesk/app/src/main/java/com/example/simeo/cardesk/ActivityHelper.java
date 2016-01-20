@@ -75,7 +75,7 @@ public class ActivityHelper extends AppCompatActivity {
         dateButton.setTextSize(25);
     }
 
-    public String DateForBase(String date){
+    public String dateForBase(String date){
         String year=date.split("\\.")[2];
         String month=date.split("\\.")[1];
         String day=date.split("\\.")[0];
