@@ -15,7 +15,96 @@
         android:background="@color/navigationBarOrange"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Call to road assistance in:"
+        android:id="@+id/textView2"
+        android:textSize="25sp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/europe"
+        android:paddingLeft="46dp"
+        android:paddingRight="46dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        ads:fb_borderColor="@color/accentOrange"
+        ads:fb_borderWidth="1dp"
+        ads:fb_defaultColor="@color/navigationBarOrange"
+        ads:fb_focusColor="@color/lightOrange"
+        ads:fb_radius="5dp"
+        ads:fb_text="Europe"
+        ads:fb_textColor="@color/black"
+        android:layout_marginTop="87dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/northAmerica"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        ads:fb_borderColor="@color/accentOrange"
+        ads:fb_borderWidth="1dp"
+        ads:fb_defaultColor="@color/navigationBarOrange"
+        ads:fb_focusColor="@color/lightOrange"
+        ads:fb_radius="5dp"
+        ads:fb_text="North America"
+        ads:fb_textColor="@color/black"
+        android:layout_above="@+id/australia"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/southAmerica"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        ads:fb_borderColor="@color/accentOrange"
+        ads:fb_borderWidth="1dp"
+        ads:fb_defaultColor="@color/navigationBarOrange"
+        ads:fb_focusColor="@color/lightOrange"
+        ads:fb_radius="5dp"
+        ads:fb_text="South America"
+        ads:fb_textColor="@color/black"
+        android:layout_alignTop="@+id/australia"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/australia"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        ads:fb_borderColor="@color/accentOrange"
+        ads:fb_borderWidth="1dp"
+        ads:fb_defaultColor="@color/navigationBarOrange"
+        ads:fb_focusColor="@color/lightOrange"
+        ads:fb_radius="5dp"
+        ads:fb_text="Australia"
+        ads:fb_textColor="@color/black"
+        android:layout_below="@+id/europe"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="15dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -29,5 +118,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
     </com.google.android.gms.ads.AdView>
+
+
 
 </RelativeLayout>
