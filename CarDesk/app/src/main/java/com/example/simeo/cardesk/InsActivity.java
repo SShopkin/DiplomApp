@@ -14,7 +14,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editValidity,editPrice,editNote;
+    EditText editValidity,editPrice,editNote,editMileage;
     FancyButton btnAddData;
     FancyButton btnHistory;
     FancyButton dateButton;
@@ -33,6 +33,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         editValidity = (EditText)findViewById(R.id.editText_validity);
         editPrice = (EditText)findViewById(R.id.editText_price);
         editNote = (EditText)findViewById(R.id.editText_note);
+        editMileage = (EditText)findViewById(R.id.editText_mileage);
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
@@ -54,16 +55,15 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*long id = addDataToTheBase(InsActivity.this, myDb, editPrice.getText().toString(),
-                                DateForBase(dateButton.getText().toString()), editValidity.getText().toString()
+                        long id = addDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(),editPrice.getText().toString(),
+                                dateForBase(dateButton.getText().toString()), editMileage.getText().toString()
                                 ,editNote.getText().toString(), TABlE_NAME);
                         if (id!=-1) {
-                            final String value = " "+editPrice.getText().toString() + "\n" + " "+ dateButton.getText().toString() +  "\n" +" "+
-                                    editValidity.getText().toString()  +"\n" + editNote.getText().toString()+ "\n"+""+ "\n" + TABlE_NAME + "\n" + id;
+                            final String value =TABlE_NAME + "\n" + id;
                             Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
-                            myIntent.putExtra("key", value); //Optional parameters
+                            myIntent.putExtra("key", value);
                             InsActivity.this.startActivity(myIntent);
-                        }*/
+                        }
                     }
                 });
 

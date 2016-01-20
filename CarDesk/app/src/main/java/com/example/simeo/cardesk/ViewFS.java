@@ -74,13 +74,16 @@ public class ViewFS extends ActivityHelper {
             if(null!=note){
                 display+= note;
             }
-        } /*else if("ins_table".equals(table_name)){
-            display ="You made insurance at "+price + " and it is valid to "+ date +
-                    ". This cost you " + firstLine +" "+ currencyMeasure+". ";
+        } else if("ins_table".equals(tableName)){
+            display ="You made insurance at "+date + " and it is valid to "+ service +
+                    ". This cost you " + price +" "+ currencyMeasure+". ";
             if(!("".equals(mileage))){
-                display+= mileage;
+                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
             }
-        } else {
+            if(null!=note){
+                display+= note;
+            }
+        } /*else {
             display ="What: ";
         }*/
 

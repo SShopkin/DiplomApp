@@ -79,7 +79,7 @@ public class ViewAll extends ActivityHelper {
             if("fuel_table".equals(table_name)){
                 buffer.append("Quantity: " + res.getString(1) + "\n");
             } else if ("ins_table".equals(table_name)){
-                buffer.append("Price: " + res.getString(1) + "\n");
+                buffer.append("Validity: " + res.getString(1) + "\n");
             } else if ("clean_table".equals(table_name)){
                 buffer.append("Cleaning km: " + res.getString(1) + "\n");
             } else if ("service_table".equals(table_name)){
