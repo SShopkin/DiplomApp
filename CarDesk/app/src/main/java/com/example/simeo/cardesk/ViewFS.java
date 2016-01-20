@@ -47,11 +47,11 @@ public class ViewFS extends ActivityHelper {
         while (res.moveToNext()) {
             service=res.getString(1);
             price=res.getString(4);
-            date=res.getString(5);
+            date=dateToShow(res.getString(5));
             mileage=res.getString(6);
             note=res.getString(8);
         }
-        
+
         if ("fuel_table".equals(tableName)) {
             numQuantity = Double.parseDouble(service);
             numPrice = Double.parseDouble(price);

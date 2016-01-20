@@ -82,6 +82,13 @@ public class ActivityHelper extends AppCompatActivity {
         return year+"-"+month+"-"+day;
     }
 
+    public String dateToShow(String date){
+        String year=date.split("-")[0];
+        String month=date.split("-")[1];
+        String day=date.split("-")[2];
+        return day+"."+month+"."+year;
+    }
+
     public void History(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
         myIntent.putExtra("key", table_name);
@@ -96,7 +103,7 @@ public class ActivityHelper extends AppCompatActivity {
             if(!("".equals(note))){
                 myDb.insertNote(note,enterId);
             }
-            if (isInserted==-1)
+            if ((isInserted==-1)||(enterId==-1))
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(activity, "Data inserted", Toast.LENGTH_LONG).show();

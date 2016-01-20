@@ -85,8 +85,8 @@ public class ViewAll extends ActivityHelper {
             } else if ("service_table".equals(table_name)){
                 buffer.append("What: " + res.getString(1) + "\n");
             }
-            buffer.append("price: " + res.getString(4) + "\n");
-            buffer.append("date: " + res.getString(5));
+            buffer.append("Price: " + res.getString(4) + "\n");
+            buffer.append("Date: " + dateToShow(res.getString(5)));
             values[b]=buffer.toString();
             b++;
         }
