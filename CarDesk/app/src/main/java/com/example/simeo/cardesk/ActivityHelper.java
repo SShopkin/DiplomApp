@@ -113,10 +113,14 @@ public class ActivityHelper extends AppCompatActivity {
         return isInserted;
     }
 
-    public long AddDataToTheBaseC (Context activity,DatabaseHelper myDb,String price,String date,String thirdRow,String note,String table_name){
-        long isInserted = -1;
-        if(!("".equals(price)||("").equals(thirdRow))) {
-            isInserted = myDb.insertData(price, date, thirdRow,note,table_name);
+    public long addCleaning(Context activity,DatabaseHelper myDb,String price,String date,String mileage,String note){
+        long isInserted = -1,enterId;
+        if(!("".equals(price))) {
+            enterId = myDb.insertEnter(price, date, mileage);
+            isInserted = myDb.insertClean(enterId);
+            if(!("".equals(note))){
+                myDb.insertNote(note,enterId);
+            }
             if (isInserted==-1)
                 Toast.makeText(activity, "Data NOT inserted", Toast.LENGTH_LONG).show();
             else

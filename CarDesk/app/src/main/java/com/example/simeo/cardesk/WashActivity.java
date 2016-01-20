@@ -14,7 +14,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class WashActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editMileage,editPrice;
+    EditText editMileage,editPrice,editNote;
     FancyButton btnAddData,btnHistory,dateButton;
     public static final String TABlE_NAME;
 
@@ -32,6 +32,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
         dateButton = (FancyButton)findViewById(R.id.date_button);
         editMileage = (EditText)findViewById(R.id.editText_mileage);
         editPrice = (EditText) findViewById(R.id.editText_price);
+        editNote = (EditText) findViewById(R.id.editText_note);
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
@@ -44,13 +45,12 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*long id = AddDataToTheBase(WashActivity.this, myDb, editMileage.getText().toString(), editPrice.getText().toString(),
-                                dateButton.getText().toString(),dateButton.getText().toString(), TABlE_NAME);
-                        final String value = "Quan: " + editMileage.getText().toString() + "\n" + "Price: " + editPrice.getText().toString() + "\n" +
-                                "Date: " + dateButton.getText().toString() + "\n" + TABlE_NAME + "\n"+id;
+                        long id = addCleaning(WashActivity.this, myDb, editPrice.getText().toString(), dateForBase(dateButton.getText().toString()),
+                                editMileage.getText().toString(), editNote.getText().toString());
+                        final String value = TABlE_NAME + "\n"+id;
                         Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
-                        myIntent.putExtra("key", value); //Optional parameters
-                        WashActivity.this.startActivity(myIntent);*/
+                        myIntent.putExtra("key", value);
+                        WashActivity.this.startActivity(myIntent);
                     }
                 });
 

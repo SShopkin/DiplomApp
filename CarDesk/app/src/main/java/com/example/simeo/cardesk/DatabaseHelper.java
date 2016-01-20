@@ -82,6 +82,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(tableName,null,contentValues);
     }
 
+    public long insertClean(long enterId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ENTER", enterId);
+        return db.insert("clean_table",null,contentValues);
+    }
+
     public long insertEnter(String price,String date,String mileage){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();

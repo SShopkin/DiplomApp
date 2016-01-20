@@ -27,7 +27,7 @@ public class ViewAll extends ActivityHelper {
     Button btnExport;
     Button btnImport;
     String path = null;
-    String table_name;
+    String tableName;
 
     @Override
     protected void onCreate (Bundle savedInstanceState){
@@ -41,7 +41,7 @@ public class ViewAll extends ActivityHelper {
         String[] values = new String[100000];
         final List<String> idArray = new ArrayList<>();
         Intent intent = getIntent();
-        table_name  = intent.getStringExtra("key");
+        tableName  = intent.getStringExtra("key");
 
         AdGenerator();
         ToolBar("History");
@@ -51,7 +51,7 @@ public class ViewAll extends ActivityHelper {
                     @Override
                     public void onClick(View view) {
                         try {
-                            sendData(myDb, table_name);
+                            sendData(myDb, tableName);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -66,7 +66,7 @@ public class ViewAll extends ActivityHelper {
                     }
                 });
 
-        Cursor res = myDb.getAllData(table_name);
+        Cursor res = myDb.getAllData(tableName);
         if (res.getCount() == 0) {
             Toast.makeText(ViewAll.this, "Error: No data", Toast.LENGTH_LONG).show();
             return;
@@ -76,17 +76,20 @@ public class ViewAll extends ActivityHelper {
         while (res.moveToNext()) {
             StringBuffer buffer = new StringBuffer();
             idArray.add(res.getString(0));
-            if("fuel_table".equals(table_name)){
+            if("fuel_table".equals(tableName)){
                 buffer.append("Quantity: " + res.getString(1) + "\n");
-            } else if ("ins_table".equals(table_name)){
+            } else if ("ins_table".equals(tableName)){
                 buffer.append("Validity: " + res.getString(1) + "\n");
-            } else if ("clean_table".equals(table_name)){
-                buffer.append("Cleaning km: " + res.getString(1) + "\n");
-            } else if ("service_table".equals(table_name)){
+            } else if ("service_table".equals(tableName)){
                 buffer.append("What: " + res.getString(1) + "\n");
+            } else {
+                buffer.append("Date: " + dateToShow(res.getString(4)) + "\n");
+                buffer.append("Price: " + res.getString(3));
             }
-            buffer.append("Price: " + res.getString(4) + "\n");
-            buffer.append("Date: " + dateToShow(res.getString(5)));
+            if(!("clean_table".equals(tableName))){
+                buffer.append("Price: " + res.getString(4) + "\n");
+                buffer.append("Date: " + dateToShow(res.getString(5)));
+            }
             values[b]=buffer.toString();
             b++;
         }
@@ -107,13 +110,13 @@ public class ViewAll extends ActivityHelper {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 String value="";
-                if(("fuel_table".equals(table_name))||("service_table".equals(table_name))) {
-                    value = table_name + "\n" + idArray.get(position);
+                if(("fuel_table".equals(tableName))||("service_table".equals(tableName))) {
+                    value = tableName + "\n" + idArray.get(position);
                 } else {
-                    value = table_name + "\n" + idArray.get(position);
+                    value = tableName + "\n" + idArray.get(position);
                 }
                 Intent myIntent = new Intent(ViewAll.this, ViewFS.class);
-                myIntent.putExtra("key", value); //Optional parameters
+                myIntent.putExtra("key", value);
                 ViewAll.this.startActivity(myIntent);
             }
         });
@@ -131,7 +134,7 @@ public class ViewAll extends ActivityHelper {
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                    openFile(path,myDb,table_name);
+                    openFile(path,myDb,tableName);
 
                 }
                 break;
@@ -175,11 +178,11 @@ public class ViewAll extends ActivityHelper {
                 return true;
             default:
                 Intent myIntent;
-                if ("fuel_table".equals(table_name)) {
+                if ("fuel_table".equals(tableName)) {
                     myIntent = new Intent(ViewAll.this, FuelActivity.class);
-                } else if ("service_table".equals(table_name)) {
+                } else if ("service_table".equals(tableName)) {
                     myIntent = new Intent(ViewAll.this, ServiceActivity.class);
-                } else if ("ins_table".equals(table_name)) {
+                } else if ("ins_table".equals(tableName)) {
                     myIntent = new Intent(ViewAll.this, InsActivity.class);
                 } else {
                     myIntent = new Intent(ViewAll.this, WashActivity.class);

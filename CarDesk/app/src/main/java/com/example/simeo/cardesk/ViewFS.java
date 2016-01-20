@@ -45,11 +45,18 @@ public class ViewFS extends ActivityHelper {
 
         Cursor res = myDb.getOneRow(tableName, id);
         while (res.moveToNext()) {
-            service=res.getString(1);
-            price=res.getString(4);
-            date=dateToShow(res.getString(5));
-            mileage=res.getString(6);
-            note=res.getString(8);
+            if("clean_table".equals(tableName)) {
+                price = res.getString(3);
+                date = dateToShow(res.getString(4));
+                mileage = res.getString(5);
+                note = res.getString(7);
+            } else {
+                service = res.getString(1);
+                price = res.getString(4);
+                date = dateToShow(res.getString(5));
+                mileage = res.getString(6);
+                note = res.getString(8);
+            }
         }
 
         if ("fuel_table".equals(tableName)) {
@@ -83,9 +90,15 @@ public class ViewFS extends ActivityHelper {
             if(null!=note){
                 display+= note;
             }
-        } /*else {
-            display ="What: ";
-        }*/
+        } else {
+            display ="You clean your car at "+date+" and this cost you "+ price + " "+ currencyMeasure +".";
+            if(!("".equals(mileage))){
+                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
+            }
+            if(null!=note){
+                display+= note;
+            }
+        }
 
         txtView.setText(display);
 
