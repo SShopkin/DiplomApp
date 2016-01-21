@@ -68,7 +68,7 @@ public class SearchActivity extends ActivityHelper {
                             sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "service_table"));
                             sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "ins_table"));
                             sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "clean_table"));
-                            sumView.setText(textAllSum(sum));
+                            sumView.setText(String.format("%s%s", textAllSum(sum), averageSum(sum)));
                         } /*else if ("fuel_table".equals(choseTable())) {
                             fuelView.setVisibility(View.VISIBLE);
                             fuelView.setText(fuelConsumption());
@@ -76,7 +76,7 @@ public class SearchActivity extends ActivityHelper {
                             sumView.setText(myDb.preciseFuel());
                         } */else {
                            fuelView.setVisibility(View.INVISIBLE);
-                           sumView.setText(textSum());
+                           sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
                         }
                    }
                 }
@@ -93,14 +93,30 @@ public class SearchActivity extends ActivityHelper {
 
     public String textSum(){
         return dateSpinner.getSelectedItem().toString()+" you paid " +
-                myDb.totalSum(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+".";
+                myDb.totalSum(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+". ";
     }
 
     public String textAllSum(double total){
-        return dateSpinner.getSelectedItem().toString()+" you paid " + total +" "+currencyMeasure+".";
+        return dateSpinner.getSelectedItem().toString()+" you paid " + total +" "+currencyMeasure+". ";
     }
 
-    
+    public String averageSum(double sum){
+        if(lastWeekDate().equals(chosePeriod())){
+            sum = sum/7;
+            sum = Math.floor(sum * 100) / 100;
+            return "Average sum for day is "+sum+" "+currencyMeasure+".";
+        } else if(lastMonthDate().equals(chosePeriod())){
+            sum = sum/30;
+            sum = Math.floor(sum * 100) / 100;
+            return "Average sum for day is "+sum+" "+currencyMeasure+".";
+        } else if(lastYearDate().equals(chosePeriod())){
+            sum = sum/12;
+            sum = Math.floor(sum * 100) / 100;
+            return "Average sum for month is "+sum+" "+currencyMeasure+".";
+        }
+        return "";
+    }
+
     /*public String fuelConsumption(){
         double consumption = myDb.FuelBetweenDate(chosePeriod(), curDate)/traveledDistance()*100;
         return "Your fuel consumption is " + (Math.floor(consumption * 100) / 100)+
