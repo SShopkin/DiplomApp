@@ -95,6 +95,18 @@ public class ActivityHelper extends AppCompatActivity {
         context.startActivity(myIntent);
     }
 
+    public boolean isMileageOk(Context activity,String current,String newOne){
+        if("".equals(newOne)){
+            Toast.makeText(activity, "Enter mileage", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(Integer.parseInt(current)>(Integer.parseInt(newOne))){
+            Toast.makeText(activity, "Your mileage is lower than mileage in last record", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     public long addDataToTheBase (Context activity,DatabaseHelper myDb,String service,String price,String date,String mileage,String note,String tableName){
         long isInserted = -1,enterId;
         if(!("".equals(price)||("").equals(service))) {

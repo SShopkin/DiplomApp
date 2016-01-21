@@ -55,14 +55,16 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = addDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(),editPrice.getText().toString(),
-                                dateForBase(dateButton.getText().toString()), editMileage.getText().toString()
-                                ,editNote.getText().toString(), TABlE_NAME);
-                        if (id!=-1) {
-                            final String value =TABlE_NAME + "\n" + id;
-                            Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
-                            myIntent.putExtra("key", value);
-                            InsActivity.this.startActivity(myIntent);
+                        if(isMileageOk(InsActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                            long id = addDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(), editPrice.getText().toString(),
+                                    dateForBase(dateButton.getText().toString()), editMileage.getText().toString()
+                                    , editNote.getText().toString(), TABlE_NAME);
+                            if (id != -1) {
+                                final String value = TABlE_NAME + "\n" + id;
+                                Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
+                                myIntent.putExtra("key", value);
+                                InsActivity.this.startActivity(myIntent);
+                            }
                         }
                     }
                 });

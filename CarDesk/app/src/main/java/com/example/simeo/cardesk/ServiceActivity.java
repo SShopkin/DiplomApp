@@ -56,16 +56,15 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       /* if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
-                            myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
-                        }*/
-                        long id = addDataToTheBase(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
-                                dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
-                        if (id!=-1) {
-                            final String value = TABlE_NAME + "\n" + id;
-                            Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
-                            myIntent.putExtra("key", value); //Optional parameters
-                            ServiceActivity.this.startActivity(myIntent);
+                        if(isMileageOk(ServiceActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                            long id = addDataToTheBase(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
+                                    dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
+                            if (id != -1) {
+                                final String value = TABlE_NAME + "\n" + id;
+                                Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
+                                myIntent.putExtra("key", value); //Optional parameters
+                                ServiceActivity.this.startActivity(myIntent);
+                            }
                         }
                     }
                 });

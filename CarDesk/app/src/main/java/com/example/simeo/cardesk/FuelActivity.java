@@ -67,16 +67,15 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       /* if(Integer.parseInt(GetMileage(myDb))<Integer.parseInt(editMileage.getText().toString())){
-                            myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
-                        }*/
-                        long id = addDataToTheBase(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
-                                dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
-                        if (id!=-1) {
-                            final String value =TABlE_NAME + "\n" + id;
-                            Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);
-                            myIntent.putExtra("key", value);
-                            FuelActivity.this.startActivity(myIntent);
+                        if(isMileageOk(FuelActivity.this,myDb.currentMileage(),editMileage.getText().toString())){
+                            long id = addDataToTheBase(FuelActivity.this, myDb, editQuantity.getText().toString(), editPrice.getText().toString(),
+                                    dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
+                            if (id != -1) {
+                                final String value = TABlE_NAME + "\n" + id;
+                                Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);
+                                myIntent.putExtra("key", value);
+                                FuelActivity.this.startActivity(myIntent);
+                            }
                         }
                     }
                 });

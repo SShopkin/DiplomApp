@@ -9,10 +9,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends ActivityHelper {
     DatabaseHelper myDb;
     ImageButton btn_fuel,ins_button,search_button,wash_button,other_button,sos_button;
     EditText editMileage;
+    final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    final Date date = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +34,13 @@ public class MainActivity extends ActivityHelper {
         other_button = (ImageButton)findViewById(R.id.other_button);
         editMileage = (EditText)findViewById(R.id.editMileage);
 
+
+
         if("null:null:null".equals(myDb.getSettings())){
             myDb.updateSettings(getResources().getString(R.string.auto_liquid_measure),
                     getResources().getString(R.string.auto_distance_measure),
                     getResources().getString(R.string.auto_currency));
-            //myDb.setMileage("0");
+            myDb.insertEnter("0",dateFormat.format(date),"0");
         }
         AdGenerator();
         editMileage.setText(myDb.currentMileage());
@@ -44,7 +52,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //myDb.updateMileage(editMileage.getText().toString(),GetMileage(myDb));
+                        mileage();
                         startActivity(new Intent(MainActivity.this, FuelActivity.class));
                     }
                 }
@@ -54,6 +62,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mileage();
                         startActivity(new Intent(MainActivity.this, SearchActivity.class));
                     }
                 }
@@ -63,6 +72,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mileage();
                         startActivity(new Intent(MainActivity.this, SOSActivity.class));
                     }
                 }
@@ -72,6 +82,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mileage();
                         startActivity(new Intent(MainActivity.this, InsActivity.class));
                     }
                 }
@@ -81,6 +92,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mileage();
                         startActivity(new Intent(MainActivity.this, WashActivity.class));
                     }
                 }
@@ -90,6 +102,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mileage();
                         startActivity(new Intent(MainActivity.this, ServiceActivity.class));
                     }
                 }
@@ -112,5 +125,10 @@ public class MainActivity extends ActivityHelper {
         return super.onOptionsItemSelected(item);
     }
 
+    public void mileage(){
+        if(isMileageOk(MainActivity.this,myDb.currentMileage(),editMileage.getText().toString())){
+            myDb.insertEnter("0",dateFormat.format(date),editMileage.getText().toString());
+        }
+    }
 
 }

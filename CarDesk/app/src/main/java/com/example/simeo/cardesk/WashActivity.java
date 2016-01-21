@@ -45,12 +45,14 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        long id = addCleaning(WashActivity.this, myDb, editPrice.getText().toString(), dateForBase(dateButton.getText().toString()),
-                                editMileage.getText().toString(), editNote.getText().toString());
-                        final String value = TABlE_NAME + "\n"+id;
-                        Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
-                        myIntent.putExtra("key", value);
-                        WashActivity.this.startActivity(myIntent);
+                        if(isMileageOk(WashActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                            long id = addCleaning(WashActivity.this, myDb, editPrice.getText().toString(), dateForBase(dateButton.getText().toString()),
+                                    editMileage.getText().toString(), editNote.getText().toString());
+                            final String value = TABlE_NAME + "\n" + id;
+                            Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
+                            myIntent.putExtra("key", value);
+                            WashActivity.this.startActivity(myIntent);
+                        }
                     }
                 });
 
