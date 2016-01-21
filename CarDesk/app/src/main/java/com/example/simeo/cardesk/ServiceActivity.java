@@ -49,7 +49,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
 
         ToolBar("Service");
         GetCurrentDate(dateButton);
-        //editMileage.setText(GetMileage(myDb));
+        editMileage.setText(myDb.currentMileage());
         AdGenerator();
 
         btnAddData.setOnClickListener(

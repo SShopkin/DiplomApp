@@ -40,7 +40,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         dateButton = (FancyButton)findViewById(R.id.date_button);
         isItFull = (AnimCheckBox)findViewById(R.id.checkbox);
 
-        //editMileage.setText(GetMileage(myDb));
+        editMileage.setText(myDb.currentMileage());
 
         isItFull.setChecked(checked);
         isItFull.setOnClickListener(new View.OnClickListener() {

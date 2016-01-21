@@ -242,8 +242,8 @@ public class ActivityHelper extends AppCompatActivity {
         String a = String.valueOf(c);
         String[] textByLine = text.toString().split(a) ;
         for(int i=5;i<textByLine.length;i+=0){
-
-            myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],table_name);
+            //function is commented
+            //myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],table_name);
             i +=20;
         }
         Intent intent = getIntent();

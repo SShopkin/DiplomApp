@@ -35,11 +35,10 @@ public class MainActivity extends ActivityHelper {
             //myDb.setMileage("0");
         }
         AdGenerator();
-
+        editMileage.setText(myDb.currentMileage());
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        //editMileage.setText(GetMileage(myDb));
 
         btn_fuel.setOnClickListener(
                 new View.OnClickListener() {

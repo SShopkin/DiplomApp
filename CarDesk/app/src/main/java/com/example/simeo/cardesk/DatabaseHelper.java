@@ -14,7 +14,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-
     }
 
     @Override
@@ -56,9 +55,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateSettings(String newLiquid,String newDistance,String newCurrency){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("UNITFORLIQUID",newLiquid);
-        cv.put("UNITFORDISTANCE",newDistance);
-        cv.put("CURRENCY",newCurrency);
+        cv.put("UNITFORLIQUID", newLiquid);
+        cv.put("UNITFORDISTANCE", newDistance);
+        cv.put("CURRENCY", newCurrency);
         db.insert("settings_table", null, cv);
     }
 
@@ -82,11 +81,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(tableName,null,contentValues);
     }
 
+    public long insertNote(String note,long enterId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("NOTE", note);
+        cv.put("ENTER", enterId);
+        return db.insert("note_table", null, cv);
+    }
+
     public long insertClean(long enterId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("ENTER", enterId);
-        return db.insert("clean_table",null,contentValues);
+        return db.insert("clean_table", null, contentValues);
     }
 
     public long insertEnter(String price,String date,String mileage){
@@ -95,9 +102,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("PRICE",price);
         cv.put("DATE",date);
         cv.put("MILEAGE", mileage);
-        return db.insert("enter_table",null,cv);
+        return db.insert("enter_table", null, cv);
     }
 
+    public Cursor getAllData(String tableName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID", null);
+    }
+
+    public Cursor getOneRow(String tableName,String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER where " + tableName + ".ID=" + id, null);
+    }
+
+    public String currentMileage(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select MILEAGE FROM enter_table ORDER BY ID DESC limit 1", null);
+        while (res.moveToNext()) {
+            return res.getString(0);
+        }
+        return "";
+    }
+
+/*
     public String sumQuery(String searchDate, String currentDate, String tableName){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
@@ -155,8 +182,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(previosFullUp.moveToFirst())        {
             return previosFullUp.getString(0);
         } return "";
-    }
+    }*/
 
+
+    /*
+    ********import******
     public long insertData(String price, String date,String validMil,String note,String TABlE_NAME) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -166,24 +196,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("NOTE",note);
         return db.insert(TABlE_NAME, null, contentValues);
     }
+    */
 
-    public long insertNote(String note,long enterId){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("NOTE", note);
-        cv.put("ENTER",enterId);
-        return db.insert("note_table", null, cv);
-    }
 
-    public Cursor getAllData(String tableName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID", null);
-    }
-
-    public Cursor getOneRow(String tableName,String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from "+tableName+" LEFT JOIN enter_table ON "+tableName+".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER where "+tableName+".ID="+id,null);
-    }
 
     public void editRecord(String firstRow,String secoundRow,String thirdRow,String fourthRow,String id,String tableName){
         SQLiteDatabase db = this.getWritableDatabase();

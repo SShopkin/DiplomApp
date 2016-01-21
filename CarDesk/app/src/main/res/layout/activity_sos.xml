@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/europe"
         android:paddingLeft="46dp"
-        android:paddingRight="46dp"
+        android:paddingRight="47dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         ads:fb_borderColor="@color/accentOrange"

@@ -37,7 +37,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
         ToolBar("Car Wash");
-        //editMileage.setText(GetMileage(myDb));
+        editMileage.setText(myDb.currentMileage());
         GetCurrentDate(dateButton);
         AdGenerator();
 

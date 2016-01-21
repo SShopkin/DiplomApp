@@ -56,6 +56,7 @@ public class SearchActivity extends ActivityHelper {
 
 
         AdGenerator();
+        /*
         btnRefresh.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -80,6 +81,7 @@ public class SearchActivity extends ActivityHelper {
                    }
                 }
         );
+        */
 
     }
 
@@ -89,7 +91,7 @@ public class SearchActivity extends ActivityHelper {
         return dateForBase(dateFormat.format(date));
     }
 
-    public String sumCost(){
+    /*public String sumCost(){
         return dateSpinner.getSelectedItem().toString()+" you paid " +
                 myDb.sumQuery(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+".";
     }
@@ -180,7 +182,7 @@ public class SearchActivity extends ActivityHelper {
                 return "clean_table";
         }
         return "";
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

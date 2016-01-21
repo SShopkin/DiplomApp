@@ -41,7 +41,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         ToolBar("Insurance");
         GetCurrentDate(dateButton);
         AdGenerator();
-
+        editMileage.setText(myDb.currentMileage());
 
         editValidity.setOnClickListener(new View.OnClickListener() {
             @Override
