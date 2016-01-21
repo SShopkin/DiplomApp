@@ -56,7 +56,7 @@ public class SearchActivity extends ActivityHelper {
 
 
         AdGenerator();
-        /*
+
         btnRefresh.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -64,24 +64,24 @@ public class SearchActivity extends ActivityHelper {
                         if ("All".equals(choseTable())) {
                             fuelView.setVisibility(View.INVISIBLE);
                             sum = 0;
-                            sum += Double.parseDouble(myDb.sumQuery(chosePeriod(), curDate, "fuel_table"));
-                            sum += Double.parseDouble(myDb.sumQuery(chosePeriod(), curDate, "service_table"));
-                            sum += Double.parseDouble(myDb.sumQuery(chosePeriod(), curDate, "ins_table"));
-                            sum += Double.parseDouble(myDb.sumQuery(chosePeriod(), curDate, "clean_table"));
-                            sumView.setText(allSumCost(sum));
-                        } else if ("fuel_table".equals(choseTable())) {
+                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "fuel_table"));
+                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "service_table"));
+                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "ins_table"));
+                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "clean_table"));
+                            sumView.setText(textAllSum(sum));
+                        } /*else if ("fuel_table".equals(choseTable())) {
                             fuelView.setVisibility(View.VISIBLE);
                             fuelView.setText(fuelConsumption());
                             sumView.setText(curDate);
                             sumView.setText(myDb.preciseFuel());
-                        } else {
+                        } */else {
                            fuelView.setVisibility(View.INVISIBLE);
-                           sumView.setText(sumCost());
+                           sumView.setText(textSum());
                         }
                    }
                 }
         );
-        */
+
 
     }
 
@@ -91,16 +91,17 @@ public class SearchActivity extends ActivityHelper {
         return dateForBase(dateFormat.format(date));
     }
 
-    /*public String sumCost(){
+    public String textSum(){
         return dateSpinner.getSelectedItem().toString()+" you paid " +
-                myDb.sumQuery(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+".";
+                myDb.totalSum(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+".";
     }
 
-    public String allSumCost(double total){
+    public String textAllSum(double total){
         return dateSpinner.getSelectedItem().toString()+" you paid " + total +" "+currencyMeasure+".";
     }
 
-    public String fuelConsumption(){
+    
+    /*public String fuelConsumption(){
         double consumption = myDb.FuelBetweenDate(chosePeriod(), curDate)/traveledDistance()*100;
         return "Your fuel consumption is " + (Math.floor(consumption * 100) / 100)+
                 " "+ liquidMeasure+"s per 100 " + distanceMeasure+".";
@@ -110,9 +111,9 @@ public class SearchActivity extends ActivityHelper {
         int first = Integer.parseInt(myDb.GetFirstMileage(chosePeriod(),curDate));
         int last = Integer.parseInt(myDb.GetLastMileage(chosePeriod(),curDate));
         return last-first;
-    }
+    }*/
 
-    public String LastWeekDate(){
+    public String lastWeekDate(){
         curDate=currentDate();
         curDay=Integer.parseInt(curDate.split("-")[2]);
         curMonth=Integer.parseInt(curDate.split("-")[1]);
@@ -125,12 +126,12 @@ public class SearchActivity extends ActivityHelper {
             } else {
                 curMonth--;
             }
-            return curYear+"-"+curMonth+"-"+(curDay);
+            return curYear+"-"+dateCheck(curDay,curMonth);
         }
-        return curYear+"-"+curMonth+"-"+(curDay-6);
+        return curYear+"-"+dateCheck(curDay-6,curMonth);
     }
 
-    public String LastMonthDate(){
+    public String lastMonthDate(){
         curDate=currentDate();
         curDay=Integer.parseInt(curDate.split("-")[2]);
         curMonth=Integer.parseInt(curDate.split("-")[1]);
@@ -141,15 +142,30 @@ public class SearchActivity extends ActivityHelper {
         } else {
             curMonth--;
         }
-        return curYear+"-"+curMonth+"-"+(curDay);
+        return curYear+"-"+dateCheck(curDay,curMonth);
     }
 
-    public String LastYearDate(){
+    public String lastYearDate(){
         curDate=currentDate();
         curDay=Integer.parseInt(curDate.split("-")[2]);
         curMonth=Integer.parseInt(curDate.split("-")[1]);
         curYear=Integer.parseInt(curDate.split("-")[0]);
-        return (curYear-1)+"-"+curMonth+"-"+curDay;
+        return (curYear-1)+"-"+dateCheck(curDay,curMonth);
+    }
+
+    public String dateCheck(Integer dayOfMonth,Integer monthOfYear){
+        String day,month;
+        if(((dayOfMonth)>=1)&&((dayOfMonth)<=9)){
+            day = "0"+dayOfMonth;
+        } else {
+            day=dayOfMonth+"";
+        }
+        if(((monthOfYear)>=0)&&((monthOfYear)<=8)){
+            month = "0"+(monthOfYear);
+        } else {
+            month=(monthOfYear)+"";
+        }
+        return month+"-"+day;
     }
 
     public String chosePeriod(){
@@ -157,11 +173,11 @@ public class SearchActivity extends ActivityHelper {
             case "Today":
                 return currentDate();
             case "Last week":
-                return LastWeekDate();
+                return lastWeekDate();
             case "Last month":
-                return LastMonthDate();
+                return lastMonthDate();
             case "Last year":
-                return LastYearDate();
+                return lastYearDate();
             case "From beginning":
                 return "2000-01-01";
         }
@@ -182,7 +198,7 @@ public class SearchActivity extends ActivityHelper {
                 return "clean_table";
         }
         return "";
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

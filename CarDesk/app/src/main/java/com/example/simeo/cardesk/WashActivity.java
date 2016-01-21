@@ -75,7 +75,18 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = dayOfMonth+"."+(++monthOfYear)+"."+year;
+        String day,month;
+        if(((dayOfMonth)>=1)&&((dayOfMonth)<=9)){
+            day = "0"+dayOfMonth;
+        } else {
+            day=dayOfMonth+"";
+        }
+        if(((monthOfYear)>=0)&&((monthOfYear)<=8)){
+            month = "0"+(++monthOfYear);
+        } else {
+            month=(++monthOfYear)+"";
+        }
+        String date = day + "." + month + "." + year;
         dateButton.setText(date);
     }
     @Override

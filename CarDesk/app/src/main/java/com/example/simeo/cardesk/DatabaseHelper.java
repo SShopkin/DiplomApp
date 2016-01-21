@@ -124,16 +124,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "";
     }
 
-/*
-    public String sumQuery(String searchDate, String currentDate, String tableName){
+    public String totalSum(String searchDate, String currentDate, String tableName){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
+        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
         if(cursor.moveToFirst()){
             return Double.toString(cursor.getDouble(0));
         } return "0";
 
     }
 
+/*
     public double FuelBetweenDate(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
