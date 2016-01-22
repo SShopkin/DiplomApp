@@ -35,10 +35,10 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import static android.os.Environment.getExternalStorageState;
 
 public class ExpImpActivity extends ActivityHelper {
-    AnimCheckBox fuelCheck,serviceCheck,insuranceCheck,washCheck;
+    AnimCheckBox fuelCheck,serviceCheck,insuranceCheck,cleanCheck;
     FancyButton btnExport,btnImport;
     DatabaseHelper myDb;
-    boolean checked=false;
+    boolean checkedFuel=false,checkedService=false,checkedInsurance=false,checkedClean=false;
     JSONObject finalObject = new JSONObject();
     String path = null;
 
@@ -51,14 +51,46 @@ public class ExpImpActivity extends ActivityHelper {
         fuelCheck = (AnimCheckBox)findViewById(R.id.fuel);
         serviceCheck = (AnimCheckBox)findViewById(R.id.service);
         insuranceCheck = (AnimCheckBox)findViewById(R.id.ins);
-        washCheck = (AnimCheckBox)findViewById(R.id.clean);
+        cleanCheck = (AnimCheckBox)findViewById(R.id.clean);
         btnExport = (FancyButton)findViewById(R.id.exportBtn);
         btnImport = (FancyButton)findViewById(R.id.importBtn);
 
-        fuelCheck.setChecked(checked);
-        serviceCheck.setChecked(checked);
-        insuranceCheck.setChecked(checked);
-        washCheck.setChecked(checked);
+        fuelCheck.setChecked(checkedFuel);
+        serviceCheck.setChecked(checkedService);
+        insuranceCheck.setChecked(checkedInsurance);
+        cleanCheck.setChecked(checkedClean);
+
+        fuelCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkedFuel = !checkedFuel;
+                fuelCheck.setChecked(checkedFuel);
+            }
+        });
+
+        serviceCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkedService = !checkedService;
+                serviceCheck.setChecked(checkedService);
+            }
+        });
+
+        insuranceCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkedInsurance = !checkedInsurance;
+                insuranceCheck.setChecked(checkedInsurance);
+            }
+        });
+
+        cleanCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkedClean = !checkedClean;
+                cleanCheck.setChecked(checkedClean);
+            }
+        });
 
         ToolBar("Export and import");
         AdGenerator();
@@ -68,11 +100,23 @@ public class ExpImpActivity extends ActivityHelper {
                 @Override
                 public void onClick(View view) {
                     try {
-                        sendData(myDb, "clean_table");
-                        sendData(myDb, "enter_table");
-
-                        getExternalStorageState();
-                        generateNoteOnSD("/storage/sdcard0/Notes/base.txt", finalObject.toString());
+                        if(checkedClean){
+                            sendData(myDb, "clean_table");
+                        }
+                        if(checkedInsurance){
+                            sendData(myDb, "ins_table");
+                        }
+                        if(checkedService){
+                            sendData(myDb, "service_table");
+                        }
+                        if(checkedFuel){
+                            sendData(myDb, "fuel_table");
+                        }
+                        if((checkedFuel)||(checkedService)||(checkedInsurance)||(checkedClean)){
+                            sendData(myDb, "enter_table");
+                            getExternalStorageState();
+                            generateNoteOnSD("/storage/sdcard0/Notes/base.txt", finalObject.toString());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -123,7 +167,7 @@ public class ExpImpActivity extends ActivityHelper {
         return null;
     }
 
-    public void openFile(String path,DatabaseHelper myDb,String table_name) {
+    public void openFile(String path,DatabaseHelper myDb,String tableName) {
         File file = new File(path);
         StringBuilder text = new StringBuilder();
         try {
@@ -144,7 +188,7 @@ public class ExpImpActivity extends ActivityHelper {
         String[] textByLine = text.toString().split(a) ;
         for(int i=5;i<textByLine.length;i+=0){
             //function is commented
-            //myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],table_name);
+            //myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],tableName);
             i +=20;
         }
         Intent intent = getIntent();
@@ -172,22 +216,22 @@ public class ExpImpActivity extends ActivityHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void sendData(DatabaseHelper myDb,String table_name) throws JSONException {
+    public void sendData(DatabaseHelper myDb,String tableName) throws JSONException {
         Cursor res;
-        if("enter_table".equals(table_name)) {
+        if("enter_table".equals(tableName)) {
             res = myDb.getAllEnter();
-            finalObject.put("enter_table", textEnterTable(res));
-        } else if ("clean_table".equals(table_name)){
-            res = myDb.getAllData(table_name);
-            finalObject.put("clean_table", textCleanTable(res));
+                finalObject.put("enter_table", textEnterTable(res));
+        } else if ("clean_table".equals(tableName)){
+            res = myDb.getAllClean();
+            if (res.getCount()!=0) {
+                finalObject.put("clean_table", textCleanTable(res));
+            }
         } else {
-            res = myDb.getAllData(table_name);
+                res = myDb.getAllTable(tableName);
+            if (res.getCount()!=0) {
+                finalObject.put(tableName, textTable(res));
+            }
         }
-        if (res.getCount()==0){
-            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
-        }
-        //finalobject.put("table2", jsonArray);
-        //write to file
 
     }
     //generate file
@@ -241,6 +285,23 @@ public class ExpImpActivity extends ActivityHelper {
             try {
                 row.put("id", res.getString(0));
                 row.put("enterId", res.getString(1));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            tableAsArray.put(row);
+        }
+        return tableAsArray;
+    }
+
+    public JSONArray textTable(Cursor res){
+        JSONObject row;
+        JSONArray tableAsArray = new JSONArray();
+        while (res.moveToNext()){
+            row = new JSONObject();
+            try {
+                row.put("id", res.getString(0));
+                row.put("service", res.getString(1));
+                row.put("enterId", res.getString(2));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
