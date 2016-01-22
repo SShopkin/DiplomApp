@@ -100,6 +100,9 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
             case R.id.action_settings:
                 startActivity(new Intent(WashActivity.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(WashActivity.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent = new Intent(WashActivity.this, MainActivity.class);
                 WashActivity.this.startActivity(myIntent);

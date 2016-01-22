@@ -69,12 +69,12 @@ public class SearchActivity extends ActivityHelper {
                             sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "ins_table"));
                             sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "clean_table"));
                             sumView.setText(String.format("%s%s", textAllSum(sum), averageSum(sum)));
-                        } /*else if ("fuel_table".equals(choseTable())) {
-                            fuelView.setVisibility(View.VISIBLE);
-                            fuelView.setText(fuelConsumption());
-                            sumView.setText(curDate);
-                            sumView.setText(myDb.preciseFuel());
-                        } */else {
+                        } else if ("fuel_table".equals(choseTable())) {
+                            /*fuelView.setVisibility(View.VISIBLE);
+                            fuelView.setText(myDb.GetFirstMileage(chosePeriod(), curDate));
+                            sumView.setText(curDate);*/
+                            //sumView.setText(myDb.preciseFuel());
+                        } else {
                            fuelView.setVisibility(View.INVISIBLE);
                            sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
                         }
@@ -117,12 +117,17 @@ public class SearchActivity extends ActivityHelper {
         return "";
     }
 
-    /*public String fuelConsumption(){
-        double consumption = myDb.FuelBetweenDate(chosePeriod(), curDate)/traveledDistance()*100;
-        return "Your fuel consumption is " + (Math.floor(consumption * 100) / 100)+
-                " "+ liquidMeasure+"s per 100 " + distanceMeasure+".";
-    }
+    public String fuelConsumption(){
+        if(myDb.fullUpCount(chosePeriod(), curDate)>1){
 
+        } else {
+            /*double consumption = myDb.FuelBetweenDate(chosePeriod(), curDate) / traveledDistance() * 100;
+            return "Your fuel consumption is " + (Math.floor(consumption * 100) / 100) +
+                    " " + liquidMeasure + "s per 100 " + distanceMeasure + ".";*/
+        }
+        return "";
+    }
+/*
     public int traveledDistance(){
         int first = Integer.parseInt(myDb.GetFirstMileage(chosePeriod(),curDate));
         int last = Integer.parseInt(myDb.GetLastMileage(chosePeriod(),curDate));
@@ -226,6 +231,9 @@ public class SearchActivity extends ActivityHelper {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(SearchActivity.this, SettingsActivity.class));
+                return true;
+            case R.id.action_export:
+                startActivity(new Intent(SearchActivity.this, ExpImpActivity.class));
                 return true;
             default:
                 Intent myIntent = new Intent(SearchActivity.this, MainActivity.class);

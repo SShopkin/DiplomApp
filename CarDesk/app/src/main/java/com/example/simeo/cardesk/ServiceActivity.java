@@ -116,6 +116,9 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
             case R.id.action_settings:
                 startActivity(new Intent(ServiceActivity.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(ServiceActivity.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent = new Intent(ServiceActivity.this, MainActivity.class);
                 ServiceActivity.this.startActivity(myIntent);

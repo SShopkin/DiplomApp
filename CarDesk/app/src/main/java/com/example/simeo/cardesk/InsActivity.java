@@ -127,6 +127,9 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
             case R.id.action_settings:
                 startActivity(new Intent(InsActivity.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(InsActivity.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent = new Intent(InsActivity.this, MainActivity.class);
                 InsActivity.this.startActivity(myIntent);

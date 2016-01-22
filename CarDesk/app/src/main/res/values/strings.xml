@@ -22,11 +22,13 @@
     <string name="banner_ad_one">ca-app-pub-3789613095387394/1048427266</string>
     <string name="banner_ad_sos">ca-app-pub-3789613095387394/7727731660</string>
     <string name="banner_ad_edit">ca-app-pub-3789613095387394/2878729660</string>
+    <string name="banner_ad_exp">ca-app-pub-3789613095387394/2899285664</string>
 
     <!-- SettingsActivity.java-->
     <string name="auto_liquid_measure"> liter</string>
     <string name="auto_distance_measure">km</string>
     <string name="auto_currency"> euro</string>
+    <string name="title_activity_exp_imp">ExpImpActivity</string>
 
 
 </resources>

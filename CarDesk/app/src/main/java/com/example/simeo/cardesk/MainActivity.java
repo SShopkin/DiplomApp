@@ -117,12 +117,16 @@ public class MainActivity extends ActivityHelper {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;
+            case R.id.action_export:
+                startActivity(new Intent(MainActivity.this, ExpImpActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void mileage(){

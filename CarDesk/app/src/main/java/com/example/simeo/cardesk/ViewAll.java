@@ -176,6 +176,9 @@ public class ViewAll extends ActivityHelper {
             case R.id.action_settings:
                 startActivity(new Intent(ViewAll.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(ViewAll.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent;
                 if ("fuel_table".equals(tableName)) {

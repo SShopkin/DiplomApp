@@ -127,6 +127,9 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
             case R.id.action_settings:
                 startActivity(new Intent(FuelActivity.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(FuelActivity.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent = new Intent(FuelActivity.this, MainActivity.class);
                 FuelActivity.this.startActivity(myIntent);

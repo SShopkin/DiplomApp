@@ -138,6 +138,9 @@ public class ViewFS extends ActivityHelper {
             case R.id.action_settings:
                 startActivity(new Intent(ViewFS.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(ViewFS.this, ExpImpActivity.class));
+                return true;
             default:
                 onBackPressed();
                 return true;

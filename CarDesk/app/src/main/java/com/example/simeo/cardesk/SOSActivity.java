@@ -76,6 +76,9 @@ public class SOSActivity extends ActivityHelper {
             case R.id.action_settings:
                 startActivity(new Intent(SOSActivity.this, SettingsActivity.class));
                 return true;
+            case R.id.action_export:
+                startActivity(new Intent(SOSActivity.this, ExpImpActivity.class));
+                return true;
             default:
                 Intent myIntent = new Intent(SOSActivity.this, MainActivity.class);
                 SOSActivity.this.startActivity(myIntent);

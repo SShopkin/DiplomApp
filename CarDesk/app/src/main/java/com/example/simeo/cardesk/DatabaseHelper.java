@@ -133,7 +133,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-/*
+    public int fullUpCount(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND NOTE='Your tank was full up.'", null);
+        if(cursor.moveToFirst()){
+            return cursor.getInt(0);
+        } return 0;
+    }
+
+    /*  *****************preciseFuel *****************
+    public String getLastFullUpMileage(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor lastFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE NOTE!='' ORDER BY ID DESC limit 1", null);
+        if(lastFullUp.moveToFirst())        {
+            return lastFullUp.getString(0);
+        } return "";
+    }
+
+    public String getPreviousFullUpMileage(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor previousFullUp = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE NOTE='Your tank was full up.' ORDER BY ID DESC limit 1,1", null);
+        if(previousFullUp.moveToFirst())        {
+            return previousFullUp.getString(0);
+        } return "";
+    }
+
+    public String preciseFuel(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM (SELECT ft.*, (SELECT count(*) FROM fuel_table ft2 WHERE ft2.note='Your tank was full up.' and ft2.id>=ft.id) AS numNotesAhead FROM fuel_table ft) AS ft WHERE numNotesAhead=1",null);
+        if(fuel.moveToFirst())        {
+            return fuel.getString(0);
+        } return "";
+    }
+    */
+
+    /* ***************fuel******************
     public double FuelBetweenDate(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
@@ -153,35 +187,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String GetFirstMileage(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor lastMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
-        if(lastMileage.moveToFirst())        {
-            return lastMileage.getString(0);
+        Cursor firstMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
+        if(firstMileage.moveToFirst())        {
+            return firstMileage.getString(0);
         } return "100";
-    }
-
-    public String getLastFullUpMileage(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor lastFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE NOTE!='' ORDER BY ID DESC limit 1", null);
-        if(lastFullUp.moveToFirst())        {
-            return lastFullUp.getString(0);
-        } return "";
-    }
-
-
-    public String preciseFuel(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM (SELECT ft.*, (SELECT count(*) FROM fuel_table ft2 WHERE ft2.note='Your tank was full up.' and ft2.id>=ft.id) AS numNotesAhead FROM fuel_table ft) AS ft WHERE numNotesAhead=1",null);
-        if(fuel.moveToFirst())        {
-            return fuel.getString(0);
-        } return "";
-    }
-
-    public String getPreviousFullUpMileage(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor previosFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE NOTE!='' ORDER BY ID DESC limit 1,1", null);
-        if(previosFullUp.moveToFirst())        {
-            return previosFullUp.getString(0);
-        } return "";
     }*/
 
 
