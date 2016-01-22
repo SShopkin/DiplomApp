@@ -209,21 +209,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void editRecord(String firstRow,String secoundRow,String thirdRow,String fourthRow,String id,String tableName){
+    public void editRecord(String id, String service,String enterID,String tableName){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         String where="ID = ?";
-        if(("fuel_table".equals(tableName))||("service_table".equals(tableName))){
-            cv.put("SERVICE",firstRow);
-            cv.put("MILEAGE",fourthRow);
-            cv.put("PRICE",secoundRow);
-            cv.put("DATE",thirdRow);
+        if(!("clean_table".equals(tableName))){
+            cv.put("SERVICE",service);
+            cv.put("ENTER",enterID);
         }else{
-            cv.put("PRICE",secoundRow);
-            cv.put("DATE",thirdRow);
-            cv.put("VALIDMIL",firstRow);
-            cv.put("NOTE", fourthRow);
+            cv.put("ENTER",enterID);
         }
         db.update(tableName,cv, where, new String[]{id});
+    }
+
+    public void editEnter(String id, String price,String date,String mileage){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where="ID = ?";
+        cv.put("PRICE",price);
+        cv.put("DATE",date);
+        cv.put("MILEAGE",mileage);
+        db.update("enter_table",cv, where, new String[]{id});
+    }
+
+    public void editNote(String enterId, String note){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where="ENTER = ?";
+        cv.put("NOTE",note);
+        db.update("note_table",cv, where, new String[]{enterId});
     }
 }
