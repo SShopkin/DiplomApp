@@ -39,6 +39,7 @@ public class ExpImpActivity extends ActivityHelper {
     FancyButton btnExport,btnImport;
     DatabaseHelper myDb;
     boolean checked=false;
+    JSONObject finalObject = new JSONObject();
     String path = null;
 
     @Override
@@ -67,7 +68,11 @@ public class ExpImpActivity extends ActivityHelper {
                 @Override
                 public void onClick(View view) {
                     try {
+                        sendData(myDb, "clean_table");
                         sendData(myDb, "enter_table");
+
+                        getExternalStorageState();
+                        generateNoteOnSD("/storage/sdcard0/Notes/base.txt", finalObject.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -84,6 +89,7 @@ public class ExpImpActivity extends ActivityHelper {
 
     }
 
+    private static final int FILE_SELECT_CODE = 0;
     public void importBase() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
@@ -146,7 +152,7 @@ public class ExpImpActivity extends ActivityHelper {
         startActivity(intent);
     }
 
-    private static final int FILE_SELECT_CODE = 0;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -159,7 +165,6 @@ public class ExpImpActivity extends ActivityHelper {
                         e.printStackTrace();
                     }
                     //openFile(path,myDb,tableName);
-
                 }
                 break;
         }
@@ -168,34 +173,22 @@ public class ExpImpActivity extends ActivityHelper {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void sendData(DatabaseHelper myDb,String table_name) throws JSONException {
-        JSONObject obj;
-        JSONArray jsonArray = new JSONArray();
-        Cursor res=null;
+        Cursor res;
         if("enter_table".equals(table_name)) {
-            //res = myDb.getAllEnter(table_name);
+            res = myDb.getAllEnter();
+            finalObject.put("enter_table", textEnterTable(res));
+        } else if ("clean_table".equals(table_name)){
+            res = myDb.getAllData(table_name);
+            finalObject.put("clean_table", textCleanTable(res));
         } else {
             res = myDb.getAllData(table_name);
         }
         if (res.getCount()==0){
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
         }
-        while (res.moveToNext()){
-            obj = new JSONObject();
-            try {
-                obj.put("id", res.getString(0));
-                obj.put("price", res.getString(1));
-                obj.put("date", res.getString(2));
-                obj.put("mileage", res.getString(3));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            jsonArray.put(obj);
-        }
-        JSONObject finalobject = new JSONObject();
-        finalobject.put("car", jsonArray);
+        //finalobject.put("table2", jsonArray);
         //write to file
-        getExternalStorageState();
-        generateNoteOnSD("/storage/sdcard0/Notes/base.txt", finalobject.toString());
+
     }
     //generate file
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -220,6 +213,40 @@ public class ExpImpActivity extends ActivityHelper {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/storage/sdcard0/Notes/base.txt")));
         startActivity(intent);
+    }
+
+    public JSONArray textEnterTable(Cursor res){
+        JSONObject row;
+        JSONArray tableAsArray = new JSONArray();
+        while (res.moveToNext()){
+            row = new JSONObject();
+            try {
+                row.put("id", res.getString(0));
+                row.put("price", res.getString(1));
+                row.put("date", res.getString(2));
+                row.put("mileage", res.getString(3));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            tableAsArray.put(row);
+        }
+        return tableAsArray;
+    }
+
+    public JSONArray textCleanTable(Cursor res){
+        JSONObject row;
+        JSONArray tableAsArray = new JSONArray();
+        while (res.moveToNext()){
+            row = new JSONObject();
+            try {
+                row.put("id", res.getString(0));
+                row.put("enterId", res.getString(1));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            tableAsArray.put(row);
+        }
+        return tableAsArray;
     }
 
     @Override

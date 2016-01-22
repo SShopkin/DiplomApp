@@ -239,4 +239,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("NOTE",note);
         db.update("note_table",cv, where, new String[]{enterId});
     }
+
+    public Cursor getAllEnter(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("select * from enter_table", null);
+    }
+
+    public Cursor getAllClean(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("select * from clean_table", null);
+    }
 }
