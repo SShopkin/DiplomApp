@@ -81,7 +81,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(ServiceActivity.this,"#FFCC80");
+                        SetDateButton(ServiceActivity.this);
                     }
                 });
 

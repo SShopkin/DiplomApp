@@ -22,21 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/adView" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Export"
-        android:layout_above="@id/adView"
-        android:id="@+id/button_export"
-        android:layout_toRightOf="@+id/button_add" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Import"
-        android:id="@+id/button_import"
-        android:layout_alignTop="@+id/button_export"
-        android:layout_alignParentRight="true" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

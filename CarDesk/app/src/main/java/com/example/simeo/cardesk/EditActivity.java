@@ -69,11 +69,14 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetDateButton(EditActivity.this, "#D81B60");
+                SetDateButton(EditActivity.this);
             }
 
         });
-        //Toast.makeText(EditActivity.this, table_name, Toast.LENGTH_LONG).show();
+
+        if("clean_table".equals(tableName)){
+            edit.setVisibility(View.INVISIBLE);
+        }
 
         btnSave.setOnClickListener(
                 new View.OnClickListener() {

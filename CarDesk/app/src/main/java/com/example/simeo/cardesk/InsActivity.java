@@ -46,7 +46,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         editValidity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetDateButton(InsActivity.this,"#D81B60");
+                SetDateButton(InsActivity.this);
             }
 
         });
@@ -81,7 +81,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(InsActivity.this,"#D81B60");
+                        SetDateButton(InsActivity.this);
                     }
                 });
 

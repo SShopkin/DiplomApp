@@ -3,20 +3,15 @@ package com.example.simeo.cardesk;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,9 +19,6 @@ import java.util.List;
 
 public class ViewAll extends ActivityHelper {
     DatabaseHelper myDb;
-    Button btnExport;
-    Button btnImport;
-    String path = null;
     String tableName;
 
     @Override
@@ -34,8 +26,6 @@ public class ViewAll extends ActivityHelper {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all);
         myDb=new DatabaseHelper(this);
-        btnExport = (Button)findViewById(R.id.button_export);
-        btnImport = (Button)findViewById(R.id.button_import);
 
         final ListView listview = (ListView) findViewById(R.id.listview);
         String[] values = new String[100000];
@@ -45,26 +35,6 @@ public class ViewAll extends ActivityHelper {
 
         AdGenerator();
         ToolBar("History");
-
-        btnExport.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        try {
-                            sendData(myDb, tableName);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-        btnImport.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Import();
-                    }
-                });
 
         Cursor res = myDb.getAllData(tableName);
         if (res.getCount() == 0) {
@@ -122,29 +92,9 @@ public class ViewAll extends ActivityHelper {
         });
     }
 
-    private static final int FILE_SELECT_CODE = 0;
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case FILE_SELECT_CODE:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    try {
-                        path = getPath(this, uri);
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-                    openFile(path,myDb,tableName);
 
-                }
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
     private class StableArrayAdapter extends ArrayAdapter<String> {
-
         HashMap<String, Integer> mIdMap = new HashMap<>();
-
         public StableArrayAdapter(Context context, int textViewResourceId,
                                   List<String> objects) {
             super(context, textViewResourceId, objects);
@@ -152,18 +102,15 @@ public class ViewAll extends ActivityHelper {
                 mIdMap.put(objects.get(i), i);
             }
         }
-
         @Override
         public long getItemId(int position) {
             String item = getItem(position);
             return mIdMap.get(item);
         }
-
         @Override
         public boolean hasStableIds() {
             return true;
         }
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

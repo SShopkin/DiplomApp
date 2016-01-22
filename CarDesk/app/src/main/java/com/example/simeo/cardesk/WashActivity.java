@@ -68,7 +68,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(WashActivity.this,"#9C27B0");
+                        SetDateButton(WashActivity.this);
                     }
         });
     }

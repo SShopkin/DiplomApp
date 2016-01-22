@@ -92,7 +92,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(FuelActivity.this,"#AED581");
+                        SetDateButton(FuelActivity.this);
                     }
                 });
 
