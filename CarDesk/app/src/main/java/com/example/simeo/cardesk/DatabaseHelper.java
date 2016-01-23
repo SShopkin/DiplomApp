@@ -208,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     */
 
 
-
+//************************ editing ********************************
     public void editRecord(String id, String service,String enterID,String tableName){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -239,7 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("NOTE",note);
         db.update("note_table",cv, where, new String[]{enterId});
     }
-
+// *********************** export ***********************
     public Cursor getAllEnter(){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from enter_table", null);
@@ -254,4 +254,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from "+tableName, null);
     }
+// ****************************** import ***********************
+    
 }

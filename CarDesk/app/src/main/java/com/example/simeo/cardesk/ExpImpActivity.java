@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -115,7 +115,7 @@ public class ExpImpActivity extends ActivityHelper {
                         if((checkedFuel)||(checkedService)||(checkedInsurance)||(checkedClean)){
                             sendData(myDb, "enter_table");
                             getExternalStorageState();
-                            generateNoteOnSD("/storage/sdcard0/Notes/base.txt", finalObject.toString());
+                            generateFile("/storage/sdcard0/Notes/base.txt", finalObject.toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -133,6 +133,7 @@ public class ExpImpActivity extends ActivityHelper {
 
     }
 
+    //***************************import***************************
     private static final int FILE_SELECT_CODE = 0;
     public void importBase() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -167,9 +168,62 @@ public class ExpImpActivity extends ActivityHelper {
         return null;
     }
 
-    public void openFile(String path,DatabaseHelper myDb,String tableName) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    try {
+                        path = getPath(this, uri);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        openFile(path,myDb);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void openFile(String path,DatabaseHelper myDb) throws IOException {
         File file = new File(path);
-        StringBuilder text = new StringBuilder();
+        JSONArray oneTable=new JSONArray();
+        String str="";
+        JSONObject allTables=null;
+        byte[] data;
+        FileInputStream fis = new FileInputStream(file);
+        data=new byte[(int) file.length()];
+        fis.read(data);
+        fis.close();
+        str = new String(data, "UTF-8");
+
+        try {
+            allTables = new JSONObject(str);
+            oneTable = allTables.getJSONArray("enter_table");
+            importEnter(oneTable);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            oneTable = allTables.getJSONArray("fuel_table");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            oneTable = allTables.getJSONArray("clean_table");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        /*StringBuilder text = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
@@ -190,31 +244,27 @@ public class ExpImpActivity extends ActivityHelper {
             //function is commented
             //myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],tableName);
             i +=20;
-        }
+        }*/
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
 
+    public void importEnter(JSONArray enterTable) throws JSONException {
+        JSONObject row;
+        for(int i=0;i<enterTable.length();i++){
+            row = new JSONObject(enterTable.getString(0));
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case FILE_SELECT_CODE:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    try {
-                        path = getPath(this, uri);
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-                    //openFile(path,myDb,tableName);
-                }
-                break;
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            Log.d("pesho",enterTable.getString(0)); //one row
+            row = new JSONObject(enterTable.getString(0));
+            Log.d("pesho",row.getString("id")); //id value
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
-
+//*******************************export************************************
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void sendData(DatabaseHelper myDb,String tableName) throws JSONException {
         Cursor res;
@@ -232,11 +282,10 @@ public class ExpImpActivity extends ActivityHelper {
                 finalObject.put(tableName, textTable(res));
             }
         }
-
     }
     //generate file
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void generateNoteOnSD(String FilePath, String sBody){
+    public void generateFile(String FilePath, String sBody){
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(FilePath), "utf-8"))) {
             writer.write(sBody);
