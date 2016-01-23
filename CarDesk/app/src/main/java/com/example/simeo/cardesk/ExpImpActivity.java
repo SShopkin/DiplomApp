@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -192,10 +191,11 @@ public class ExpImpActivity extends ActivityHelper {
 
     public void openFile(String path,DatabaseHelper myDb) throws IOException {
         File file = new File(path);
-        JSONArray oneTable=new JSONArray();
-        String str="";
+        JSONArray oneTable;
+        String str;
         JSONObject allTables=null;
         byte[] data;
+
         FileInputStream fis = new FileInputStream(file);
         data=new byte[(int) file.length()];
         fis.read(data);
@@ -205,79 +205,77 @@ public class ExpImpActivity extends ActivityHelper {
         try {
             allTables = new JSONObject(str);
             oneTable = allTables.getJSONArray("enter_table");
-            importEnter(oneTable);
+            importEnter(oneTable, myDb);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            oneTable = allTables.getJSONArray("note_table");
+            importNote(oneTable, myDb);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         try {
             oneTable = allTables.getJSONArray("fuel_table");
+            importTable(oneTable, myDb);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         try {
             oneTable = allTables.getJSONArray("clean_table");
+            importClean(oneTable,myDb);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        /*StringBuilder text = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close();
-        }
-        catch (IOException e) {
-            //Toast.makeText(context, "3.",Toast.LENGTH_SHORT).show();
-        }
-        int number = 34;
-        char c = (char)number;
-        String a = String.valueOf(c);
-        String[] textByLine = text.toString().split(a) ;
-        for(int i=5;i<textByLine.length;i+=0){
-            //function is commented
-            //myDb.insertData(textByLine[i+4],textByLine[i+8],textByLine[i+12],textByLine[i+16],tableName);
-            i +=20;
-        }*/
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
 
-    public void importEnter(JSONArray enterTable) throws JSONException {
+    public void importEnter(JSONArray enterTable,DatabaseHelper myDb) throws JSONException {
         JSONObject row;
         for(int i=0;i<enterTable.length();i++){
-            row = new JSONObject(enterTable.getString(0));
-
-        }
-        try {
-            Log.d("pesho",enterTable.getString(0)); //one row
-            row = new JSONObject(enterTable.getString(0));
-            Log.d("pesho",row.getString("id")); //id value
-        } catch (JSONException e) {
-            e.printStackTrace();
+            row = new JSONObject(enterTable.getString(i));
+            myDb.importEnter(row.getString("id"), row.getString("price"), row.getString("date"), row.getString("mileage"));
         }
     }
+
+    public void importClean(JSONArray cleanTable,DatabaseHelper myDb) throws JSONException {
+        JSONObject row;
+        for (int i = 0; i < cleanTable.length(); i++) {
+            row = new JSONObject(cleanTable.getString(i));
+            myDb.insertClean(Long.parseLong(row.getString("enterId")));
+        }
+    }
+
+    public void importNote(JSONArray noteTable,DatabaseHelper myDb) throws JSONException {
+        JSONObject row;
+        for (int i = 0; i < noteTable.length(); i++) {
+            row = new JSONObject(noteTable.getString(i));
+            myDb.insertNote(row.getString("note"), Long.parseLong(row.getString("enterId")));
+        }
+    }
+
 //*******************************export************************************
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void sendData(DatabaseHelper myDb,String tableName) throws JSONException {
         Cursor res;
         if("enter_table".equals(tableName)) {
             res = myDb.getAllEnter();
-                finalObject.put("enter_table", textEnterTable(res));
+            finalObject.put("enter_table", textEnterTable(res));
+            res = myDb.getAllNotes();
+            finalObject.put("note_table", textNoteTable(res));
         } else if ("clean_table".equals(tableName)){
             res = myDb.getAllClean();
             if (res.getCount()!=0) {
                 finalObject.put("clean_table", textCleanTable(res));
             }
         } else {
-                res = myDb.getAllTable(tableName);
+                res = myDb.getAllTables(tableName);
             if (res.getCount()!=0) {
                 finalObject.put(tableName, textTable(res));
             }
@@ -334,6 +332,22 @@ public class ExpImpActivity extends ActivityHelper {
             try {
                 row.put("id", res.getString(0));
                 row.put("enterId", res.getString(1));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            tableAsArray.put(row);
+        }
+        return tableAsArray;
+    }
+
+    public JSONArray textNoteTable(Cursor res){
+        JSONObject row;
+        JSONArray tableAsArray = new JSONArray();
+        while (res.moveToNext()){
+            row = new JSONObject();
+            try {
+                row.put("note", res.getString(1));
+                row.put("enterId", res.getString(2));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

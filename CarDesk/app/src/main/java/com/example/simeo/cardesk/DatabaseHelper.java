@@ -250,10 +250,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("select * from clean_table", null);
     }
 
-    public Cursor getAllTable(String tableName) {
+    public Cursor getAllNotes(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("select * from note_table", null);
+    }
+
+    public Cursor getAllTables(String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from "+tableName, null);
     }
 // ****************************** import ***********************
-    
+    public void importEnter(String id,String price,String date,String mileage){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("ID",id);
+        cv.put("PRICE",price);
+        cv.put("DATE",date);
+        cv.put("MILEAGE", mileage);
+        db.insert("enter_table", null, cv);
+    }
 }
