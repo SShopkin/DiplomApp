@@ -43,7 +43,8 @@ public class MainActivity extends ActivityHelper {
             myDb.insertEnter("0",dateFormat.format(date),"0");
         }
         AdGenerator();
-        editMileage.setText(myDb.currentMileage());
+        final String currentMileage=myDb.currentMileage();
+        editMileage.setText(currentMileage);
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
@@ -52,7 +53,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, FuelActivity.class));
                     }
                 }
@@ -62,7 +63,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, SearchActivity.class));
                     }
                 }
@@ -72,7 +73,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, SOSActivity.class));
                     }
                 }
@@ -82,7 +83,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, InsActivity.class));
                     }
                 }
@@ -92,7 +93,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, WashActivity.class));
                     }
                 }
@@ -102,7 +103,7 @@ public class MainActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mileage();
+                        mileage(currentMileage);
                         startActivity(new Intent(MainActivity.this, ServiceActivity.class));
                     }
                 }
@@ -129,9 +130,11 @@ public class MainActivity extends ActivityHelper {
         }
     }
 
-    public void mileage(){
+    public void mileage(String oldMileage){
         if(isMileageOk(MainActivity.this,myDb.currentMileage(),editMileage.getText().toString())){
-            myDb.insertEnter("0",dateFormat.format(date),editMileage.getText().toString());
+            if(oldMileage.equals(editMileage.getText().toString())) {
+                myDb.insertEnter("0", dateFormat.format(date), editMileage.getText().toString());
+            }
         }
     }
 
