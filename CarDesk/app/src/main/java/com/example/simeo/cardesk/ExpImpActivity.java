@@ -219,7 +219,21 @@ public class ExpImpActivity extends ActivityHelper {
 
         try {
             oneTable = allTables.getJSONArray("fuel_table");
-            importTable(oneTable, myDb);
+            importTable(oneTable, myDb, "fuel_table");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            oneTable = allTables.getJSONArray("service_table");
+            importTable(oneTable, myDb,"service_table");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            oneTable = allTables.getJSONArray("ins_table");
+            importTable(oneTable, myDb,"ins_table");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -257,6 +271,14 @@ public class ExpImpActivity extends ActivityHelper {
         for (int i = 0; i < noteTable.length(); i++) {
             row = new JSONObject(noteTable.getString(i));
             myDb.insertNote(row.getString("note"), Long.parseLong(row.getString("enterId")));
+        }
+    }
+
+    public void importTable(JSONArray noteTable,DatabaseHelper myDb, String tableName) throws JSONException {
+        JSONObject row;
+        for (int i = 0; i < noteTable.length(); i++) {
+            row = new JSONObject(noteTable.getString(i));
+            myDb.insertData(row.getString("service"), Long.parseLong(row.getString("enterId")),tableName);
         }
     }
 
