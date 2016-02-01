@@ -59,12 +59,7 @@ public class StatisticActivity extends ActivityHelper {
                     public void onClick(View v) {
                         if ("All".equals(choseTable())) {
                             fuelView.setVisibility(View.INVISIBLE);
-                            sum = 0;
-                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "fuel_table"));
-                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "service_table"));
-                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "ins_table"));
-                            sum += Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, "clean_table"));
-                            sumView.setText(String.format("%s%s", textAllSum(sum), averageSum(sum)));
+                            sumView.setText(String.format("%s%s", textAllSum(myDb.allSum(chosePeriod(), curDate)), averageSum(myDb.allSum(chosePeriod(), curDate))));
                         } else if ("fuel_table".equals(choseTable())) {
                             /*fuelView.setVisibility(View.VISIBLE);
                             fuelView.setText(myDb.GetFirstMileage(chosePeriod(), curDate));

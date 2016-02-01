@@ -124,6 +124,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "";
     }
 
+    public double allSum(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM enter_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
+        if(cursor.moveToFirst()){
+            return cursor.getDouble(0);
+        } return 0;
+    }
+
     public String totalSum(String searchDate, String currentDate, String tableName){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
