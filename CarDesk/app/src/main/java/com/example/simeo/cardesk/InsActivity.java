@@ -38,15 +38,15 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
-        ToolBar("Insurance");
-        GetCurrentDate(dateButton);
-        AdGenerator();
+        toolBar("Insurance");
+        getCurrentDate(dateButton);
+        adGenerator();
         editMileage.setText(myDb.currentMileage());
 
         editValidity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetDateButton(InsActivity.this);
+                setDateButton(InsActivity.this);
             }
 
         });
@@ -61,7 +61,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                                     , editNote.getText().toString(), TABlE_NAME);
                             if (id != -1) {
                                 final String value = TABlE_NAME + "\n" + id;
-                                Intent myIntent = new Intent(InsActivity.this, ViewFS.class);
+                                Intent myIntent = new Intent(InsActivity.this, ViewOne.class);
                                 myIntent.putExtra("key", value);
                                 InsActivity.this.startActivity(myIntent);
                             }
@@ -73,7 +73,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(InsActivity.this, TABlE_NAME);
+                        history(InsActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -81,7 +81,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(InsActivity.this);
+                        setDateButton(InsActivity.this);
                     }
                 });
 

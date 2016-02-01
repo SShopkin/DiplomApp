@@ -12,7 +12,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
-public class WashActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
+public class CleanActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
     EditText editMileage,editPrice,editNote;
     FancyButton btnAddData,btnHistory,dateButton;
@@ -25,7 +25,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wash);
+        setContentView(R.layout.activity_clean);
         myDb=new DatabaseHelper(this);
 
 
@@ -36,22 +36,22 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
-        ToolBar("Car Wash");
+        toolBar("Car Wash");
         editMileage.setText(myDb.currentMileage());
-        GetCurrentDate(dateButton);
-        AdGenerator();
+        getCurrentDate(dateButton);
+        adGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(isMileageOk(WashActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
-                            long id = addCleaning(WashActivity.this, myDb, editPrice.getText().toString(), dateForBase(dateButton.getText().toString()),
+                        if(isMileageOk(CleanActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                            long id = addCleaning(CleanActivity.this, myDb, editPrice.getText().toString(), dateForBase(dateButton.getText().toString()),
                                     editMileage.getText().toString(), editNote.getText().toString());
                             final String value = TABlE_NAME + "\n" + id;
-                            Intent myIntent = new Intent(WashActivity.this, ViewFS.class);
+                            Intent myIntent = new Intent(CleanActivity.this, ViewOne.class);
                             myIntent.putExtra("key", value);
-                            WashActivity.this.startActivity(myIntent);
+                            CleanActivity.this.startActivity(myIntent);
                         }
                     }
                 });
@@ -60,7 +60,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(WashActivity.this, TABlE_NAME);
+                        history(CleanActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -68,7 +68,7 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(WashActivity.this);
+                        setDateButton(CleanActivity.this);
                     }
         });
     }
@@ -98,14 +98,14 @@ public class WashActivity extends ActivityHelper implements DatePickerDialog.OnD
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(WashActivity.this, SettingsActivity.class));
+                startActivity(new Intent(CleanActivity.this, SettingsActivity.class));
                 return true;
             case R.id.action_export:
-                startActivity(new Intent(WashActivity.this, ExpImpActivity.class));
+                startActivity(new Intent(CleanActivity.this, ExpImpActivity.class));
                 return true;
             default:
-                Intent myIntent = new Intent(WashActivity.this, MainActivity.class);
-                WashActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(CleanActivity.this, MainActivity.class);
+                CleanActivity.this.startActivity(myIntent);
                 return true;
         }
     }

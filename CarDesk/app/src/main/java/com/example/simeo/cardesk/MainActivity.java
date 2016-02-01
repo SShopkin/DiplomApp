@@ -42,7 +42,7 @@ public class MainActivity extends ActivityHelper {
                     getResources().getString(R.string.auto_currency));
             myDb.insertEnter("0",dateFormat.format(date),"0");
         }
-        AdGenerator();
+        adGenerator();
         final String currentMileage=myDb.currentMileage();
         editMileage.setText(currentMileage);
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -64,7 +64,7 @@ public class MainActivity extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         mileage(currentMileage);
-                        startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                        startActivity(new Intent(MainActivity.this, StatisticActivity.class));
                     }
                 }
         );
@@ -94,7 +94,7 @@ public class MainActivity extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         mileage(currentMileage);
-                        startActivity(new Intent(MainActivity.this, WashActivity.class));
+                        startActivity(new Intent(MainActivity.this, CleanActivity.class));
                     }
                 }
         );

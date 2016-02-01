@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class ViewFS extends ActivityHelper {
+public class ViewOne extends ActivityHelper {
     TextView txtView;
     FancyButton btnDelete;
     FancyButton btnEdit;
@@ -20,14 +20,14 @@ public class ViewFS extends ActivityHelper {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_fs);
+        setContentView(R.layout.activity_view_one);
         txtView= (TextView)findViewById(R.id.textView);
         btnDelete=(FancyButton)findViewById(R.id.button_delete);
         btnEdit=(FancyButton)findViewById(R.id.button_edit);
         myDb=new DatabaseHelper(this);
 
-        ToolBar("Record");
-        AdGenerator();
+        toolBar("Record");
+        adGenerator();
 
         Intent intent = getIntent();
         String value = intent.getStringExtra("key");
@@ -107,8 +107,8 @@ public class ViewFS extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         myDb.delete(id, tableName);
-                        Toast.makeText(ViewFS.this, "Successful deleted", Toast.LENGTH_LONG).show();
-                        History(ViewFS.this, tableName);
+                        Toast.makeText(ViewOne.this, "Successful deleted", Toast.LENGTH_LONG).show();
+                        history(ViewOne.this, tableName);
                     }
                 }
         );
@@ -118,9 +118,9 @@ public class ViewFS extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         String value =id  + "\n" + tableName;
-                        Intent myIntent = new Intent(ViewFS.this, EditActivity.class);
+                        Intent myIntent = new Intent(ViewOne.this, EditActivity.class);
                         myIntent.putExtra("key", value);
-                        ViewFS.this.startActivity(myIntent);
+                        ViewOne.this.startActivity(myIntent);
                     }
                 }
         );
@@ -136,10 +136,10 @@ public class ViewFS extends ActivityHelper {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(ViewFS.this, SettingsActivity.class));
+                startActivity(new Intent(ViewOne.this, SettingsActivity.class));
                 return true;
             case R.id.action_export:
-                startActivity(new Intent(ViewFS.this, ExpImpActivity.class));
+                startActivity(new Intent(ViewOne.this, ExpImpActivity.class));
                 return true;
             default:
                 onBackPressed();

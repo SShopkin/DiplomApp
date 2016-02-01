@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -45,23 +46,24 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (MaterialSpinner)findViewById(R.id.spinner);
+        spinner.setHint(R.string.service);
         spinner.setAdapter(adapter);
 
-        ToolBar("Service");
-        GetCurrentDate(dateButton);
+        toolBar("Service");
+        getCurrentDate(dateButton);
         editMileage.setText(myDb.currentMileage());
-        AdGenerator();
+        adGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(isMileageOk(ServiceActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                        if((isMileageOk(ServiceActivity.this,myDb.currentMileage(),editMileage.getText().toString()))&&(isOptionSelected())) {
                             long id = addDataToTheBase(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
                                     dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
                             if (id != -1) {
                                 final String value = TABlE_NAME + "\n" + id;
-                                Intent myIntent = new Intent(ServiceActivity.this, ViewFS.class);
+                                Intent myIntent = new Intent(ServiceActivity.this, ViewOne.class);
                                 myIntent.putExtra("key", value); //Optional parameters
                                 ServiceActivity.this.startActivity(myIntent);
                             }
@@ -73,7 +75,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(ServiceActivity.this, TABlE_NAME);
+                        history(ServiceActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -81,13 +83,22 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(ServiceActivity.this);
+                        setDateButton(ServiceActivity.this);
                     }
                 });
 
 
 
 
+    }
+    
+    public boolean isOptionSelected(){
+        if (getString(R.string.service).equals(spinner.getSelectedItem().toString())){
+            Toast.makeText(ServiceActivity.this, "Choose service", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

@@ -30,5 +30,8 @@
     <string name="auto_currency"> euro</string>
     <string name="title_activity_exp_imp">ExpImpActivity</string>
 
+    <!-- ServiceActivity.java-->
+    <string name="service">Service:</string>
+
 
 </resources>

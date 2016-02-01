@@ -58,10 +58,9 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         });
 
 
-        ToolBar("Fuel");
-        GetCurrentDate(dateButton);
-
-        AdGenerator();
+        toolBar("Fuel");
+        getCurrentDate(dateButton);
+        adGenerator();
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
@@ -72,7 +71,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                                     dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), tank, TABlE_NAME);
                             if (id != -1) {
                                 final String value = TABlE_NAME + "\n" + id;
-                                Intent myIntent = new Intent(FuelActivity.this, ViewFS.class);
+                                Intent myIntent = new Intent(FuelActivity.this, ViewOne.class);
                                 myIntent.putExtra("key", value);
                                 FuelActivity.this.startActivity(myIntent);
                             }
@@ -84,7 +83,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        History(FuelActivity.this, "fuel_table");
+                        history(FuelActivity.this, "fuel_table");
                     }
                 });
 
@@ -92,7 +91,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetDateButton(FuelActivity.this);
+                        setDateButton(FuelActivity.this);
                     }
                 });
 

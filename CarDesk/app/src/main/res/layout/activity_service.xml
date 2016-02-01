@@ -36,7 +36,6 @@
             android:id="@+id/spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            ads:ms_hint="Service:"
             ads:ms_baseColor="@color/accentOrange"
             ads:ms_arrowSize="20dp"
             android:layout_below="@+id/date_button"

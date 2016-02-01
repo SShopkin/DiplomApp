@@ -16,7 +16,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
-public class SearchActivity extends ActivityHelper {
+public class StatisticActivity extends ActivityHelper {
     DatabaseHelper myDb;
     TextView sumView,fuelView;
     FancyButton btnRefresh;
@@ -27,19 +27,16 @@ public class SearchActivity extends ActivityHelper {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_statistic);
         myDb=new DatabaseHelper(this);
         liquidMeasure=myDb.getSettings().split(":")[0];
         distanceMeasure=myDb.getSettings().split(":")[1];
         currencyMeasure=myDb.getSettings().split(":")[2];
 
-        ToolBar("Statistics");
-
         btnRefresh = (FancyButton)findViewById(R.id.button_refresh);
         sumView= (TextView)findViewById(R.id.sumTxt);
         fuelView= (TextView)findViewById(R.id.fuelTxt);
         fuelView.setVisibility(View.INVISIBLE);
-
 
         String[] TABLE = {"All", "Fuel", "Service", "Insurance", "Clean"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TABLE);
@@ -53,9 +50,8 @@ public class SearchActivity extends ActivityHelper {
         dateSpinner.setAdapter(dateAdapter);
 
         curDate=currentDate();
-
-
-        AdGenerator();
+        adGenerator();
+        toolBar("Statistics");
 
         btnRefresh.setOnClickListener(
                 new View.OnClickListener() {
@@ -230,14 +226,14 @@ public class SearchActivity extends ActivityHelper {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(SearchActivity.this, SettingsActivity.class));
+                startActivity(new Intent(StatisticActivity.this, SettingsActivity.class));
                 return true;
             case R.id.action_export:
-                startActivity(new Intent(SearchActivity.this, ExpImpActivity.class));
+                startActivity(new Intent(StatisticActivity.this, ExpImpActivity.class));
                 return true;
             default:
-                Intent myIntent = new Intent(SearchActivity.this, MainActivity.class);
-                SearchActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(StatisticActivity.this, MainActivity.class);
+                StatisticActivity.this.startActivity(myIntent);
                 return true;
         }
     }

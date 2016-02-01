@@ -22,20 +22,20 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class ActivityHelper extends AppCompatActivity {
     private static final int FILE_SELECT_CODE = 0;
 
-    public void ToolBar(String title){
+    public void toolBar(String title){
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar);
         myToolbar.setTitle(title);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-     public void AdGenerator(){
+     public void adGenerator(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
 
-    public void SetDateButton(Context context){
+    public void setDateButton(Context context){
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 (DatePickerDialog.OnDateSetListener) context,
@@ -47,7 +47,7 @@ public class ActivityHelper extends AppCompatActivity {
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
-    public void GetCurrentDate(FancyButton dateButton){
+    public void getCurrentDate(FancyButton dateButton){
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
         dateButton.setText(dateFormat.format(date));
@@ -68,7 +68,7 @@ public class ActivityHelper extends AppCompatActivity {
         return day+"."+month+"."+year;
     }
 
-    public void History(Context context,String table_name){
+    public void history(Context context,String table_name){
         Intent myIntent = new Intent(context, ViewAll.class);
         myIntent.putExtra("key", table_name);
         context.startActivity(myIntent);

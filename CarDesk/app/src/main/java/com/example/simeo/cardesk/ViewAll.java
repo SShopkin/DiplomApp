@@ -33,8 +33,8 @@ public class ViewAll extends ActivityHelper {
         Intent intent = getIntent();
         tableName  = intent.getStringExtra("key");
 
-        AdGenerator();
-        ToolBar("History");
+        adGenerator();
+        toolBar("History");
 
         Cursor res = myDb.getAllData(tableName);
         if (res.getCount() == 0) {
@@ -85,7 +85,7 @@ public class ViewAll extends ActivityHelper {
                 } else {
                     value = tableName + "\n" + idArray.get(position);
                 }
-                Intent myIntent = new Intent(ViewAll.this, ViewFS.class);
+                Intent myIntent = new Intent(ViewAll.this, ViewOne.class);
                 myIntent.putExtra("key", value);
                 ViewAll.this.startActivity(myIntent);
             }
@@ -135,7 +135,7 @@ public class ViewAll extends ActivityHelper {
                 } else if ("ins_table".equals(tableName)) {
                     myIntent = new Intent(ViewAll.this, InsActivity.class);
                 } else {
-                    myIntent = new Intent(ViewAll.this, WashActivity.class);
+                    myIntent = new Intent(ViewAll.this, CleanActivity.class);
                 }
                 ViewAll.this.startActivity(myIntent);
                 return true;

@@ -35,12 +35,12 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ViewFS"
+            android:name=".ViewOne"
             android:label="@string/title_activity_view_one"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".StatisticActivity"
             android:label="@string/title_activity_lamp"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
@@ -56,7 +56,7 @@
                 android:value="com.example.simeo.cardesk.MainActivity" />
         </activity>
         <activity
-            android:name=".WashActivity"
+            android:name=".CleanActivity"
             android:label="@string/title_activity_oil"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data

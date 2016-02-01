@@ -91,8 +91,8 @@ public class ExpImpActivity extends ActivityHelper {
             }
         });
 
-        ToolBar("Export and import");
-        AdGenerator();
+        toolBar("Export and import");
+        adGenerator();
 
         btnExport.setOnClickListener(
             new View.OnClickListener() {

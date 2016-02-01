@@ -55,8 +55,8 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
             }
         }
 
-        ToolBar("Edit");
-        AdGenerator();
+        toolBar("Edit");
+        adGenerator();
 
         if(!("clean_table".equals(tableName))){
             edit.setText(service);
@@ -69,7 +69,7 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetDateButton(EditActivity.this);
+                setDateButton(EditActivity.this);
             }
 
         });
@@ -89,7 +89,7 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
                         } else if (!("".equals(note))){
                             myDb.editNote(enterId,editNote.getText().toString());
                         }
-                        History(EditActivity.this, tableName);
+                        history(EditActivity.this, tableName);
                     }
                 });
 

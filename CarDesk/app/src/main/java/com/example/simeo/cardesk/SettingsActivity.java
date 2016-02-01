@@ -56,8 +56,8 @@ public class SettingsActivity extends ActivityHelper {
         spinnerCurrency.setAdapter(adapter2);
         spinnerCurrency.setSelection(4);
 
-        ToolBar("Settings");
-        AdGenerator();
+        toolBar("Settings");
+        adGenerator();
 
 
         btnApply.setOnClickListener(
