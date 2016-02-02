@@ -42,11 +42,13 @@ public class StatisticActivity extends ActivityHelper {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TABLE);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tableSpinner = (MaterialSpinner)findViewById(R.id.tableSpinner);
+        tableSpinner.setHint(R.string.statistic_hint_cat);
         tableSpinner.setAdapter(adapter);
         String[] DATES = {"Today","Last week", "Last month", "Last year", "From beginning"};
         ArrayAdapter<String> dateAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, DATES);
         dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dateSpinner = (MaterialSpinner)findViewById(R.id.timeSpinner);
+        dateSpinner.setHint(R.string.statistic_hint_time);
         dateSpinner.setAdapter(dateAdapter);
 
         curDate=currentDate();
