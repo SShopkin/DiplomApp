@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,23 +60,32 @@ public class StatisticActivity extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if ("All".equals(choseTable())) {
-                            fuelView.setVisibility(View.INVISIBLE);
-                            sumView.setText(String.format("%s%s", textAllSum(myDb.allSum(chosePeriod(), curDate)), averageSum(myDb.allSum(chosePeriod(), curDate))));
-                        } else if ("fuel_table".equals(choseTable())) {
-                            /*fuelView.setVisibility(View.VISIBLE);
-                            fuelView.setText(myDb.GetFirstMileage(chosePeriod(), curDate));
-                            sumView.setText(curDate);*/
-                            //sumView.setText(myDb.preciseFuel());
-                        } else {
-                           fuelView.setVisibility(View.INVISIBLE);
-                           sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
+                        if (isOtionSelected()) {
+                            if ("All".equals(choseTable())) {
+                                fuelView.setVisibility(View.INVISIBLE);
+                                sumView.setText(String.format("%s%s", textAllSum(myDb.allSum(chosePeriod(), curDate)), averageSum(myDb.allSum(chosePeriod(), curDate))));
+                            } else if ("fuel_table".equals(choseTable())) {
+                        /*fuelView.setVisibility(View.VISIBLE);
+                        fuelView.setText(myDb.GetFirstMileage(chosePeriod(), curDate));
+                        sumView.setText(curDate);*/
+                                //sumView.setText(myDb.preciseFuel());
+                            } else {
+                                fuelView.setVisibility(View.INVISIBLE);
+                                sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
+                            }
                         }
-                   }
+                    }
                 }
         );
+    }
 
-
+    public boolean isOtionSelected(){
+        if((("").equals(chosePeriod()))||("").equals(choseTable())) {
+            Toast.makeText(StatisticActivity.this, "Choose category or period", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public String currentDate(){
