@@ -19,11 +19,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABlE_NAME[0] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PRICE REAL, DATE TEXT, MILEAGE INTEGER)");
-        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
-        db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE REAL, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
-        db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
-        db.execSQL("create table " + TABlE_NAME[4] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
-        db.execSQL("create table " + TABlE_NAME[5] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOTE TEXT, ENTER INTEGER, FOREIGN KEY (ENTER) REFERENCES enter_table(ID))");
+        db.execSQL("create table " + TABlE_NAME[1] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTERID INTEGER, FOREIGN KEY (ENTERID) REFERENCES enter_table(ID))");
+        db.execSQL("create table " + TABlE_NAME[2] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE REAL, ENTERID INTEGER, FOREIGN KEY (ENTERID) REFERENCES enter_table(ID))");
+        db.execSQL("create table " + TABlE_NAME[3] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVICE TEXT, ENTERID INTEGER, FOREIGN KEY (ENTERID) REFERENCES enter_table(ID))");
+        db.execSQL("create table " + TABlE_NAME[4] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ENTERID INTEGER, FOREIGN KEY (ENTERID) REFERENCES enter_table(ID))");
+        db.execSQL("create table " + TABlE_NAME[5] + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOTE TEXT, ENTERID INTEGER, FOREIGN KEY (ENTERID) REFERENCES enter_table(ID))");
         db.execSQL("create table " + TABlE_NAME[6] + " (UNITFORLIQUID TEXT, UNITFORDISTANCE TEXT, CURRENCY TEXT)");
     }
 
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("SERVICE",service);
-        contentValues.put("ENTER", enterId);
+        contentValues.put("ENTERID", enterId);
         return db.insert(tableName,null,contentValues);
     }
 
@@ -85,14 +85,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("NOTE", note);
-        cv.put("ENTER", enterId);
+        cv.put("ENTERID", enterId);
         return db.insert("note_table", null, cv);
     }
 
     public long insertClean(long enterId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ENTER", enterId);
+        contentValues.put("ENTERID", enterId);
         return db.insert("clean_table", null, contentValues);
     }
 
@@ -107,12 +107,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllData(String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID", null);
+        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTERID = enter_table.ID", null);
     }
 
     public Cursor getOneRow(String tableName,String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER where " + tableName + ".ID=" + id, null);
+        return db.rawQuery("select * from " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTERID = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTERID = note_table.ENTERID where " + tableName + ".ID=" + id, null);
     }
 
     public String currentMileage(){
@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String totalSum(String searchDate, String currentDate, String tableName){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTER = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
+        Cursor cursor = db.rawQuery("SELECT Sum(PRICE) FROM " + tableName + " LEFT JOIN enter_table ON " + tableName + ".ENTERID = enter_table.ID LEFT JOIN note_table ON " + tableName + ".ENTERID = note_table.ENTERID WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
         if(cursor.moveToFirst()){
             return Double.toString(cursor.getDouble(0));
         } return "0";
@@ -143,78 +143,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int fullUpCount(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND NOTE='Your tank was full up.'", null);
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTERID = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTERID = note_table.ENTERID WHERE date(enter_table.DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND note_table.NOTE='Your tank was full up.'", null);
         if(cursor.moveToFirst()){
             return cursor.getInt(0);
         } return 0;
     }
 
-    /*  *****************preciseFuel *****************
-    public String getLastFullUpMileage(){
+
+    public int getLastFullUpMileage(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor lastFullUp = db.rawQuery("SELECT MILEAGE FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE NOTE!='' ORDER BY ID DESC limit 1", null);
+        Cursor lastFullUp = db.rawQuery("SELECT enter_table.mileage FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTERID = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTERID = note_table.ENTERID WHERE note_table.note !='' ORDER BY date(DATE) DESC, fuel_table.ID DESC limit 1", null);
         if(lastFullUp.moveToFirst())        {
-            return lastFullUp.getString(0);
-        } return "";
+            return lastFullUp.getInt(0);
+        }
+        return 0;
     }
 
-    public String getPreviousFullUpMileage(){
+    public int getFirstFullUpMileage(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor previousFullUp = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE NOTE='Your tank was full up.' ORDER BY ID DESC limit 1,1", null);
+        Cursor previousFullUp = db.rawQuery("SELECT enter_table.mileage FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTERID = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTERID = note_table.ENTERID WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND note_table.note !='' ORDER BY date(DATE) ASC limit 1", null);
         if(previousFullUp.moveToFirst())        {
-            return previousFullUp.getString(0);
-        } return "";
+            return previousFullUp.getInt(0);
+        } return 0;
     }
 
-    public String preciseFuel(){
+    public Double preciseFuel(int fullUpCount){
+        Double sum=0.0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM (SELECT ft.*, (SELECT count(*) FROM fuel_table ft2 WHERE ft2.note='Your tank was full up.' and ft2.id>=ft.id) AS numNotesAhead FROM fuel_table ft) AS ft WHERE numNotesAhead=1",null);
-        if(fuel.moveToFirst())        {
-            return fuel.getString(0);
-        } return "";
+        for(int i=1;i<fullUpCount;i++) {
+            Cursor fuel = db.rawQuery("SELECT SUM(fq.service) AS total FROM (SELECT fq2.*,(SELECT COUNT(*) FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq1 WHERE fq1.note = 'Your tank was full up.' AND fq1.id >= fq2.id) AS numNotesAhead FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq2) fq WHERE numNotesAhead = "+i, null);
+            if (fuel.moveToFirst()) {
+                sum += fuel.getDouble(0);
+            }
+        }
+        return sum;
     }
-    */
-
-    /* ***************fuel******************
-    public double FuelBetweenDate(String searchDate, String currentDate){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor fuel = db.rawQuery("SELECT Sum(SERVICE) FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "')", null);
-        Cursor firstFuel = db.rawQuery("SELECT SERVICE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
-        if(firstFuel.moveToFirst()&&fuel.moveToFirst()){
-            return (Double.parseDouble(fuel.getString(0))) - (Double.parseDouble(firstFuel.getString(0)));
-        }  return 0;
-    }
-
-    public String GetLastMileage(String searchDate, String currentDate){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor lastMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID DESC limit 1", null);
-        if(lastMileage.moveToFirst())        {
-            return lastMileage.getString(0);
-        } return "101";
-    }
-
-    public String GetFirstMileage(String searchDate, String currentDate){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor firstMileage = db.rawQuery("SELECT MILEAGE FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTER = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTER = note_table.ENTER WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY ID ASC limit 1", null);
-        if(firstMileage.moveToFirst())        {
-            return firstMileage.getString(0);
-        } return "100";
-    }*/
-
-
-    /*
-    ********import******
-    public long insertData(String price, String date,String validMil,String note,String TABlE_NAME) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("PRICE",price);
-        contentValues.put("DATE",date);
-        contentValues.put("VALIDMIL",validMil);
-        contentValues.put("NOTE",note);
-        return db.insert(TABlE_NAME, null, contentValues);
-    }
-    */
-
 
 //************************ editing ********************************
     public void editRecord(String id, String service,String enterID,String tableName){
@@ -223,9 +186,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String where="ID = ?";
         if(!("clean_table".equals(tableName))){
             cv.put("SERVICE",service);
-            cv.put("ENTER",enterID);
+            cv.put("ENTERID",enterID);
         }else{
-            cv.put("ENTER",enterID);
+            cv.put("ENTERID",enterID);
         }
         db.update(tableName,cv, where, new String[]{id});
     }
@@ -243,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void editNote(String enterId, String note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where="ENTER = ?";
+        String where="ENTERID = ?";
         cv.put("NOTE",note);
         db.update("note_table",cv, where, new String[]{enterId});
     }

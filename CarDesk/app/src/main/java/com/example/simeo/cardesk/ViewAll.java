@@ -79,12 +79,7 @@ public class ViewAll extends ActivityHelper {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                String value="";
-                if(("fuel_table".equals(tableName))||("service_table".equals(tableName))) {
-                    value = tableName + "\n" + idArray.get(position);
-                } else {
-                    value = tableName + "\n" + idArray.get(position);
-                }
+                String value = tableName + "\n" + idArray.get(position);
                 Intent myIntent = new Intent(ViewAll.this, ViewOne.class);
                 myIntent.putExtra("key", value);
                 ViewAll.this.startActivity(myIntent);

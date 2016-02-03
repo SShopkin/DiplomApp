@@ -65,10 +65,9 @@ public class StatisticActivity extends ActivityHelper {
                                 fuelView.setVisibility(View.INVISIBLE);
                                 sumView.setText(String.format("%s%s", textAllSum(myDb.allSum(chosePeriod(), curDate)), averageSum(myDb.allSum(chosePeriod(), curDate))));
                             } else if ("fuel_table".equals(choseTable())) {
-                        /*fuelView.setVisibility(View.VISIBLE);
-                        fuelView.setText(myDb.GetFirstMileage(chosePeriod(), curDate));
-                        sumView.setText(curDate);*/
-                                //sumView.setText(myDb.preciseFuel());
+                                fuelView.setVisibility(View.VISIBLE);
+                                fuelView.setText(fuelConsumption());
+                                sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
                             } else {
                                 fuelView.setVisibility(View.INVISIBLE);
                                 sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
@@ -122,20 +121,18 @@ public class StatisticActivity extends ActivityHelper {
 
     public String fuelConsumption(){
         if(myDb.fullUpCount(chosePeriod(), curDate)>1){
-
-        } else {
-            /*double consumption = myDb.FuelBetweenDate(chosePeriod(), curDate) / traveledDistance() * 100;
-            return "Your fuel consumption is " + (Math.floor(consumption * 100) / 100) +
-                    " " + liquidMeasure + "s per 100 " + distanceMeasure + ".";*/
+            double consumption = myDb.preciseFuel(myDb.fullUpCount(chosePeriod(), curDate)) / fuelDistance() * 100;
+            consumption = Math.floor(consumption * 100) / 100;
+            return "Fuel consumption is "+consumption+" "+liquidMeasure+"s per 100 "+distanceMeasure+".";
         }
-        return "";
+        return "Not enough full ups.";
     }
-/*
-    public int traveledDistance(){
-        int first = Integer.parseInt(myDb.GetFirstMileage(chosePeriod(),curDate));
-        int last = Integer.parseInt(myDb.GetLastMileage(chosePeriod(),curDate));
+
+    public int fuelDistance(){
+        int first = myDb.getFirstFullUpMileage(chosePeriod(),curDate);
+        int last = myDb.getLastFullUpMileage();
         return last-first;
-    }*/
+    }
 
     public String lastWeekDate(){
         curDate=currentDate();
