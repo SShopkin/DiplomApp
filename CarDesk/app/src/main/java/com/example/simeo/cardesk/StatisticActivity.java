@@ -24,7 +24,6 @@ public class StatisticActivity extends ActivityHelper {
     MaterialSpinner dateSpinner,tableSpinner;
     String curDate,liquidMeasure,distanceMeasure,currencyMeasure;
     int curDay,curMonth,curYear;
-    double sum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +38,7 @@ public class StatisticActivity extends ActivityHelper {
         fuelView= (TextView)findViewById(R.id.fuelTxt);
         fuelView.setVisibility(View.INVISIBLE);
 
-        String[] TABLE = {"All", "Fuel", "Service", "Insurance", "Clean"};
+        String[] TABLE = {"All", "Fuel", "Service", "Travelled distance", "Insurance", "Clean"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TABLE);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tableSpinner = (MaterialSpinner)findViewById(R.id.tableSpinner);
@@ -68,7 +67,10 @@ public class StatisticActivity extends ActivityHelper {
                                 fuelView.setVisibility(View.VISIBLE);
                                 fuelView.setText(fuelConsumption());
                                 sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
-                            } else {
+                            } else if("distance".equals(choseTable())){
+                                fuelView.setVisibility(View.INVISIBLE);
+                                sumView.setText(distance());
+                            } else{
                                 fuelView.setVisibility(View.INVISIBLE);
                                 sumView.setText(String.format("%s%s", textSum(), averageSum(Double.parseDouble(myDb.totalSum(chosePeriod(), curDate, choseTable())))));
                             }
@@ -91,6 +93,17 @@ public class StatisticActivity extends ActivityHelper {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
         return dateForBase(dateFormat.format(date));
+    }
+
+    public String distance(){
+        int cur = Integer.parseInt(myDb.currentMileage());
+        if("".equals(myDb.mileage(chosePeriod(),curDate))){
+            return "Not enough records.";
+        } else {
+            int prev = Integer.parseInt(myDb.mileage(chosePeriod(),curDate));
+            String travel = (cur - prev) + "";
+            return dateSpinner.getSelectedItem().toString() + " you travelled " + travel + " " + distanceMeasure+".";
+        }
     }
 
     public String textSum(){
@@ -217,6 +230,8 @@ public class StatisticActivity extends ActivityHelper {
                 return "ins_table";
             case "Clean":
                 return "clean_table";
+            case "Travelled distance":
+                return "distance";
         }
         return "";
     }

@@ -132,7 +132,7 @@ public class MainActivity extends ActivityHelper {
 
     public void mileage(String oldMileage){
         if(isMileageOk(MainActivity.this,myDb.currentMileage(),editMileage.getText().toString())){
-            if(oldMileage.equals(editMileage.getText().toString())) {
+            if(!(oldMileage.equals(editMileage.getText().toString()))) {
                 myDb.insertEnter("0", dateFormat.format(date), editMileage.getText().toString());
             }
         }

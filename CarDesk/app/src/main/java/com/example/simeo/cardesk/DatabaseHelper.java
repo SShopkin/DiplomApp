@@ -35,12 +35,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void delete(String id,String TABlE_NAME)
+    public void delete(String id,String enterId,String TABlE_NAME)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
             db.delete(TABlE_NAME, "ID = ?", new String[]{id});
+            db.delete("enter_table", "ID = ?", new String[]{enterId});
         }
         catch(Exception e)
         {
@@ -118,6 +119,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String currentMileage(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select MILEAGE FROM enter_table ORDER BY ID DESC limit 1", null);
+        while (res.moveToNext()) {
+            return res.getString(0);
+        }
+        return "";
+    }
+
+    public String mileage(String searchDate, String currentDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select MILEAGE FROM enter_table WHERE date(DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') ORDER BY MILEAGE ASC limit 1", null);
         while (res.moveToNext()) {
             return res.getString(0);
         }

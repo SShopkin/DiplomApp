@@ -16,6 +16,7 @@ public class ViewOne extends ActivityHelper {
     FancyButton btnDelete;
     FancyButton btnEdit;
     DatabaseHelper myDb;
+    String enterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +47,14 @@ public class ViewOne extends ActivityHelper {
         Cursor res = myDb.getOneRow(tableName, id);
         while (res.moveToNext()) {
             if("clean_table".equals(tableName)) {
+                enterId = res.getString(2);
                 price = res.getString(3);
                 date = dateToShow(res.getString(4));
                 mileage = res.getString(5);
                 note = res.getString(7);
             } else {
                 service = res.getString(1);
+                enterId = res.getString(2);
                 price = res.getString(4);
                 date = dateToShow(res.getString(5));
                 mileage = res.getString(6);
@@ -106,7 +109,7 @@ public class ViewOne extends ActivityHelper {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb.delete(id, tableName);
+                        myDb.delete(id, enterId, tableName);
                         Toast.makeText(ViewOne.this, "Successful deleted", Toast.LENGTH_LONG).show();
                         history(ViewOne.this, tableName);
                     }
