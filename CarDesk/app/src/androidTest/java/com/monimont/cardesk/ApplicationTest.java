@@ -1,4 +1,4 @@
-package com.example.simeo.cardesk;
+package com.monimont.cardesk;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

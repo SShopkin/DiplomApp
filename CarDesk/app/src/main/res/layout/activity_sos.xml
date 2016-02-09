@@ -6,7 +6,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/backgroundOrange"
-    tools:context="com.example.simeo.cardesk.SOSActivity">
+    tools:context="com.monimont.cardesk.SOSActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Call to road assistance in:"
+        android:text="Call to roadside assistance in:"
         android:id="@+id/textView2"
         android:textSize="25sp"
         android:layout_below="@+id/toolbar"

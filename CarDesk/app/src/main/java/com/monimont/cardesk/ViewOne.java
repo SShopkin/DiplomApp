@@ -1,4 +1,4 @@
-package com.example.simeo.cardesk;
+package com.monimont.cardesk;
 
 import android.content.Intent;
 import android.database.Cursor;

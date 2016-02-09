@@ -1,4 +1,4 @@
-package com.example.simeo.cardesk;
+package com.monimont.cardesk;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -114,7 +114,7 @@ public class ExpImpActivity extends ActivityHelper {
                         if((checkedFuel)||(checkedService)||(checkedInsurance)||(checkedClean)){
                             sendData(myDb, "enter_table");
                             getExternalStorageState();
-                            generateFile("/storage/sdcard0/Notes/base.txt", finalObject.toString());
+                            generateFile("/storage/sdcard0/base.txt", finalObject.toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -324,7 +324,7 @@ public class ExpImpActivity extends ActivityHelper {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/storage/sdcard0/Notes/base.txt")));
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/storage/sdcard0/base.txt")));
         startActivity(intent);
     }
 

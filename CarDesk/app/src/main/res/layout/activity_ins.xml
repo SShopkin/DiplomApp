@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             ads:met_underlineColor="@color/accentOrange"
-            android:hint="Mileage:"
+            android:hint="@string/mileage_field"
             ads:met_floatingLabel="highlight"
             android:layout_below="@+id/editText_note"
             android:layout_alignParentRight="true"

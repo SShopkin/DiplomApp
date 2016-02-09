@@ -1,4 +1,4 @@
-package com.example.simeo.cardesk;
+package com.monimont.cardesk;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,31 +24,31 @@ public class SOSActivity extends ActivityHelper {
         btnSAmerica = (FancyButton) findViewById(R.id.southAmerica);
         btnAustralia = (FancyButton) findViewById(R.id.australia);
 
-        toolBar("Road assistance");
+        toolBar("Roadside assistance");
         adGenerator();
 
         btnEurope.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call("tel:NUMBER");
+                call("tel:0035316179560");
             }
         });
         btnNAmerica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call("tel:NUMBER");
+                call("tel:0018007192224");
             }
         });
         btnSAmerica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call("tel:NUMBER");
+                call("tel:00131111");
             }
         });
         btnAustralia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call("tel:NUMBER");
+                call("tel:00131111");
             }
         });
     }

@@ -37,4 +37,7 @@
     <string name="statistic_hint_cat">Category:</string>
     <string name="statistic_hint_time">Period:</string>
 
+    <!--common-->
+    <string name="mileage_field">Odometer:</string>
+
 </resources>

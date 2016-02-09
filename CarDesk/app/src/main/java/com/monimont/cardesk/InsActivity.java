@@ -1,40 +1,36 @@
-package com.example.simeo.cardesk;
+package com.monimont.cardesk;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
-public class ServiceActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
+public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDateSetListener{
     DatabaseHelper myDb;
-    EditText editQuantity,editPrice,editNote,editMileage;
+    EditText editValidity,editPrice,editNote,editMileage;
     FancyButton btnAddData;
     FancyButton btnHistory;
     FancyButton dateButton;
-    MaterialSpinner spinner;
     public static final String TABlE_NAME;
 
     static {
-        TABlE_NAME = "service_table";
+        TABlE_NAME = "ins_table";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service);
+        setContentView(R.layout.activity_ins);
         myDb=new DatabaseHelper(this);
 
-        editQuantity = (EditText)findViewById(R.id.editText_quantity);
+        editValidity = (EditText)findViewById(R.id.editText_validity);
         editPrice = (EditText)findViewById(R.id.editText_price);
         editNote = (EditText)findViewById(R.id.editText_note);
         editMileage = (EditText)findViewById(R.id.editText_mileage);
@@ -42,30 +38,32 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
-        String[] ITEMS = {"Oil change", "Tyre change", "Bulb change", "Absorber change", "Brake system", "Other"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (MaterialSpinner)findViewById(R.id.spinner);
-        spinner.setHint(R.string.service);
-        spinner.setAdapter(adapter);
-
-        toolBar("Service");
+        toolBar("Insurance");
         getCurrentDate(dateButton);
-        editMileage.setText(myDb.currentMileage());
         adGenerator();
+        editMileage.setText(myDb.currentMileage());
+
+        editValidity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateButton(InsActivity.this);
+            }
+
+        });
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if((isMileageOk(ServiceActivity.this,myDb.currentMileage(),editMileage.getText().toString()))&&(isOptionSelected())) {
-                            long id = addDataToTheBase(ServiceActivity.this, myDb, spinner.getSelectedItem().toString(), editPrice.getText().toString(),
-                                    dateForBase(dateButton.getText().toString()), editMileage.getText().toString(), editNote.getText().toString(), TABlE_NAME);
+                        if(isMileageOk(InsActivity.this,myDb.currentMileage(),editMileage.getText().toString())) {
+                            long id = addDataToTheBase(InsActivity.this, myDb, editValidity.getText().toString(), editPrice.getText().toString(),
+                                    dateForBase(dateButton.getText().toString()), editMileage.getText().toString()
+                                    , editNote.getText().toString(), TABlE_NAME);
                             if (id != -1) {
                                 final String value = TABlE_NAME + "\n" + id;
-                                Intent myIntent = new Intent(ServiceActivity.this, ViewOne.class);
-                                myIntent.putExtra("key", value); //Optional parameters
-                                ServiceActivity.this.startActivity(myIntent);
+                                Intent myIntent = new Intent(InsActivity.this, ViewOne.class);
+                                myIntent.putExtra("key", value);
+                                InsActivity.this.startActivity(myIntent);
                             }
                         }
                     }
@@ -75,7 +73,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        history(ServiceActivity.this, TABlE_NAME);
+                        history(InsActivity.this, TABlE_NAME);
                     }
                 });
 
@@ -83,22 +81,13 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        setDateButton(ServiceActivity.this);
+                        setDateButton(InsActivity.this);
                     }
                 });
 
 
 
 
-    }
-    
-    public boolean isOptionSelected(){
-        if (getString(R.string.service).equals(spinner.getSelectedItem().toString())){
-            Toast.makeText(ServiceActivity.this, "Choose service", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
-            return true;
-        }
     }
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -114,7 +103,18 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
             month=(++monthOfYear)+"";
         }
         String date = day + "." + month + "." + year;
-        dateButton.setText(date);
+        int buttonYear=Integer.parseInt(dateButton.getText().toString().split("\\.")[2]);
+        int buttonMonth=Integer.parseInt(dateButton.getText().toString().split("\\.")[1]);
+        int buttonDay=Integer.parseInt(dateButton.getText().toString().split("\\.")[0]);
+       if(year > buttonYear){
+            editValidity.setText(date);
+        } else if((monthOfYear > buttonMonth)&&(year==buttonYear)){
+            editValidity.setText(date);
+        } else if((dayOfMonth > buttonDay)&&(monthOfYear==buttonMonth)&&(year==buttonYear)){
+            editValidity.setText(date);
+        } else {
+            dateButton.setText(date);
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,14 +125,14 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(ServiceActivity.this, SettingsActivity.class));
+                startActivity(new Intent(InsActivity.this, SettingsActivity.class));
                 return true;
             case R.id.action_export:
-                startActivity(new Intent(ServiceActivity.this, ExpImpActivity.class));
+                startActivity(new Intent(InsActivity.this, ExpImpActivity.class));
                 return true;
             default:
-                Intent myIntent = new Intent(ServiceActivity.this, MainActivity.class);
-                ServiceActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(InsActivity.this, MainActivity.class);
+                InsActivity.this.startActivity(myIntent);
                 return true;
         }
     }

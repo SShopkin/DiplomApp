@@ -49,7 +49,7 @@
             android:id="@+id/editText_mileage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mileage:"
+            android:hint="@string/mileage_field"
             ads:met_floatingLabel="highlight"
             ads:met_underlineColor="@color/accentOrange"
             android:inputType="number"
