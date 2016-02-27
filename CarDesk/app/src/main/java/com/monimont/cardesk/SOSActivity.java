@@ -24,7 +24,7 @@ public class SOSActivity extends ActivityHelper {
         btnSAmerica = (FancyButton) findViewById(R.id.southAmerica);
         btnAustralia = (FancyButton) findViewById(R.id.australia);
 
-        toolBar("Roadside assistance");
+        toolBar(getString(R.string.sos_toolbar));
         adGenerator();
 
         btnEurope.setOnClickListener(new View.OnClickListener() {

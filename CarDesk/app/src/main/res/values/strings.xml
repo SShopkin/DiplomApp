@@ -37,6 +37,14 @@
     <string name="statistic_hint_cat">Category:</string>
     <string name="statistic_hint_time">Period:</string>
 
+    <!-- SOSActivity-->
+    <string name="sos_toolbar">Roadside assistance</string>
+    <string name="sos_call">Call to roadside assistance in:</string>
+    <string name="sos_europe">Europe</string>
+    <string name="sos_north_america">North America</string>
+    <string name="sos_south_america">South America</string>
+    <string name="sos_australia">Australia</string>
+
     <!--common-->
     <string name="mileage_field">Odometer:</string>
 
