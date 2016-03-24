@@ -55,7 +55,7 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
             }
         }
 
-        toolBar("Edit");
+        toolBar(getString(R.string.edit_toolbar));
         adGenerator();
 
         if(!("clean_table".equals(tableName))){

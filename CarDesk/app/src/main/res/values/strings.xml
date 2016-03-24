@@ -30,11 +30,15 @@
     <string name="auto_currency"> euro</string>
     <string name="title_activity_exp_imp">ExpImpActivity</string>
 
-    <!-- ServiceActivity.java-->
-    <string name="service">Service:</string>
-
     <!-- CleanActivity.java-->
     <string name="clean_toolbar">Car Wash</string>
+
+    <!-- EditActivity.java-->
+    <string name="edit_toolbar">Edit</string>
+    <string name="save">Save</string>
+
+    <!-- ServiceActivity.java-->
+    <string name="service">Service:</string>
 
 
     <!--StatisticActivity.java-->
@@ -53,6 +57,7 @@
     <string name="mileage_field">Odometer:</string>
     <string name="price_edit_text">Price:</string>
     <string name="note_edit_text">Note:</string>
+    <string name="date_edit_text">Date:</string>
     <string name="add_data_button">Add data</string>
     <string name="history_button">History</string>
 
