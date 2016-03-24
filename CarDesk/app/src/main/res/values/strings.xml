@@ -33,6 +33,10 @@
     <!-- ServiceActivity.java-->
     <string name="service">Service:</string>
 
+    <!-- CleanActivity.java-->
+    <string name="clean_toolbar">Car Wash</string>
+
+
     <!--StatisticActivity.java-->
     <string name="statistic_hint_cat">Category:</string>
     <string name="statistic_hint_time">Period:</string>
@@ -47,5 +51,9 @@
 
     <!--common-->
     <string name="mileage_field">Odometer:</string>
+    <string name="price_edit_text">Price:</string>
+    <string name="note_edit_text">Note:</string>
+    <string name="add_data_button">Add data</string>
+    <string name="history_button">History</string>
 
 </resources>

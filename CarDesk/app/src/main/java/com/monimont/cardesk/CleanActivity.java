@@ -36,7 +36,7 @@ public class CleanActivity extends ActivityHelper implements DatePickerDialog.On
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
-        toolBar("Car Wash");
+        toolBar(getString(R.string.clean_toolbar));
         editMileage.setText(myDb.currentMileage());
         getCurrentDate(dateButton);
         adGenerator();
