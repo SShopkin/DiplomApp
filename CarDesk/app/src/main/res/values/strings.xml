@@ -37,6 +37,16 @@
     <string name="edit_toolbar">Edit</string>
     <string name="save">Save</string>
 
+    <!-- ExpImpActivity.java-->
+    <string name="exp_imp_toolbar">Export and import</string>
+    <string name="export">Export:</string>
+    <string name="exp_imp_fuel">Fuel</string>
+    <string name="exp_imp_service">Service</string>
+    <string name="exp_imp_insurance">Insurance</string>
+    <string name="exp_imp_cleaning">Cleaning</string>
+    <string name="exp_imp_export">EXPORT</string>
+    <string name="exp_imp_import">IMPORT</string>
+
     <!-- ServiceActivity.java-->
     <string name="service">Service:</string>
 

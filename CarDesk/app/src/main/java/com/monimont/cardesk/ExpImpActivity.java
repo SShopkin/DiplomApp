@@ -91,7 +91,7 @@ public class ExpImpActivity extends ActivityHelper {
             }
         });
 
-        toolBar("Export and import");
+        toolBar(getString(R.string.exp_imp_toolbar));
         adGenerator();
 
         btnExport.setOnClickListener(
