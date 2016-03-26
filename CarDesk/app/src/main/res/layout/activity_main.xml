@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your current millage"
+        android:text="@string/main_txt"
         android:id="@+id/textView3"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"/>
