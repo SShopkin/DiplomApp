@@ -38,7 +38,7 @@ public class InsActivity extends ActivityHelper implements DatePickerDialog.OnDa
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
-        toolBar("Insurance");
+        toolBar(getString(R.string.ins_toolbar));
         getCurrentDate(dateButton);
         adGenerator();
         editMileage.setText(myDb.currentMileage());

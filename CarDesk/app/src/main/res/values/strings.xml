@@ -47,6 +47,10 @@
     <string name="fuel_full_tank_text">Your tank is full</string>
     <string name="fuel_quantity">Quantity:</string>
 
+    <!-- Ins-->
+    <string name="ins_toolbar">Insurance</string>
+    <string name="ins_validity">Validity:</string>
+
     <!-- ServiceActivity.java-->
     <string name="service">Service:</string>
 
