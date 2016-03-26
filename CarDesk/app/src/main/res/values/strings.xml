@@ -24,20 +24,14 @@
     <string name="banner_ad_edit">ca-app-pub-3789613095387394/2878729660</string>
     <string name="banner_ad_exp">ca-app-pub-3789613095387394/2899285664</string>
 
-    <!-- SettingsActivity.java-->
-    <string name="auto_liquid_measure"> liter</string>
-    <string name="auto_distance_measure">km</string>
-    <string name="auto_currency"> euro</string>
-    <string name="title_activity_exp_imp">ExpImpActivity</string>
-
-    <!-- CleanActivity.java-->
+    <!-- Clean-->
     <string name="clean_toolbar">Car Wash</string>
 
-    <!-- EditActivity.java-->
+    <!-- Edit-->
     <string name="edit_toolbar">Edit</string>
     <string name="save">Save</string>
 
-    <!-- ExpImpActivity.java-->
+    <!-- ExpImp-->
     <string name="exp_imp_toolbar">Export and import</string>
     <string name="export">Export:</string>
     <string name="exp_imp_fuel">Fuel</string>
@@ -47,13 +41,24 @@
     <string name="exp_imp_export">EXPORT</string>
     <string name="exp_imp_import">IMPORT</string>
 
+    <!-- Fuel-->
+    <string name="fuel_toolbar">Fuel</string>
+    <string name="fuel_full_tank">Your tank was full up.</string>
+    <string name="fuel_full_tank_text">Your tank is full</string>
+    <string name="fuel_quantity">Quantity:</string>
+
     <!-- ServiceActivity.java-->
     <string name="service">Service:</string>
-
 
     <!--StatisticActivity.java-->
     <string name="statistic_hint_cat">Category:</string>
     <string name="statistic_hint_time">Period:</string>
+
+    <!-- Settings-->
+    <string name="auto_liquid_measure"> liter</string>
+    <string name="auto_distance_measure">km</string>
+    <string name="auto_currency"> euro</string>
+    <string name="title_activity_exp_imp">ExpImpActivity</string>
 
     <!-- SOSActivity-->
     <string name="sos_toolbar">Roadside assistance</string>

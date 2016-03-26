@@ -49,7 +49,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
                 checked = !checked;
                 isItFull.setChecked(checked);
                 if (((AnimCheckBox) v).isChecked()) {
-                    tank = "Your tank was full up.";
+                    tank = getString(R.string.fuel_full_tank);
                 } else {
                     tank = "";
                 }
@@ -58,7 +58,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         });
 
 
-        toolBar("Fuel");
+        toolBar(getString(R.string.fuel_toolbar));
         getCurrentDate(dateButton);
         adGenerator();
 
