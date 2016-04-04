@@ -153,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int fullUpCount(String searchDate, String currentDate){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTERID = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTERID = note_table.ENTERID WHERE date(enter_table.DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND note_table.NOTE='Your tank was full up.'", null);
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM fuel_table LEFT JOIN enter_table ON fuel_table.ENTERID = enter_table.ID LEFT JOIN note_table ON fuel_table.ENTERID = note_table.ENTERID WHERE date(enter_table.DATE) BETWEEN date('" + searchDate + "') AND date('" + currentDate + "') AND note_table.NOTE!=''", null);
         if(cursor.moveToFirst()){
             return cursor.getInt(0);
         } return 0;
@@ -181,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Double sum=0.0;
         SQLiteDatabase db = this.getReadableDatabase();
         for(int i=1;i<fullUpCount;i++) {
-            Cursor fuel = db.rawQuery("SELECT SUM(fq.service) AS total FROM (SELECT fq2.*,(SELECT COUNT(*) FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq1 WHERE fq1.note = 'Your tank was full up.' AND fq1.id >= fq2.id) AS numNotesAhead FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq2) fq WHERE numNotesAhead = "+i, null);
+            Cursor fuel = db.rawQuery("SELECT SUM(fq.service) AS total FROM (SELECT fq2.*,(SELECT COUNT(*) FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq1 WHERE fq1.note != '' AND fq1.id >= fq2.id) AS numNotesAhead FROM (SELECT f.id, f.service, f.enterid, n.note FROM fuel_table f LEFT JOIN note_table n ON f.enterid = n.enterid) fq2) fq WHERE numNotesAhead = "+i, null);
             if (fuel.moveToFirst()) {
                 sum += fuel.getDouble(0);
             }
