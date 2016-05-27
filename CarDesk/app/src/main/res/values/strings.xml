@@ -45,27 +45,43 @@
     <string name="fuel_toolbar">Fuel</string>
     <string name="fuel_full_tank">Your tank was full up.</string>
     <string name="fuel_full_tank_text">Your tank is full</string>
-    <string name="fuel_quantity">Quantity:</string>
+    <string name="fuel_quantity">Quantity: </string>
 
     <!-- Ins -->
     <string name="ins_toolbar">Insurance</string>
-    <string name="ins_validity">Validity:</string>
+    <string name="ins_validity">Validity: </string>
 
     <!-- Main -->
     <string name="main_txt">Your current millage</string>
 
     <!-- ServiceActivity.java-->
     <string name="service">Service:</string>
-
-    <!--StatisticActivity.java-->
-    <string name="statistic_hint_cat">Category:</string>
-    <string name="statistic_hint_time">Period:</string>
+    <string name="service_toolbar">Service</string>
+    <string name="oil_change">Oil change</string>
+    <string name="tyre_change">Tyre change</string>
+    <string name="blub_change">Bulb change</string>
+    <string name="abs_change">Absorber change</string>
+    <string name="brake_system">Brake system</string>
+    <string name="other">Other</string>
+    <string name="choose_service">Choose service</string>
 
     <!-- Settings-->
     <string name="auto_liquid_measure"> liter</string>
     <string name="auto_distance_measure">km</string>
     <string name="auto_currency"> euro</string>
     <string name="title_activity_exp_imp">ExpImpActivity</string>
+    <string name="set_your">Set your app values. Current are: </string>
+    <string name="automatic">Automatic</string>
+    <string name="litre_currency">litre</string>
+    <string name="gallon_currency">gallon</string>
+    <string name="kilometer_currency">kilometer</string>
+    <string name="mile_currency">mile</string>
+    <string name="euros_currency">euros</string>
+    <string name="levs_currency">levs</string>
+    <string name="dollars_currency">dollars</string>
+    <string name="settings_toolbar">Settings</string>
+    <string name="settings_button">Apply</string>
+    <string name="settings_text">Set your app values</string>
 
     <!-- SOSActivity-->
     <string name="sos_toolbar">Roadside assistance</string>
@@ -75,12 +91,61 @@
     <string name="sos_south_america">South America</string>
     <string name="sos_australia">Australia</string>
 
+    <!--StatisticActivity-->
+    <string name="statistic_hint_cat">Category:</string>
+    <string name="statistic_hint_time">Period:</string>
+    <string name="statistic_all">All</string>
+    <string name="statistic_fuel">Fuel</string>
+    <string name="statistic_service">Service</string>
+    <string name="statistic_travelled_distance">Travelled distance </string>
+    <string name="statistic_insurance">Insurance </string>
+    <string name="statistic_clean">Clean </string>
+    <string name="statistic_today">Today </string>
+    <string name="statistic_week">Last week </string>
+    <string name="statistic_month">Last month </string>
+    <string name="statistic_year">Last year </string>
+    <string name="statistic_beginning">From beginning </string>
+    <string name="statistic_toolbar">Statistics </string>
+    <string name="statistic_not_full">Not enough full ups. </string>
+    <string name="statistic_fuel_cons">Fuel consumption is </string>
+    <string name="statistic_per_cat">s per 100 </string>
+    <string name="statistic_avr_day">Average sum for day is </string>
+    <string name="statistic_avr_month">Average sum for month is </string>
+    <string name="statistic_you_paid"> you paid </string>
+    <string name="statistic_you_travelled"> you travelled </string>
+    <string name="statistic_not_enough_records">Not enough records.</string>
+    <string name="statistic_toast">Choose category or period</string>
+    <string name="statistic_refresh">Refresh</string>
+
+    <!--ViewAll-->
+    <string name="view_all_toolbar">History</string>
+    <string name="view_all_err">Error: No data</string>
+    <string name="view_all_what">What: </string>
+
+    <!--ViewOne-->
+    <string name="view_one_toolbar">Record</string>
+    <string name="view_one_fuel">s fuel on </string>
+    <string name="view_one_cost_you"> and this cost you </string>
+    <string name="view_one_or"> or </string>
+    <string name="view_one_per"> per </string>
+    <string name="view_one_you_do"> You do this at </string>
+    <string name="view_one_on"> on </string>
+    <string name="view_one_made_ins">You made insurance at </string>
+    <string name="view_one_valid"> and it is valid to </string>
+    <string name="view_one_cost">. This cost you </string>
+    <string name="view_one_clean">You clean your car at </string>
+    <string name="view_one_deleted">Successful deleted</string>
+    <string name="view_one_delete_button">Delete</string>
+    <string name="view_one_edit_button">Edit</string>
+
+
     <!--common-->
-    <string name="mileage_field">Odometer:</string>
-    <string name="price_edit_text">Price:</string>
-    <string name="note_edit_text">Note:</string>
-    <string name="date_edit_text">Date:</string>
+    <string name="mileage_field">Odometer: </string>
+    <string name="price_edit_text">Price: </string>
+    <string name="note_edit_text">Note: </string>
+    <string name="date_edit_text">Date: </string>
     <string name="add_data_button">Add data</string>
+    <string name="date_button">Date</string>
     <string name="history_button">History</string>
 
 </resources>

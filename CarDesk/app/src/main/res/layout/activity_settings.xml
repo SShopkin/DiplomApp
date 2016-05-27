@@ -27,7 +27,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             ads:fb_defaultColor="@color/backgroundPurple"
-            ads:fb_text="Set your app values"
+            ads:fb_text="@string/settings_text"
             ads:fb_textColor="@color/accentPurple"
             android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true" />
@@ -79,7 +79,7 @@
             ads:fb_defaultColor="@color/navigationBarPurple"
             ads:fb_focusColor="@color/lightPurple"
             ads:fb_radius="30dp"
-            ads:fb_text="Apply"
+            ads:fb_text="@string/settings_button"
             ads:fb_textColor="#000000"
             android:layout_below="@+id/spinner3"
             android:layout_centerHorizontal="true" />

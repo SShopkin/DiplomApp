@@ -38,13 +38,13 @@ public class StatisticActivity extends ActivityHelper {
         fuelView= (TextView)findViewById(R.id.fuelTxt);
         fuelView.setVisibility(View.INVISIBLE);
 
-        String[] TABLE = {"All", "Fuel", "Service", "Travelled distance", "Insurance", "Clean"};
+        String[] TABLE = {getString(R.string.statistic_all), getString(R.string.statistic_fuel), getString(R.string.statistic_service), getString(R.string.statistic_travelled_distance), getString(R.string.statistic_insurance), getString(R.string.statistic_clean)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TABLE);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tableSpinner = (MaterialSpinner)findViewById(R.id.tableSpinner);
         tableSpinner.setHint(R.string.statistic_hint_cat);
         tableSpinner.setAdapter(adapter);
-        String[] DATES = {"Today","Last week", "Last month", "Last year", "From beginning"};
+        String[] DATES = {getString(R.string.statistic_today),getString(R.string.statistic_week),getString(R.string.statistic_month), getString(R.string.statistic_year), getString(R.string.statistic_beginning)};
         ArrayAdapter<String> dateAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, DATES);
         dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dateSpinner = (MaterialSpinner)findViewById(R.id.timeSpinner);
@@ -53,7 +53,7 @@ public class StatisticActivity extends ActivityHelper {
 
         curDate=currentDate();
         adGenerator();
-        toolBar("Statistics");
+        toolBar(getString(R.string.statistic_toolbar));
 
         btnRefresh.setOnClickListener(
                 new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class StatisticActivity extends ActivityHelper {
 
     public boolean isOtionSelected(){
         if((("").equals(chosePeriod()))||("").equals(choseTable())) {
-            Toast.makeText(StatisticActivity.this, "Choose category or period", Toast.LENGTH_LONG).show();
+            Toast.makeText(StatisticActivity.this, getString(R.string.statistic_toast), Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -98,36 +98,36 @@ public class StatisticActivity extends ActivityHelper {
     public String distance(){
         int cur = Integer.parseInt(myDb.currentMileage());
         if("".equals(myDb.mileage(chosePeriod(),curDate))){
-            return "Not enough records.";
+            return getString(R.string.statistic_not_enough_records);
         } else {
             int prev = Integer.parseInt(myDb.mileage(chosePeriod(),curDate));
             String travel = (cur - prev) + "";
-            return dateSpinner.getSelectedItem().toString() + " you travelled " + travel + " " + distanceMeasure+".";
+            return dateSpinner.getSelectedItem().toString() + getString(R.string.statistic_you_travelled) + travel + " " + distanceMeasure+".";
         }
     }
 
     public String textSum(){
-        return dateSpinner.getSelectedItem().toString()+" you paid " +
+        return dateSpinner.getSelectedItem().toString()+getString(R.string.statistic_you_paid) +
                 myDb.totalSum(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+". ";
     }
 
     public String textAllSum(double total){
-        return dateSpinner.getSelectedItem().toString()+" you paid " + total +" "+currencyMeasure+". ";
+        return dateSpinner.getSelectedItem().toString()+getString(R.string.statistic_you_paid) + total +" "+currencyMeasure+". ";
     }
 
     public String averageSum(double sum){
         if(lastWeekDate().equals(chosePeriod())){
             sum = sum/7;
             sum = Math.floor(sum * 100) / 100;
-            return "Average sum for day is "+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_day)+sum+" "+currencyMeasure+".";
         } else if(lastMonthDate().equals(chosePeriod())){
             sum = sum/30;
             sum = Math.floor(sum * 100) / 100;
-            return "Average sum for day is "+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_day)+sum+" "+currencyMeasure+".";
         } else if(lastYearDate().equals(chosePeriod())){
             sum = sum/12;
             sum = Math.floor(sum * 100) / 100;
-            return "Average sum for month is "+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_month)+sum+" "+currencyMeasure+".";
         }
         return "";
     }
@@ -136,9 +136,9 @@ public class StatisticActivity extends ActivityHelper {
         if(myDb.fullUpCount(chosePeriod(), curDate)>1){
             double consumption = myDb.preciseFuel(myDb.fullUpCount(chosePeriod(), curDate)) / fuelDistance() * 100;
             consumption = Math.floor(consumption * 100) / 100;
-            return "Fuel consumption is "+consumption+" "+liquidMeasure+"s per 100 "+distanceMeasure+".";
+            return getString(R.string.statistic_fuel_cons)+consumption+" "+liquidMeasure+getString(R.string.statistic_per_cat)+distanceMeasure+".";
         }
-        return "Not enough full ups.";
+        return getString(R.string.statistic_not_full);
     }
 
     public int fuelDistance(){

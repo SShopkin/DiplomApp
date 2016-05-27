@@ -27,6 +27,7 @@
             android:paddingBottom="10dp"
             ads:fb_defaultColor="@color/backgroundOrange"
             ads:fb_focusColor="@color/lightOrange"
+            ads:fb_text="@string/date_button"
             ads:fb_textColor="@color/accentOrange"
             android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true" />

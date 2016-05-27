@@ -42,14 +42,14 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
         btnHistory = (FancyButton)findViewById(R.id.button_history);
         dateButton = (FancyButton)findViewById(R.id.date_button);
 
-        String[] ITEMS = {"Oil change", "Tyre change", "Bulb change", "Absorber change", "Brake system", "Other"};
+        String[] ITEMS = {getString(R.string.oil_change), getString(R.string.tyre_change), getString(R.string.blub_change), getString(R.string.abs_change), getString(R.string.brake_system), getString(R.string.other)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (MaterialSpinner)findViewById(R.id.spinner);
         spinner.setHint(R.string.service);
         spinner.setAdapter(adapter);
 
-        toolBar("Service");
+        toolBar(getString(R.string.service_toolbar));
         getCurrentDate(dateButton);
         editMileage.setText(myDb.currentMileage());
         adGenerator();
@@ -94,7 +94,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
     
     public boolean isOptionSelected(){
         if (getString(R.string.service).equals(spinner.getSelectedItem().toString())){
-            Toast.makeText(ServiceActivity.this, "Choose service", Toast.LENGTH_LONG).show();
+            Toast.makeText(ServiceActivity.this, getString(R.string.choose_service), Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;

@@ -33,30 +33,30 @@ public class SettingsActivity extends ActivityHelper {
         distance=myDb.getSettings().split(":")[1];
         currency=myDb.getSettings().split(":")[2];
 
-        btnText.setText("Set your app values. Current are: "+liquid+", "+distance+", "+currency+".");
+        btnText.setText(getString(R.string.set_your)+liquid+", "+distance+", "+currency+".");
 
-        String[] LIQUIDS = {"litre", "gallon","Automatic"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, LIQUIDS);
+        String[] LIQUIDS = {getString(R.string.litre_currency), getString(R.string.gallon_currency),getString(R.string.automatic)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LIQUIDS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLiquid = (MaterialSpinner)findViewById(R.id.spinner1);
         spinnerLiquid.setAdapter(adapter);
         spinnerLiquid.setSelection(3);
 
-        String[] Distances = {"kilometer", "mile","Automatic"};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Distances);
+        String[] Distances = {getString(R.string.kilometer_currency), getString(R.string.mile_currency),getString(R.string.automatic)};
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Distances);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDistance = (MaterialSpinner)findViewById(R.id.spinner2);
         spinnerDistance.setAdapter(adapter1);
         spinnerDistance.setSelection(3);
 
-        String[] Currencies = {"euros", "levs", "dollars","Automatic"};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Currencies);
+        String[] Currencies = {getString(R.string.euros_currency), getString(R.string.levs_currency), getString(R.string.dollars_currency),getString(R.string.automatic)};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Currencies);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCurrency = (MaterialSpinner)findViewById(R.id.spinner3);
         spinnerCurrency.setAdapter(adapter2);
         spinnerCurrency.setSelection(4);
 
-        toolBar("Settings");
+        toolBar(getString(R.string.service_toolbar));
         adGenerator();
 
 
@@ -65,15 +65,15 @@ public class SettingsActivity extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         newLiquid=spinnerLiquid.getSelectedItem().toString();
-                        if("Automatic".equals(newLiquid)){
+                        if(getString(R.string.automatic).equals(newLiquid)){
                             newLiquid=getResources().getString(R.string.auto_liquid_measure);
                         }
                         newDistance=spinnerDistance.getSelectedItem().toString();
-                        if("Automatic".equals(newDistance)){
+                        if(getString(R.string.automatic).equals(newDistance)){
                             newDistance=getResources().getString(R.string.auto_distance_measure);
                         }
                         newCurrency=spinnerCurrency.getSelectedItem().toString();
-                        if("Automatic".equals(newCurrency)){
+                        if(getString(R.string.automatic).equals(newCurrency)){
                             newCurrency=getResources().getString(R.string.auto_currency);
                         }
 

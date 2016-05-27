@@ -34,11 +34,11 @@ public class ViewAll extends ActivityHelper {
         tableName  = intent.getStringExtra("key");
 
         adGenerator();
-        toolBar("History");
+        toolBar(getString(R.string.view_all_toolbar));
 
         Cursor res = myDb.getAllData(tableName);
         if (res.getCount() == 0) {
-            Toast.makeText(ViewAll.this, "Error: No data", Toast.LENGTH_LONG).show();
+            Toast.makeText(ViewAll.this, getString(R.string.view_all_err), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -47,18 +47,18 @@ public class ViewAll extends ActivityHelper {
             StringBuffer buffer = new StringBuffer();
             idArray.add(res.getString(0));
             if("fuel_table".equals(tableName)){
-                buffer.append("Quantity: " + res.getString(1) + "\n");
+                buffer.append(getString(R.string.fuel_quantity) + res.getString(1) + "\n");
             } else if ("ins_table".equals(tableName)){
-                buffer.append("Validity: " + res.getString(1) + "\n");
+                buffer.append(getString(R.string.ins_validity) + res.getString(1) + "\n");
             } else if ("service_table".equals(tableName)){
-                buffer.append("What: " + res.getString(1) + "\n");
+                buffer.append(getString(R.string.view_all_what) + res.getString(1) + "\n");
             } else {
-                buffer.append("Date: " + dateToShow(res.getString(4)) + "\n");
-                buffer.append("Price: " + res.getString(3));
+                buffer.append(getString(R.string.date_edit_text) + dateToShow(res.getString(4)) + "\n");
+                buffer.append(getString(R.string.price_edit_text) + res.getString(3));
             }
             if(!("clean_table".equals(tableName))){
-                buffer.append("Price: " + res.getString(4) + "\n");
-                buffer.append("Date: " + dateToShow(res.getString(5)));
+                buffer.append(getString(R.string.price_edit_text) + res.getString(4) + "\n");
+                buffer.append(getString(R.string.date_edit_text) + dateToShow(res.getString(5)));
             }
             values[b]=buffer.toString();
             b++;

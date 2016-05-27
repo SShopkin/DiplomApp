@@ -27,7 +27,7 @@ public class ViewOne extends ActivityHelper {
         btnEdit=(FancyButton)findViewById(R.id.button_edit);
         myDb=new DatabaseHelper(this);
 
-        toolBar("Record");
+        toolBar(getString(R.string.view_one_toolbar));
         adGenerator();
 
         Intent intent = getIntent();
@@ -67,36 +67,36 @@ public class ViewOne extends ActivityHelper {
             numPrice = Double.parseDouble(price);
             numPricePerQuantity = numPrice / numQuantity;
             numPricePerQuantity = Math.floor(numPricePerQuantity * 100) / 100;
-            display =service+" "+liquidMeasure+"s fuel on " + date+" and this cost you "+ price
-                    +" "+currencyMeasure+" or " +Double.toString(numPricePerQuantity) + " " +
-                    currencyMeasure+" per "+liquidMeasure+".";
+            display =service+" "+liquidMeasure+getString(R.string.view_one_fuel) + date+getString(R.string.view_one_cost_you)+ price
+                    +" "+currencyMeasure+getString(R.string.view_one_or) +Double.toString(numPricePerQuantity) + " " +
+                    currencyMeasure+getString(R.string.view_one_per)+liquidMeasure+".";
             if(!("".equals(mileage))){
-                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else if("service_table".equals(tableName)){
-            display ="What: "+service+" on " + date+" and this cost you "+ price + " "+ currencyMeasure +".";
+            display =getString(R.string.view_all_what)+service+getString(R.string.view_one_on) + date+getString(R.string.view_one_cost_you)+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
-                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else if("ins_table".equals(tableName)){
-            display ="You made insurance at "+date + " and it is valid to "+ service +
-                    ". This cost you " + price +" "+ currencyMeasure+". ";
+            display =getString(R.string.view_one_made_ins)+date + getString(R.string.view_one_valid)+ service +
+                    getString(R.string.view_one_cost) + price +" "+ currencyMeasure+". ";
             if(!("".equals(mileage))){
-                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else {
-            display ="You clean your car at "+date+" and this cost you "+ price + " "+ currencyMeasure +".";
+            display =getString(R.string.view_one_clean)+date+getString(R.string.view_one_cost_you)+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
-                display+= " You do this at "+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
@@ -110,7 +110,7 @@ public class ViewOne extends ActivityHelper {
                     @Override
                     public void onClick(View v) {
                         myDb.delete(id, enterId, tableName);
-                        Toast.makeText(ViewOne.this, "Successful deleted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ViewOne.this, getString(R.string.view_one_deleted), Toast.LENGTH_LONG).show();
                         history(ViewOne.this, tableName);
                     }
                 }
