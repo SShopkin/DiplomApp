@@ -20,6 +20,7 @@ public class MainActivity extends ActivityHelper {
     final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     final Date date = new Date();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class MainActivity extends ActivityHelper {
         other_button = (ImageButton)findViewById(R.id.other_button);
         editMileage = (EditText)findViewById(R.id.editMileage);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.accentOrange));
 
 
         if("null:null:null".equals(myDb.getSettings())){

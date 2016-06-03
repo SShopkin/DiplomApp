@@ -91,6 +91,7 @@ public class ExpImpActivity extends ActivityHelper {
             }
         });
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground), getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.exp_imp_toolbar));
         adGenerator();
 

@@ -58,6 +58,7 @@ public class FuelActivity extends ActivityHelper implements DatePickerDialog.OnD
         });
 
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground), getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.fuel_toolbar));
         getCurrentDate(dateButton);
         adGenerator();

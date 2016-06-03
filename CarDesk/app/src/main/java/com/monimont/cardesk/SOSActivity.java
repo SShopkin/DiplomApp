@@ -24,6 +24,7 @@ public class SOSActivity extends ActivityHelper {
         btnSAmerica = (FancyButton) findViewById(R.id.southAmerica);
         btnAustralia = (FancyButton) findViewById(R.id.australia);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.sos_toolbar));
         adGenerator();
 

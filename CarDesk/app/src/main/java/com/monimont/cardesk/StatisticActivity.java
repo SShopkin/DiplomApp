@@ -51,6 +51,7 @@ public class StatisticActivity extends ActivityHelper {
         dateSpinner.setHint(R.string.statistic_hint_time);
         dateSpinner.setAdapter(dateAdapter);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground), getResources().getColor(R.color.accentOrange));
         curDate=currentDate();
         adGenerator();
         toolBar(getString(R.string.statistic_toolbar));
@@ -102,32 +103,32 @@ public class StatisticActivity extends ActivityHelper {
         } else {
             int prev = Integer.parseInt(myDb.mileage(chosePeriod(),curDate));
             String travel = (cur - prev) + "";
-            return dateSpinner.getSelectedItem().toString() + getString(R.string.statistic_you_travelled) + travel + " " + distanceMeasure+".";
+            return dateSpinner.getSelectedItem().toString() +" "+ getString(R.string.statistic_you_travelled) +" "+ travel + " " + distanceMeasure+".";
         }
     }
 
     public String textSum(){
-        return dateSpinner.getSelectedItem().toString()+getString(R.string.statistic_you_paid) +
+        return dateSpinner.getSelectedItem().toString()+" "+getString(R.string.statistic_you_paid)+" " +
                 myDb.totalSum(chosePeriod(),curDate,choseTable())+" "+currencyMeasure+". ";
     }
 
     public String textAllSum(double total){
-        return dateSpinner.getSelectedItem().toString()+getString(R.string.statistic_you_paid) + total +" "+currencyMeasure+". ";
+        return dateSpinner.getSelectedItem().toString()+" "+getString(R.string.statistic_you_paid) +" "+ total +" "+currencyMeasure+". ";
     }
 
     public String averageSum(double sum){
         if(lastWeekDate().equals(chosePeriod())){
             sum = sum/7;
             sum = Math.floor(sum * 100) / 100;
-            return getString(R.string.statistic_avr_day)+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_day)+" "+sum+" "+currencyMeasure+".";
         } else if(lastMonthDate().equals(chosePeriod())){
             sum = sum/30;
             sum = Math.floor(sum * 100) / 100;
-            return getString(R.string.statistic_avr_day)+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_day)+" "+sum+" "+currencyMeasure+".";
         } else if(lastYearDate().equals(chosePeriod())){
             sum = sum/12;
             sum = Math.floor(sum * 100) / 100;
-            return getString(R.string.statistic_avr_month)+sum+" "+currencyMeasure+".";
+            return getString(R.string.statistic_avr_month)+" "+sum+" "+currencyMeasure+".";
         }
         return "";
     }
@@ -136,9 +137,9 @@ public class StatisticActivity extends ActivityHelper {
         if(myDb.fullUpCount(chosePeriod(), curDate)>1){
             double consumption = myDb.preciseFuel(myDb.fullUpCount(chosePeriod(), curDate)) / fuelDistance() * 100;
             consumption = Math.floor(consumption * 100) / 100;
-            return getString(R.string.statistic_fuel_cons)+consumption+" "+liquidMeasure+getString(R.string.statistic_per_cat)+distanceMeasure+".";
+            return getString(R.string.statistic_fuel_cons)+" "+consumption+" "+liquidMeasure+" "+getString(R.string.statistic_per_cat)+" "+distanceMeasure+".";
         }
-        return getString(R.string.statistic_not_full);
+        return "";
     }
 
     public int fuelDistance(){

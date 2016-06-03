@@ -56,6 +56,7 @@ public class SettingsActivity extends ActivityHelper {
         spinnerCurrency.setAdapter(adapter2);
         spinnerCurrency.setSelection(4);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground), getResources().getColor(R.color.accentPurple));
         toolBar(getString(R.string.service_toolbar));
         adGenerator();
 

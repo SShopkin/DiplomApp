@@ -27,6 +27,7 @@ public class ViewOne extends ActivityHelper {
         btnEdit=(FancyButton)findViewById(R.id.button_edit);
         myDb=new DatabaseHelper(this);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.view_one_toolbar));
         adGenerator();
 
@@ -67,36 +68,36 @@ public class ViewOne extends ActivityHelper {
             numPrice = Double.parseDouble(price);
             numPricePerQuantity = numPrice / numQuantity;
             numPricePerQuantity = Math.floor(numPricePerQuantity * 100) / 100;
-            display =service+" "+liquidMeasure+getString(R.string.view_one_fuel) + date+getString(R.string.view_one_cost_you)+ price
-                    +" "+currencyMeasure+getString(R.string.view_one_or) +Double.toString(numPricePerQuantity) + " " +
-                    currencyMeasure+getString(R.string.view_one_per)+liquidMeasure+".";
+            display =service+" "+liquidMeasure+getString(R.string.view_one_fuel) +" " + date +" " +getString(R.string.view_one_cost_you)+" "+ price
+                    +" "+currencyMeasure+" "+getString(R.string.view_one_or)+" " +Double.toString(numPricePerQuantity) + " " +
+                    currencyMeasure+" "+getString(R.string.view_one_per)+" "+liquidMeasure+".";
             if(!("".equals(mileage))){
-                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+" "+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else if("service_table".equals(tableName)){
-            display =getString(R.string.view_all_what)+service+getString(R.string.view_one_on) + date+getString(R.string.view_one_cost_you)+ price + " "+ currencyMeasure +".";
+            display =getString(R.string.view_all_what)+" "+service+" "+getString(R.string.view_one_on)+" " + date+" "+getString(R.string.view_one_cost_you)+" "+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
-                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+" "+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else if("ins_table".equals(tableName)){
-            display =getString(R.string.view_one_made_ins)+date + getString(R.string.view_one_valid)+ service +
-                    getString(R.string.view_one_cost) + price +" "+ currencyMeasure+". ";
+            display =getString(R.string.view_one_made_ins)+" "+date +" "+ getString(R.string.view_one_valid)+" "+ service +
+                    getString(R.string.view_one_cost)+" " + price +" "+ currencyMeasure+". ";
             if(!("".equals(mileage))){
-                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+" "+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;
             }
         } else {
-            display =getString(R.string.view_one_clean)+date+getString(R.string.view_one_cost_you)+ price + " "+ currencyMeasure +".";
+            display =getString(R.string.view_one_clean)+" "+date+" "+getString(R.string.view_one_cost_you)+" "+ price + " "+ currencyMeasure +".";
             if(!("".equals(mileage))){
-                display+= getString(R.string.view_one_you_do)+ mileage+" "+distanceMeasure+". ";
+                display+= getString(R.string.view_one_you_do)+" "+ mileage+" "+distanceMeasure+". ";
             }
             if(null!=note){
                 display+= note;

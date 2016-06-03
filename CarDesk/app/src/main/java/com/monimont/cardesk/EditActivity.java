@@ -55,6 +55,7 @@ public class EditActivity extends ActivityHelper implements DatePickerDialog.OnD
             }
         }
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.edit_toolbar));
         adGenerator();
 

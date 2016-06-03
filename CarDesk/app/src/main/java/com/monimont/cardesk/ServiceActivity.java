@@ -49,6 +49,7 @@ public class ServiceActivity extends ActivityHelper implements DatePickerDialog.
         spinner.setHint(R.string.service);
         spinner.setAdapter(adapter);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground), getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.service_toolbar));
         getCurrentDate(dateButton);
         editMileage.setText(myDb.currentMileage());

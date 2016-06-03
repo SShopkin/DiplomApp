@@ -36,6 +36,7 @@ public class CleanActivity extends ActivityHelper implements DatePickerDialog.On
         btnAddData = (FancyButton)findViewById(R.id.button_add);
         btnHistory = (FancyButton)findViewById(R.id.button_history);
 
+        setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.accentOrange));
         toolBar(getString(R.string.clean_toolbar));
         editMileage.setText(myDb.currentMileage());
         getCurrentDate(dateButton);
